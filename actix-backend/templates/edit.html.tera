@@ -1,0 +1,79 @@
+{% extends "layout.html.tera" %} {% block content %}
+<div class="row">
+  <h4>Edit Post</h4>
+  <div class="twelve columns">
+    <div class="ten columns">
+      <form action="/{{ post.id }}" method="post">
+        <div class="twelve columns">
+          {# <input
+            type="text"
+            placeholder="title"
+            name="title"
+            id="title"
+            value="{{ post.title }}"
+            autofocus
+            class="u-full-width"
+          />
+          <input
+            type="text"
+            placeholder="content"
+            name="text"
+            id="text"
+            value="{{ post.text }}"
+            autofocus
+            class="u-full-width"
+          /> #}
+
+          <input
+            type="text"
+            placeholder="enter chemical name"
+            name="chem_name"
+            id="chem_name"
+            value="{{ post.chem_name }}"
+            autofocus
+            class="u-full-width"
+          />
+          <input
+            type="text"
+            placeholder="enter chemical cas"
+            name="chem_cas"
+            id="chem_cas"
+            value="{{ post.chem_cas }}"
+            autofocus
+            class="u-full-width"
+          />
+          <input
+            type="text"
+            placeholder="enter chemical quantity"
+            name="chem_quantity"
+            id="chem_quantity"
+            value="{{ post.chem_quantity }}"
+            autofocus
+            class="u-full-width"
+          />
+
+
+        </div>
+        <div class="twelve columns">
+          <div class="two columns">
+            <a href="/">
+              <input type="button" value="cancel" />
+            </a>
+          </div>
+          <div class="eight columns"></div>
+          <div class="two columns">
+            <input type="submit" value="save post" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="two columns">
+      <form action="/delete/{{ post.id }}" method="post">
+        <div class="two columns">
+          <input id="delete-button" type="submit" value="delete post" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

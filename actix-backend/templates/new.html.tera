@@ -1,0 +1,47 @@
+{% extends "layout.html.tera" %} {% block content %}
+<div class="row">
+  <h4>New Post</h4>
+  <form action="/" method="post">
+    <div class="twelve columns">
+      <input
+        type="text"
+        placeholder="enter chemcal name"
+        name="chem_name"
+        id="chem_name"
+        value=""
+        autofocus
+        class="u-full-width"
+      />
+      <input
+        type="text"
+        placeholder="enter chemical CAS"
+        name="chem_cas"
+        id="chem_cas"
+        value=""
+        autofocus
+        class="u-full-width"
+      />
+      <input
+        type="text"
+        placeholder="enter chemical quantity"
+        name="chem_quantity"
+        id="chem_quantity"
+        value=""
+        autofocus
+        class="u-full-width"
+      />
+    </div>
+    <div class="twelve columns">
+      <div class="two columns">
+        <a href="/">
+          <input type="button" value="cancel" />
+        </a>
+      </div>
+      <div class="eight columns"></div>
+      <div class="two columns">
+        <input type="submit" value="save post" />
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}
