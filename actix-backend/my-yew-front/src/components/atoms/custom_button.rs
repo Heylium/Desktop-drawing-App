@@ -12,6 +12,7 @@ pub fn custom_button(props: &Props) -> Html {
     let button_onclick = Callback::from(move |_| {
         onclick.emit(());
     });
+
     html! {
         <button onclick={button_onclick}>{&props.label}</button>
     }

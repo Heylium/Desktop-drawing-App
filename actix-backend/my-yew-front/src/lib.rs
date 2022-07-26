@@ -10,6 +10,7 @@ use crate::router::{switch, Route};
 use components::atoms::main_title::{Color, MainTitle};
 use components::molecules::custom_form::CustomForm;
 use components::molecules::edit_form::EditForm;
+use components::molecules::label_row::LabelRow;
 use gloo::console::log;
 use std::ops::Deref;
 use stylist::yew::{styled_component};
@@ -64,6 +65,10 @@ pub fn app() -> Html {
         })
     };
 
+    
+
+    
+
     html!{
         <ContextProvider<Chem> context={chem_state.deref().clone()}>
             <MainTitle title="Hi from Maintitle" color={Color::Ok} on_load = {main_title_load} />
@@ -71,7 +76,8 @@ pub fn app() -> Html {
             <BrowserRouter>
                 <Switch<Route> render={Switch::render(switch)} />
             </BrowserRouter>
-            
+           
+           
         </ContextProvider<Chem>>
 
     

@@ -8,7 +8,7 @@ use crate::{Chem, log};
 use yew::prelude::*;
 
 
-#[derive(Default, Clone)]
+#[derive(Default, Clone, PartialEq)]
 pub struct Data {
     pub chem_name: String,
     pub chem_cas: String,
@@ -53,13 +53,6 @@ pub fn custom_form() -> Html {
         )
     });
 
-    // let form_onsubmit = props.onsubmit.clone();
-    // let cloned_state = state.clone();
-    // let onsubmit = Callback::from(move |event: FocusEvent| {
-    //     event.prevent_default();
-    //     let data = cloned_state.deref().clone();
-    //     form_onsubmit.emit(data);
-    // });
 
     let button_changed = Callback::from(|_| {
         log!("button clicked");
