@@ -1,6 +1,7 @@
 
 use yew::prelude::*;
 
+
 #[derive(Properties, PartialEq)]
 pub struct Props {
     pub label: String,
@@ -10,7 +11,7 @@ pub struct Props {
 pub fn row_label(props: &Props) -> Html {
     
     html!{
-        <label>{&props.label}</label>
+        <label class={ classes!("row-label") }>{&props.label}</label>
     }
 
 }
