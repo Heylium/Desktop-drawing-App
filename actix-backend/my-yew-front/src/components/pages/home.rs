@@ -1,6 +1,7 @@
 use crate::router::Route;
 use crate::components::molecules::label_row::LabelRow;
 use crate::components::molecules::custom_form::Data;
+
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -20,6 +21,9 @@ pub fn home() -> Html{
                 <Link <Route> to={Route::New}>{"To New Page"}</Link<Route>>
             </div>
             <LabelRow data={data} />
+            <div>
+                <Link <Route> to={Route::Edit}>{"To Edit Page"}</Link<Route>>
+            </div>
         </div>
     )
 }

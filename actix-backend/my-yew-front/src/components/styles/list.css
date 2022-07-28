@@ -2,3 +2,7 @@
     color: aqua;
     padding: 2px;
 }
+
+.row-label:not(last-child) {
+    border-left: 1px solid black;
+}

@@ -84,7 +84,7 @@ pub fn edit_form(props: &Props) -> Html {
                     .unwrap()
                     ;
                            
-                    log!("response:",response.to_string());
+            log!("response:",response.to_string());
 
         });
         
