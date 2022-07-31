@@ -1,24 +1,32 @@
 use std::clone;
 use std::ops::Deref;
+use std::borrow::Cow;
 
-use crate::components::atoms::custom_button::CustomButton;
+use crate::components::atoms::custom_button::{CustomButton, Props as CUS_BTN_PROP};
 use crate::components::atoms::text_input::TextInput;
 
 use crate::{Chem, log};
+use serde::{Serialize, Deserialize};
+use yew::html::IntoPropValue;
 use yew::prelude::*;
 
 
-#[derive(Default, Clone, PartialEq)]
+#[derive(Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Data {
     pub chem_name: String,
     pub chem_cas: String,
     pub chem_quantity: String,
 }
 
-// #[derive(Properties, PartialEq)]
-// pub struct Props {
-//     // pub onsubmit: Callback<Data>,
+// impl IntoPropValue<T> for Data {
+//     fn into_prop_value(self) -> Data {
+//         Callback::from(|_| {
+//             Data
+//         })
+        
+//     }
 // }
+
 
 #[function_component(CustomForm)]
 pub fn custom_form() -> Html {

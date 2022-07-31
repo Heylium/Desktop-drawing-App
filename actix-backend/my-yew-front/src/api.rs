@@ -1,6 +1,7 @@
 use reqwasm::http::Request;
 use serde::{Deserialize, Serialize };
 use serde_json::json;
+use crate::components::molecules::custom_form::Data;
 
 #[derive(Serialize, Deserialize)]
 pub struct ApiLoginResponse{
@@ -31,4 +32,25 @@ pub async fn api_login(username:String, password:String) -> ApiLoginResponse{
     .unwrap();
 
     response.data
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct EditResponse{
+    pub response: String,
+}
+
+pub async fn api_edit(data:Data) -> EditResponse {
+    let body = json!(data);
+    let edit_response = Request::post("http://localhost:8000/edit")
+    .header("content-type", "application/json")
+    .body(body.to_string())
+    .send()
+    .await
+    .unwrap()
+    .json::<EditResponse>()
+    .await
+    .unwrap();
+
+    edit_response
+
 }
