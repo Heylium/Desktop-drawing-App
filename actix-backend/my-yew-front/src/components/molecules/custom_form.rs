@@ -18,16 +18,6 @@ pub struct Data {
     pub chem_quantity: String,
 }
 
-// impl IntoPropValue<T> for Data {
-//     fn into_prop_value(self) -> Data {
-//         Callback::from(|_| {
-//             Data
-//         })
-        
-//     }
-// }
-
-
 #[function_component(CustomForm)]
 pub fn custom_form() -> Html {
     let state = use_state(|| Data::default());
