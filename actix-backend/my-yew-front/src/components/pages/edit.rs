@@ -38,10 +38,8 @@ impl Component for Edit{
                 let response = api_edit(copied_data).await;
             })
 
-            
         });
         
-
         html!{
             <div>
                 <CustomForm   />

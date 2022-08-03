@@ -1,8 +1,8 @@
 .row-label {
-    color: aqua;
+    color: #009688;
     padding: 2px;
 }
 
-.row-label:not(last-child) {
-    border-left: 1px solid black;
+.row-label:not(:last-child) {
+    border-right: 1px solid black;
 }

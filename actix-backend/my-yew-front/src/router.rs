@@ -1,7 +1,11 @@
-use crate::components::pages::hello::Hello;
-use crate::components::pages::home::Home;
-use crate::components::pages::new::New;
-use crate::components::pages::edit::Edit;
+use crate::components::pages::{
+    hello::Hello,
+    home::Home,
+    new::New,
+    edit::Edit,
+    list::List,
+};
+
 use yew::prelude::*;
 use yew_router::prelude::*;
 
@@ -15,6 +19,8 @@ pub enum Route {
     New,
     #[at("edit")]
     Edit,
+    #[at("list")]
+    List
 }
 
 pub fn switch(route: &Route) -> Html {
@@ -23,5 +29,6 @@ pub fn switch(route: &Route) -> Html {
         Route::Hello => html!( <Hello />),
         Route::New => html!( <New />),
         Route::Edit => html!( <Edit /> ),
+        Route::List => html!( <List /> ),
     }
 }

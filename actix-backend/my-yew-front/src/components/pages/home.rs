@@ -24,6 +24,10 @@ pub fn home() -> Html{
             <div>
                 <Link <Route> to={Route::Edit}>{"To Edit Page"}</Link<Route>>
             </div>
+
+            <div>
+                <Link <Route> to={Route::List}>{"To List Page"}</Link<Route>>
+            </div>
         </div>
     )
 }
