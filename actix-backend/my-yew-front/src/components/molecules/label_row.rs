@@ -6,6 +6,7 @@ use yew::{classes, html};
 use stylist::{yew::styled_component, Style};
 
 use crate::components::atoms::show_label::ShowLabel;
+use crate::components::atoms::delete_button::DeleteButton;
 use crate::components::molecules::custom_form::Data;
 
 
@@ -30,6 +31,7 @@ pub fn label_row(props: &Props)->Html {
             <ShowLabel label={data.chem_name.clone()} />
             <ShowLabel label={data.chem_cas.clone()} />
             <ShowLabel label={data.chem_quantity.clone()} />
+            <DeleteButton />
         </div>
     }
 }

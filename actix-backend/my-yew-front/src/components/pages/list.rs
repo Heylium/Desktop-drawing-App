@@ -33,7 +33,7 @@ impl Component for List {
                     chem_quantity: "1.5L".to_string(),
                 },
                 Data{
-                    chem_name: "Ether".to_string(),
+                    chem_name: "rther".to_string(),
                     chem_cas: "	60-29-7".to_string(),
                     chem_quantity: "3.0L".to_string(),
                 }
