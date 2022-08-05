@@ -54,3 +54,24 @@ pub async fn api_edit(data:Data) -> EditResponse {
     edit_response
 
 }
+
+
+#[derive(Serialize, Deserialize)]
+pub struct DeleteResponse {
+    pub response: String,
+}
+
+pub async fn api_delete(id: u32) -> DeleteResponse {
+    let id = json!(id);
+    let delete_response = Request::post("http:://loaclhost:8000/edit")
+        .header("content-type", "application/json")
+        .body(id.to_string())
+        .send()
+        .await
+    .unwrap()
+    .json()
+    .await
+    .unwrap();
+
+    delete_response
+}
