@@ -41,7 +41,7 @@ pub struct EditResponse{
 
 pub async fn api_edit(data:Data) -> EditResponse {
     let body = json!(data);
-    let edit_response = Request::post("edit")
+    let edit_response = Request::post("/edit")
     .header("content-type", "application/json")
     .body(body.to_string())
     .send()
