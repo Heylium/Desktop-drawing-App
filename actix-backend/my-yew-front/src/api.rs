@@ -41,7 +41,7 @@ pub struct EditResponse{
 
 pub async fn api_edit(data:Data) -> EditResponse {
     let body = json!(data);
-    let edit_response = Request::post("http://localhost:8000/edit")
+    let edit_response = Request::post("edit")
     .header("content-type", "application/json")
     .body(body.to_string())
     .send()
@@ -63,7 +63,7 @@ pub struct DeleteResponse {
 
 pub async fn api_delete(id: u32) -> DeleteResponse {
     let id = json!(id);
-    let delete_response = Request::post("http:://loaclhost:8000/edit")
+    let delete_response = Request::post("/delete")
         .header("content-type", "application/json")
         .body(id.to_string())
         .send()

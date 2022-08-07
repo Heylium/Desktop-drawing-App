@@ -13,5 +13,4 @@ pub fn row_label(props: &Props) -> Html {
     html!{
         <label class={ classes!("row-label") }>{&props.label}</label>
     }
-
 }
