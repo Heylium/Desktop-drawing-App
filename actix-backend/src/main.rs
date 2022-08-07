@@ -214,7 +214,7 @@ async fn main() -> std::io::Result<()> {
     let mut server = HttpServer::new(move || {
         App::new()
             .app_data(state.clone())
-            .service(Files::new("/","./dist").index_file("index.html"))
+            .service(Files::new("/","../../dist").index_file("index.html"))
             .wrap(middleware::Logger::default())
             // .wrap(actix_flash::Flash::default())
             
