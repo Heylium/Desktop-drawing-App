@@ -2,7 +2,7 @@ use entity::post;
 use entity::post::Entity as Post;
 use migration::{Migrator, MigratorTrait};
 
-use actix_files as fs;
+
 use actix_files::Files;
 use actix_web::{
     error, get, middleware, post, web, App, Error, HttpRequest, HttpResponse, HttpServer, Result,
@@ -15,23 +15,23 @@ use std::env;
 use std::rc::Weak;
 use actix_http::client::SendRequestError::Response;
 // use actix_http::Response;
-use futures_util::io::BufReader;
-use tera::{Tera};
+
+
 
 
 const DEFAULT_POSTS_PER_PAGE: usize = 6;
 
 #[derive(Debug, Clone)]
 struct AppState {
-    templates: tera::Tera,
+    // templates: tera::Tera,
     conn: DatabaseConnection,
 }
 
-#[derive(Debug, Deserialize)]
-pub struct Params {
-    page: Option<usize>,
-    posts_per_page: Option<usize>,
-}
+// #[derive(Debug, Deserialize)]
+// pub struct Params {
+//     page: Option<usize>,
+//     posts_per_page: Option<usize>,
+// }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct FlashData {
@@ -75,12 +75,12 @@ struct FlashData {
  */
 #[get("/new")]
 async fn new(data: web::Data<AppState>) -> Result<HttpResponse, Error> {
-    let template = &data.templates;
+    // let template = &data.templates;
     let ctx = tera::Context::new();
-    let body = template
-        .render("new.html.tera", &ctx)
-        .map_err(|_| error::ErrorInternalServerError("Template error"))?;
-    Ok(HttpResponse::Ok().content_type("text/html").body(body))
+    // let body = template
+    //     .render("new.html.tera", &ctx)
+    //     .map_err(|_| error::ErrorInternalServerError("Template error"))?;
+    Ok(HttpResponse::Ok().content_type("text/html").body("new route response."))
 }
 
 /**
@@ -117,7 +117,7 @@ async fn create(
 #[get("/{id}")]
 async fn edit(data: web::Data<AppState>, id: web::Path<i32>) -> Result<HttpResponse, Error> {
     let conn = &data.conn;
-    let template = &data.templates;
+    // let template = &data.templates;
     let post: post::Model = Post::find_by_id(id.into_inner())
         .one(conn)
         .await
@@ -127,10 +127,10 @@ async fn edit(data: web::Data<AppState>, id: web::Path<i32>) -> Result<HttpRespo
     let mut ctx = tera::Context::new();
     ctx.insert("post", &post);
 
-    let body = template
-        .render("edit.html.tera", &ctx)
-        .map_err(|_| error::ErrorInternalServerError("Template error!"))?;
-    Ok(HttpResponse::Ok().content_type("text/html").body(body))
+    // let body = template
+    //     .render("edit.html.tera", &ctx)
+    //     .map_err(|_| error::ErrorInternalServerError("Template error!"))?;
+    Ok(HttpResponse::Ok().content_type("text/html").body("response from edit"))
 }
 
 #[post("/{id}")]
@@ -206,8 +206,8 @@ async fn main() -> std::io::Result<()> {
     //create table if not exist
     let conn = sea_orm::Database::connect(&db_url).await.unwrap();
     Migrator::up(&conn, None).await.unwrap();
-    let templates = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")).unwrap();
-    let state = AppState { templates, conn };
+    // let templates = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")).unwrap();
+    let state = AppState { conn };
 
     let mut listenfd = ListenFd::from_env();
 
