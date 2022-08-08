@@ -76,7 +76,7 @@ struct FlashData {
 #[get("/new")]
 async fn new(data: web::Data<AppState>) -> Result<HttpResponse, Error> {
     // let template = &data.templates;
-    let ctx = tera::Context::new();
+    // let ctx = tera::Context::new();
     // let body = template
     //     .render("new.html.tera", &ctx)
     //     .map_err(|_| error::ErrorInternalServerError("Template error"))?;
@@ -105,10 +105,10 @@ async fn create(
     .await
     .expect("could not insert post");
 
-    let flash = FlashData {
-        kind: "success".to_owned(),
-        message: "Post successfully added.".to_owned(),
-    };
+    // let flash = FlashData {
+    //     kind: "success".to_owned(),
+    //     message: "Post successfully added.".to_owned(),
+    // };
 
     // actix_flash::Response::with_redirect(flash, "/")
     HttpResponse::Ok().body("ok from create response")
@@ -118,14 +118,14 @@ async fn create(
 async fn edit(data: web::Data<AppState>, id: web::Path<i32>) -> Result<HttpResponse, Error> {
     let conn = &data.conn;
     // let template = &data.templates;
-    let post: post::Model = Post::find_by_id(id.into_inner())
-        .one(conn)
-        .await
-        .expect("could not find post")
-        .unwrap();
+    // let post: post::Model = Post::find_by_id(id.into_inner())
+    //     .one(conn)
+    //     .await
+    //     .expect("could not find post")
+    //     .unwrap();
 
-    let mut ctx = tera::Context::new();
-    ctx.insert("post", &post);
+    // let mut ctx = tera::Context::new();
+    // ctx.insert("post", &post);
 
     // let body = template
     //     .render("edit.html.tera", &ctx)
@@ -151,10 +151,10 @@ async fn update(
     .save(conn)
     .await
     .expect("could not edit post");
-    let flash = FlashData {
-        kind: "success".to_owned(),
-        message: "Post successfully updated".to_owned(),
-    };
+    // let flash = FlashData {
+    //     kind: "success".to_owned(),
+    //     message: "Post successfully updated".to_owned(),
+    // };
 
     // actix_flash::Response::with_redirect(flash, "/")
     HttpResponse::Ok().body("response from update response")
