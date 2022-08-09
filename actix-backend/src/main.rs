@@ -23,15 +23,9 @@ const DEFAULT_POSTS_PER_PAGE: usize = 6;
 
 #[derive(Debug, Clone)]
 struct AppState {
-    // templates: tera::Tera,
     conn: DatabaseConnection,
 }
 
-// #[derive(Debug, Deserialize)]
-// pub struct Params {
-//     page: Option<usize>,
-//     posts_per_page: Option<usize>,
-// }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 struct FlashData {
