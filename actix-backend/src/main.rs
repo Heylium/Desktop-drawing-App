@@ -32,7 +32,12 @@ async fn main() {
     ))
     .with(tracing_subscriber::fmt::layer())
     .init();
-
+    //get database url
+    dotenv::dotenv().ok();
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL NOT FOUND IN .env file");
+    let host = env::var("HOST").expect("HOST NOT FOUND IN .env file");
+    let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
+    let server_url = format!("{}:{}", host, port);
 
     let conn = sea_orm::Database::connect(&db_url).await.unwrap();
     Migrator::up(&conn, None).await.unwrap();
@@ -152,10 +157,10 @@ struct AppState {
 //     tracing_subscriber::fmt::init();
 
 //     dotenv::dotenv().ok();
-//     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL NOT FOUND IN .env file");
-//     let host = env::var("HOST").expect("HOST NOT FOUND IN .env file");
-//     let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
-//     let server_url = format!("{}:{}", host, port);
+    // let db_url = env::var("DATABASE_URL").expect("DATABASE_URL NOT FOUND IN .env file");
+    // let host = env::var("HOST").expect("HOST NOT FOUND IN .env file");
+    // let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
+    // let server_url = format!("{}:{}", host, port);
 
     //create table if not exist
     // let conn = sea_orm::Database::connect(&db_url).await.unwrap();
