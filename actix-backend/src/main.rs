@@ -1,3 +1,4 @@
+use axum::routing::Route;
 use entity::post;
 use entity::post::Entity as Post;
 use migration::{Migrator, MigratorTrait};
@@ -19,11 +20,17 @@ use axum::{
     async_trait,
     extract::{Extension, FromRequest, RequestParts},
     http::StatusCode,
+    response::{IntoResponse, Response},
     routing::get,
     Router,
 };
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use std::{net::SocketAddr, time::Duration};
+
+#[derive(Debug, Clone)]
+struct AppState {
+    conn: DatabaseConnection,
+}
 
 #[tokio::main]
 async fn main() {
@@ -41,17 +48,20 @@ async fn main() {
 
     let conn = sea_orm::Database::connect(&db_url).await.unwrap();
     Migrator::up(&conn, None).await.unwrap();
-    // let templates = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")).unwrap();
     let state = AppState { conn };
+
+    let app = Router::new()
+        .route("/", get(list));
+
+    
 }
 
 
-// const DEFAULT_POSTS_PER_PAGE: usize = 6;
+async fn list() -> Result<String, (StatusCode, String)> {
 
-#[derive(Debug, Clone)]
-struct AppState {
-    conn: DatabaseConnection,
 }
+
+
 
 
 // #[derive(Debug, Clone, Deserialize, Serialize)]
