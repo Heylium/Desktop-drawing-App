@@ -21,6 +21,7 @@ use axum::{
     extract::{Extension, FromRequest, RequestParts, Query as AxumQuery},
     http::StatusCode,
     response::{IntoResponse, Response},
+    body::{boxed, Body},
     routing::get,
     Router,
 };
@@ -64,7 +65,11 @@ async fn main() {
         .route("/", get(list))
         .fallback(get|req| async move {
             match ServeDir::new("../dist").oneshot(req).await {
-                
+                Ok(res) => res.map(boxed),
+                Err(err) => Response::builder()
+                    .status(StatusCode::INTERNAL_SERVER_ERROR)
+                    .body(boxed(Body::from(format!("error: {err}"))))
+                    .expect("error response"),
             }
         })
         .layer(Extension(conn));
