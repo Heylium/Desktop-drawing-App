@@ -1,7 +1,7 @@
 use axum::routing::Route;
 use entity::post;
 use entity::post::Entity as Post;
-use migration::{Migrator, MigratorTrait};
+use migration::{Migrator, MigratorTrait, Query};
 
 // use actix_files::Files;
 // use actix_web::{
@@ -18,7 +18,7 @@ use std::rc::Weak;
 
 use axum::{
     async_trait,
-    extract::{Extension, FromRequest, RequestParts},
+    extract::{Extension, FromRequest, RequestParts, Query as AxumQuery},
     http::StatusCode,
     response::{IntoResponse, Response},
     routing::get,
@@ -30,6 +30,13 @@ use std::{net::SocketAddr, time::Duration};
 #[derive(Debug, Clone)]
 struct AppState {
     conn: DatabaseConnection,
+}
+
+// The query parameters for list index
+#[derive(Debug, Deserialize, Default)]
+pub struct Pagination {
+    pub offset: Option<usize>,
+    pub limit: Option<usize>,
 }
 
 #[tokio::main]
@@ -51,13 +58,17 @@ async fn main() {
     let state = AppState { conn };
 
     let app = Router::new()
-        .route("/", get(list));
+        .route("/", get(list))
+        .layer(Extension(conn));
 
     
 }
 
 
-async fn list() -> Result<String, (StatusCode, String)> {
+async fn list(
+    pagination: Option<AxumQuery<Pagination>>,
+    Extension(db): Extension<DatabaseConnection>
+) -> impl IntoResponse {
 
 }
 
