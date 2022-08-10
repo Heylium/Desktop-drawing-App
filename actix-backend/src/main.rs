@@ -27,6 +27,9 @@ use axum::{
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use std::{net::SocketAddr, time::Duration};
 
+use tower::{ServiceBuilder, ServiceExt};
+use tower_http::services::ServeDir;
+
 #[derive(Debug, Clone)]
 struct AppState {
     conn: DatabaseConnection,
@@ -59,6 +62,9 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(list))
+        .fallback(get|req| async move {
+            match ServeDir
+        })
         .layer(Extension(conn));
 
     
@@ -69,7 +75,7 @@ async fn list(
     pagination: Option<AxumQuery<Pagination>>,
     Extension(db): Extension<DatabaseConnection>
 ) -> impl IntoResponse {
-
+    
 }
 
 
