@@ -63,7 +63,9 @@ async fn main() {
     let app = Router::new()
         .route("/", get(list))
         .fallback(get|req| async move {
-            match ServeDir
+            match ServeDir::new("../dist").oneshot(req).await {
+                
+            }
         })
         .layer(Extension(conn));
 
