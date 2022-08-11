@@ -19,19 +19,17 @@ use std::net::{SocketAddr, ToSocketAddrs};
 // use actix_http::Response;
 
 use axum::{
-    async_trait,
-    extract::{Extension, FromRequest, RequestParts, Query as AxumQuery},
+    extract::{Extension, Query as AxumQuery},
     http::StatusCode,
-    response::{IntoResponse, Response},
-    body::{boxed, Body},
+    response::{IntoResponse},
     routing::get,
     Router,
 };
-use axum_extra::routing::SpaRouter;
+
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 
-use tower::{ServiceBuilder, ServiceExt};
+use tower::{ServiceBuilder};
 use tower_http::services::ServeDir;
 
 #[derive(Debug, Clone)]
