@@ -15,6 +15,7 @@ use std::env;
 use std::rc::Weak;
 use std::io;
 use std::net::{SocketAddr, ToSocketAddrs};
+use std::str::FromStr;
 // use actix_http::client::SendRequestError::Response;
 // use actix_http::Response;
 
@@ -64,21 +65,20 @@ async fn main() {
 
     let app = Router::new()
         .route("/hello", get(list))
-        .fallback(get_service(ServeDir::new("../dist")).handle_error(handle_error))
+        .fallback(get_service(ServeDir::new("./dist")).handle_error(handle_error))
         // .merge(SpaRouter::new("/", "../dist"))
         .layer(
             ServiceBuilder::new()
                 .layer(Extension(conn)),
         );
 
-
-    axum::Server::bind(&server_url.parse().unwrap())
+    let addr = SocketAddr::from_str(&server_url).unwrap();
+    axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
     .unwrap();
 
-
-    
+    println!("Starting server at {}", server_url);
 }
 
 
