@@ -1,4 +1,4 @@
-use axum::routing::Route;
+use axum::routing::{Route, get_service};
 use entity::post;
 use entity::post::Entity as Post;
 use migration::{Migrator, MigratorTrait, Query};
@@ -13,6 +13,8 @@ use sea_orm::{entity::*, query::*};
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::rc::Weak;
+use std::io;
+use std::net::{SocketAddr, ToSocketAddrs};
 // use actix_http::client::SendRequestError::Response;
 // use actix_http::Response;
 
@@ -25,8 +27,9 @@ use axum::{
     routing::get,
     Router,
 };
+use axum_extra::routing::SpaRouter;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
-use std::{net::SocketAddr, time::Duration};
+
 
 use tower::{ServiceBuilder, ServiceExt};
 use tower_http::services::ServeDir;
@@ -57,22 +60,25 @@ async fn main() {
     let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
     let server_url = format!("{}:{}", host, port);
 
-    let conn = sea_orm::Database::connect(&db_url).await.unwrap();
+    let conn = sea_orm::Database::connect(&db_url).await.expect("sea_orm connection failed");
     Migrator::up(&conn, None).await.unwrap();
-    let state = AppState { conn };
+    // let state = AppState { conn };
 
     let app = Router::new()
-        .route("/", get(list))
-        .fallback(get|req| async move {
-            match ServeDir::new("../dist").oneshot(req).await {
-                Ok(res) => res.map(boxed),
-                Err(err) => Response::builder()
-                    .status(StatusCode::INTERNAL_SERVER_ERROR)
-                    .body(boxed(Body::from(format!("error: {err}"))))
-                    .expect("error response"),
-            }
-        })
-        .layer(Extension(conn));
+        .route("/hello", get(list))
+        .fallback(get_service(ServeDir::new("../dist")).handle_error(handle_error))
+        // .merge(SpaRouter::new("/", "../dist"))
+        .layer(
+            ServiceBuilder::new()
+                .layer(Extension(conn)),
+        );
+
+
+    axum::Server::bind(&server_url.parse().unwrap())
+        .serve(app.into_make_service())
+        .await
+    .unwrap();
+
 
     
 }
@@ -82,7 +88,11 @@ async fn list(
     pagination: Option<AxumQuery<Pagination>>,
     Extension(db): Extension<DatabaseConnection>
 ) -> impl IntoResponse {
-    
+    "hello from axum".to_string()
+}
+
+async fn handle_error(_err: io::Error)-> impl IntoResponse {
+    (StatusCode::INTERNAL_SERVER_ERROR, "Something went wrong...")
 }
 
 
@@ -191,16 +201,16 @@ async fn list(
 //     tracing_subscriber::fmt::init();
 
 //     dotenv::dotenv().ok();
-    // let db_url = env::var("DATABASE_URL").expect("DATABASE_URL NOT FOUND IN .env file");
-    // let host = env::var("HOST").expect("HOST NOT FOUND IN .env file");
-    // let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
-    // let server_url = format!("{}:{}", host, port);
+//     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL NOT FOUND IN .env file");
+//     let host = env::var("HOST").expect("HOST NOT FOUND IN .env file");
+//     let port = env::var("PORT").expect("PORT NOT FOUND IN .env file");
+//     let server_url = format!("{}:{}", host, port);
 
-    //create table if not exist
-    // let conn = sea_orm::Database::connect(&db_url).await.unwrap();
-    // Migrator::up(&conn, None).await.unwrap();
-    // // let templates = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")).unwrap();
-    // let state = AppState { conn };
+//     // create table if not exist
+//     let conn = sea_orm::Database::connect(&db_url).await.unwrap();
+//     Migrator::up(&conn, None).await.unwrap();
+//     // let templates = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/templates/**/*")).unwrap();
+//     let state = AppState { conn };
 
 //     let mut listenfd = ListenFd::from_env();
 
