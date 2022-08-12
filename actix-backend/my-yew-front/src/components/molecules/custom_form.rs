@@ -2,8 +2,9 @@ use std::clone;
 use std::ops::Deref;
 use std::borrow::Cow;
 
-use crate::components::atoms::custom_button::{CustomButton, Props as CUS_BTN_PROP};
+use crate::components::atoms::custom_button::{CustomButton};
 use crate::components::atoms::text_input::TextInput;
+
 
 use crate::{Chem, log};
 use serde::{Serialize, Deserialize};
