@@ -23,11 +23,11 @@ pub struct Data {
 #[function_component(CustomForm)]
 pub fn custom_form() -> Html {
     let state = use_state(|| Data::default());
-    let user_context = use_context::<Chem>();
+    // let user_context = use_context::<Chem>();
 
     let cloned_state = state.clone();
     let chem_name_changed = Callback::from(move |chem_name| {
-        // let mut data = cloned_state.deref().clone();
+        
         cloned_state.set(Data {
             chem_name,
             ..cloned_state.deref().clone()
@@ -36,7 +36,7 @@ pub fn custom_form() -> Html {
 
     let cloned_state = state.clone();
     let chem_cas_changed = Callback::from(move |chem_cas| {
-        // let mut data = cloned_state.deref().clone();
+        
         cloned_state.set(Data {
             chem_cas,
             ..cloned_state.deref().clone()

@@ -64,7 +64,7 @@ async fn main() {
     // let state = AppState { conn };
 
     let app = Router::new()
-        .route("/hello", get(list))
+        .route("/list", get(list))
         .fallback(get_service(ServeDir::new("./dist")).handle_error(handle_error))
         // .merge(SpaRouter::new("/", "../dist"))
         .layer(
@@ -81,9 +81,16 @@ async fn main() {
     println!("Starting server at {}", server_url);
 }
 
+#[derive(Deserialize)]
+struct Params {
+    page: Option<usize>,
+    posts_per_page: Option<usize>,
+}
+
 
 async fn list(
     Extension(ref conn): Extension<DatabaseConnection>,
+    AxumQuery(params): AxumQuery<Params>,
 ) -> impl IntoResponse {
     
 }
