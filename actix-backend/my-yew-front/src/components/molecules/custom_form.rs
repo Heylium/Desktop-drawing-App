@@ -13,6 +13,7 @@ use yew::prelude::*;
 
 #[derive(Default, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Data {
+    pub id: u32,
     pub chem_name: String,
     pub chem_cas: String,
     pub chem_quantity: String,

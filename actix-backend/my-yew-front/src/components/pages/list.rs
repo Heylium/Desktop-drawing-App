@@ -23,16 +23,19 @@ impl Component for List {
         Self {
             data_list: vec![
                 Data{
+                    id: 1,
                     chem_name: "benzene".to_string(),
                     chem_cas: "71-43-2".to_string(),
                     chem_quantity: "1L".to_string(),
                 },
                 Data{
+                    id: 2,
                     chem_name: "acetone".to_string(),
                     chem_cas: "67-64-1".to_string(),
                     chem_quantity: "1.5L".to_string(),
                 },
                 Data{
+                    id: 3,
                     chem_name: "rther".to_string(),
                     chem_cas: "	60-29-7".to_string(),
                     chem_quantity: "3.0L".to_string(),

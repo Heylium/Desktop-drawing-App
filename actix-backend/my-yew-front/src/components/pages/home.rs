@@ -9,6 +9,7 @@ use yew_router::prelude::*;
 pub fn home() -> Html{
 
     let data = Data{
+        id: 5,
         chem_cas:"benzene".to_owned(),
         chem_name: "75".to_owned(),
         chem_quantity: "1L".to_owned(),

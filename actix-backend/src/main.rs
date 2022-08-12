@@ -83,10 +83,9 @@ async fn main() {
 
 
 async fn list(
-    pagination: Option<AxumQuery<Pagination>>,
-    Extension(db): Extension<DatabaseConnection>
+    Extension(ref conn): Extension<DatabaseConnection>,
 ) -> impl IntoResponse {
-    "hello from axum".to_string()
+    
 }
 
 async fn handle_error(_err: io::Error)-> impl IntoResponse {

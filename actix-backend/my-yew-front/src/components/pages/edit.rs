@@ -23,7 +23,7 @@ impl Component for Edit{
 
     fn create(ctx: &Context<Self>) -> Self {
         Self {
-            data: Data { chem_name: "chem_name_init".to_owned(), chem_cas: "chem_cas_init".to_owned(), chem_quantity: "chem_quantity_init".to_owned() }
+            data: Data {id:4, chem_name: "chem_name_init".to_owned(), chem_cas: "chem_cas_init".to_owned(), chem_quantity: "chem_quantity_init".to_owned() }
         }
     }
 
