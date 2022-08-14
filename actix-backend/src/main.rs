@@ -1,6 +1,8 @@
+use axum::Json;
 use axum::routing::{Route, get_service};
 use entity::post;
 use entity::post::Entity as Post;
+use migration::tests_cfg::json;
 use migration::{Migrator, MigratorTrait, Query};
 
 // use actix_files::Files;
@@ -32,6 +34,8 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 use tower::{ServiceBuilder};
 use tower_http::services::ServeDir;
+
+
 
 #[derive(Debug, Clone)]
 struct AppState {
@@ -91,8 +95,22 @@ struct Params {
 async fn list(
     Extension(ref conn): Extension<DatabaseConnection>,
     AxumQuery(params): AxumQuery<Params>,
-) -> impl IntoResponse {
+) -> Result<Json<Vec<post::Model>>, (StatusCode, &'static str)> {
+    let page = params.page.unwrap_or(1);
+    let posts_per_page = params.posts_per_page.unwrap_or(5);
+    let paginator = Post::find()
+        .order_by_asc(post::Column::Id)
+        .paginate(conn, posts_per_page);
+    let num_pages = paginator.num_pages().await.ok().unwrap();
+    let posts = paginator
+        .fetch_page(page - 1)
+        .await
+        .expect("could not retrieve posts");
     
+    // let list_json = json!(posts);
+    // let response = Json(list_json).into_response();
+    Ok(json(posts))
+
 }
 
 async fn handle_error(_err: io::Error)-> impl IntoResponse {
