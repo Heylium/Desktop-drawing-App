@@ -1,4 +1,5 @@
 use axum::Json;
+use axum::response::Response;
 use axum::routing::{Route, get_service};
 use entity::post;
 use entity::post::Entity as Post;
@@ -13,6 +14,7 @@ use listenfd::ListenFd;
 use sea_orm::DatabaseConnection;
 use sea_orm::{entity::*, query::*};
 use serde::{Deserialize, Serialize};
+// use serde_json::Result;
 use std::env;
 use std::rc::Weak;
 use std::io;
@@ -91,25 +93,31 @@ struct Params {
     posts_per_page: Option<usize>,
 }
 
+struct Chem{
+    pub id: i32,
+    pub chem_name: String,
+    pub chem_cas: String,
+    pub chem_quantity: String,
+}
+
 
 async fn list(
     Extension(ref conn): Extension<DatabaseConnection>,
     AxumQuery(params): AxumQuery<Params>,
-) -> Result<Json<Vec<post::Model>>, (StatusCode, &'static str)> {
+) -> Result<Json<serde_json::Value>, (StatusCode, &'static str)> {
     let page = params.page.unwrap_or(1);
     let posts_per_page = params.posts_per_page.unwrap_or(5);
-    let paginator = Post::find()
+    let mut paginator = Post::find()
         .order_by_asc(post::Column::Id)
+        .into_json()
         .paginate(conn, posts_per_page);
-    let num_pages = paginator.num_pages().await.ok().unwrap();
-    let posts = paginator
-        .fetch_page(page - 1)
-        .await
-        .expect("could not retrieve posts");
+
     
-    // let list_json = json!(posts);
-    // let response = Json(list_json).into_response();
-    Ok(json(posts))
+    if let Some(chems) = paginator.fetch_and_next().await.unwrap() {
+            return Ok(Json(json!(chems)));
+    } else {
+        return Err((StatusCode::NO_CONTENT, "no cheminfo found"));
+    }
 
 }
 
