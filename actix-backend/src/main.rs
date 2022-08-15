@@ -94,7 +94,7 @@ struct Params {
 }
 
 struct Chem{
-    pub id: i32,
+    pub id: u32,
     pub chem_name: String,
     pub chem_cas: String,
     pub chem_quantity: String,
