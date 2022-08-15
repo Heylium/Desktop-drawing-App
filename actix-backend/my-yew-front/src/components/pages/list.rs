@@ -20,6 +20,7 @@ impl Component for List {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
+        
         Self {
             data_list: vec![
                 Data{
