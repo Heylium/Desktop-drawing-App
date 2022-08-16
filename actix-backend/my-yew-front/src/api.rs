@@ -97,31 +97,16 @@ pub async fn api_list(page:u32, limit: u32) -> Vec<Data> {
         page: page,
         posts_per_page: limit
     };
-    let mut opts = RequestInit::new();
-        opts.method("GET");
-        opts.mode(RequestMode::Cors);
-    
-    let request = Request::new_with_str_and_init("/list", &opts).unwrap();
-    let window = gloo::utils::window();
-    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await.unwrap();
-    let resp: Response = resp_value.dyn_into().unwrap();
-    let data = JsFuture::from(resp.json().unwrap()).await.unwrap().as_string();
-    if let Some(data) {
-        data
-    }
+    let list_response = ReqwasmReq::get("/list")
+        .header("content-type", "application/json")
+        .body(serde_json::to_string(&params).unwrap())
+        .send()
+        .await
+    .unwrap()
+    .json()
+    .await
+    .unwrap();
 
-    // let list_response = Request::get("/list")
-    //     .header("content-type", "application/json")
-    //     .body(serde_json::to_string(&params).unwrap())
-    //     .send()
-    //     .await
-    // .unwrap()
-    // .json()
-    // .await
-    // .unwrap();
-
-    // list_response
-
-
+    list_response
 }
 

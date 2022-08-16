@@ -93,6 +93,7 @@ struct Params {
     posts_per_page: Option<usize>,
 }
 
+#[derive(Serialize, Deserialize)]
 struct Chem{
     pub id: u32,
     pub chem_name: String,
@@ -114,6 +115,27 @@ async fn list(
 
     
     if let Some(chems) = paginator.fetch_and_next().await.unwrap() {
+            // return Ok(Json(json!(chems)));
+            let chems = vec![
+                Chem{
+                    id: 1,
+                    chem_name: "benzene".to_string(),
+                    chem_cas: "71-43-2".to_string(),
+                    chem_quantity: "1L".to_string(),
+                },
+                Chem{
+                    id: 2,
+                    chem_name: "acetone".to_string(),
+                    chem_cas: "67-64-1".to_string(),
+                    chem_quantity: "1.5L".to_string(),
+                },
+                Chem{
+                    id: 3,
+                    chem_name: "rther".to_string(),
+                    chem_cas: "	60-29-7".to_string(),
+                    chem_quantity: "3.0L".to_string(),
+                }
+            ];
             return Ok(Json(json!(chems)));
     } else {
         return Err((StatusCode::NO_CONTENT, "no cheminfo found"));
