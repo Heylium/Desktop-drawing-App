@@ -103,7 +103,7 @@ pub async fn api_list(page:u32, limit: u32) -> Vec<Data> {
         .send()
         .await
     .unwrap()
-    .json()
+    .json::<Vec<Data>>()
     .await
     .unwrap();
 

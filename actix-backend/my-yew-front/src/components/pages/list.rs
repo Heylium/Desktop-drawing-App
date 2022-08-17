@@ -1,6 +1,7 @@
 
 use std::ops::Deref;
 
+use crate::api;
 use crate::components::molecules::label_row::LabelRow;
 use crate::components::molecules::custom_form::Data;
 use crate::components::atoms::custom_button::CustomButton;
@@ -34,23 +35,13 @@ impl Component for List {
 
     fn create(ctx: &Context<Self>) -> Self {
         let data_list:Vec<Data> = Vec::new();
-        Callback::from(move |mut data_list: Vec<Data>| {
-            // let _cloned_state = data_list.clone();
-            wasm_bindgen_futures::spawn_local(async move {
-                let response  = Request::get("/list")
-                    .header("content-type", "application/json")
-                    .send()
-                    .await
-                .unwrap()
-                .json::<Vec<Data>>()
-                .await
-                .unwrap();
-
-                // let mut lists = cloned_props.deref().clone();
-                
-                data_list = response;
-            })
-        });
+        // Callback::from( |mut data_list: Vec<Data>| {
+        //     // let _cloned_state = data_list.clone();
+        //     wasm_bindgen_futures::spawn_local(async move {
+        //         let response = api::api_list(1, 5).await;
+        //         data_list = response;
+        //     })
+        // });
 
         Self {
             data_list: data_list,
@@ -108,6 +99,17 @@ impl Component for List {
             </div>
 
         }
+    }
+
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        Callback::from( |mut data_list: Vec<Data>| {
+            // let _cloned_state = data_list.clone();
+            wasm_bindgen_futures::spawn_local(async move {
+                let response = api::api_list(1, 5).await;
+                data_list = response;
+            })
+        });
+        true
     }
 
     
