@@ -3,6 +3,7 @@ use std::ops::Deref;
 
 use crate::api;
 use crate::components::molecules::label_row::LabelRow;
+use crate::components::atoms::show_label::ShowLabel;
 use crate::components::molecules::custom_form::Data;
 use crate::components::atoms::custom_button::CustomButton;
 use crate::router::Route;
@@ -20,18 +21,25 @@ use yew_router::{prelude::*, history};
 
 #[function_component(List)]
 pub fn list() -> Html {
-    let data = use_state(|| None);
-
-    {
-        let data = data.clone();
-        use_effect(move || {
-            wasm_bindgen_futures::spawn_local(async move {
-                let resposne  = api::api_list(1, 5).await;
-                data.set(Some(resposne));
-            });
-            ||{}
+    let data = use_state(|| {
+        wasm_bindgen_futures::spawn_local(async move {
+            let resposne  = api::api_list(1, 5).await;
+            resposne;
+            // data.set(Some(resposne));
         });
-    }
+        ||{}
+    });
+
+    // {
+    //     let data = data.clone();
+    //     use_effect(move || {
+    //         wasm_bindgen_futures::spawn_local(async move {
+    //             let resposne  = api::api_list(1, 5).await;
+    //             data.set(Some(resposne));
+    //         });
+    //         ||{}
+    //     });
+    // }
 
     let history = use_history().unwrap();
     let go_home_onclick = Callback::from(move |_| history.push(Route::Home) );
@@ -42,10 +50,15 @@ pub fn list() -> Html {
             {
                 if let Some(d) = data.deref() {
                     d.deref().into_iter().map(|v| {
-                            html!{ 
-                                < LabelRow data={} />
+                            html!{
+                                <div> 
+                                    <ShowLabel label={v.chem_name.clone()} />
+                                    <ShowLabel label={v.chem_cas.clone()} />
+                                    <ShowLabel label={v.chem_quantity.clone()} />
+                                </div>
                                 }
                         }).collect::<Html>()
+                
                 }else{
                     html!{
                         <div>{"No data..."}</div>
