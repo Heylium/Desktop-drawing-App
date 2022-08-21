@@ -23,31 +23,17 @@ use yew_router::{prelude::*, history};
 pub fn list() -> Html {
     let data = use_state(|| None);
     
-    // {
-    //     let data = data.clone();
-    //     use_effect(move || {
-    //         wasm_bindgen_futures::spawn_local(async move {
-    //             let resposne  = api::api_list(1, 5).await;
-    //             data.set(Some(resposne));
-    //         });
-    //         ||{}
-    //     });
-    // }
-    let cloned_data = data.clone();
-    let list_click = 
-        Callback::from(move |_| {
-            let data = cloned_data.clone();
-            use_effect(move || {
+    {
+        let data = data.clone();
+        use_effect(move || {
             wasm_bindgen_futures::spawn_local(async move {
                 let resposne  = api::api_list(1, 5).await;
                 data.set(Some(resposne));
             });
             ||{}
         });
-    });
+    }
     
-    
-
     let history = use_history().unwrap();
     let go_home_onclick = Callback::from(move |_| history.push(Route::Home) );
     
@@ -75,7 +61,7 @@ pub fn list() -> Html {
             }
 
             <CustomButton label={"Go Home"} onclick={go_home_onclick} />
-            <CustomButton label={"Get List"} onclick={list_click} />
+            // <CustomButton label={"Get List"} onclick={list_click} />
         </div>
         
     }
