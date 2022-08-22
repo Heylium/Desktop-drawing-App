@@ -61,7 +61,7 @@ pub fn list() -> Html {
             }
 
             <CustomButton label={"Go Home"} onclick={go_home_onclick} />
-            // <CustomButton label={"Get List"} onclick={list_click} />
+            
         </div>
         
     }
