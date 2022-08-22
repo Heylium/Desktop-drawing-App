@@ -45,6 +45,7 @@ pub fn list() -> Html {
     //         ||{}
     //     });
     // }
+    log!(format!("{:?}", data.deref()));
     
     let history = use_history().unwrap();
     let go_home_onclick = Callback::from(move |_| history.push(Route::Home) );
