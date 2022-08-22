@@ -7,8 +7,10 @@ use crate::components::atoms::show_label::ShowLabel;
 use crate::components::molecules::custom_form::Data;
 use crate::components::atoms::custom_button::CustomButton;
 use crate::router::Route;
+use gloo::console::log;
 use reqwasm::http::Request;
 use crate::api::api_list;
+use gloo::*;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
@@ -26,6 +28,7 @@ pub fn list() -> Html {
         let mut cloned_data_value = data_value.clone();
         wasm_bindgen_futures::spawn_local(async move {
             let response = api::api_list(1, 5).await;
+            log!("response!!!");
             *cloned_data_value = response;
         });
         Some(data_value)

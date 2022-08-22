@@ -99,7 +99,7 @@ pub async fn api_list(page:u32, limit: u32) -> Vec<Data> {
     };
     let list_response = ReqwasmReq::get("/list")
         .header("content-type", "application/json")
-        .body(serde_json::to_string(&params).unwrap())
+        // .body(serde_json::to_string(&params).unwrap())
         .send()
         .await
     .unwrap()
