@@ -23,29 +23,19 @@ use yew_router::{prelude::*, history};
 
 #[function_component(List)]
 pub fn list() -> Html {
-    let data = use_state(|| {
-        let data_value = Box::new(Vec::new());
-        let mut cloned_data_value = data_value.clone();
-        wasm_bindgen_futures::spawn_local(async move {
-            let response = api::api_list(1, 5).await;
-            log!("response!!!");
-            *cloned_data_value = response;
-        });
-        Some(data_value)
-        
-    });
+    let data = use_state(|| None);
     
-    // {
-    //     let data = data.clone();
-    //     use_effect(move || {
-    //         wasm_bindgen_futures::spawn_local(async move {
-    //             let resposne  = api::api_list(1, 5).await;
-    //             data.set(Some(resposne));
-    //         });
-    //         ||{}
-    //     });
-    // }
-    log!(format!("{:?}", data.deref()));
+    {
+        let data = data.clone();
+        use_effect(move || {
+            wasm_bindgen_futures::spawn_local(async move {
+                let resposne  = api::api_list(1, 5).await;
+                data.set(Some(resposne));
+            });
+            ||{}
+        });
+    }
+    
     
     let history = use_history().unwrap();
     let go_home_onclick = Callback::from(move |_| history.push(Route::Home) );
@@ -67,7 +57,7 @@ pub fn list() -> Html {
                 
                 }else{
                     html!{
-                        <div>{"No data..."}</div>
+                        <div>{"No Chem data..."}</div>
                     }
                 }
 
@@ -86,10 +76,11 @@ pub fn list() -> Html {
 
 
 
-#[derive(Default)]
-pub struct ListState{
-    data_list: Vec<Data>,
-}
+
+// #[derive(Default)]
+// pub struct ListState{
+//     data_list: Vec<Data>,
+// }
 
 // // #[derive(PartialEq, Properties)]
 // // pub struct ListProps {
