@@ -7,17 +7,9 @@ use crate::components::atoms::show_label::ShowLabel;
 use crate::components::atoms::custom_button::CustomButton;
 use crate::router::Route;
 
-
-
-
-
-
-
-
-
-
 use yew::prelude::*;
 use yew_router::{prelude::*};
+
 
 
 #[function_component(List)]
