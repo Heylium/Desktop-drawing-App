@@ -1,6 +1,7 @@
 use reqwasm::http::Request as ReqwasmReq;
 use serde::{Deserialize, Serialize };
 use serde_json::json;
+use url::Url;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
@@ -93,12 +94,14 @@ pub struct Params {
 
 
 pub async fn api_list(page:u32, limit: u32) -> Vec<Data> {
-    let params = Params{
-        page: page,
-        posts_per_page: limit
-    };
+    let params = [
+        ("page", page),
+        ("limit", limit)
+    ];
+    let url = "/list";
+    let url = reqwasm::Url::parse_with_params(url, &params);
     let list_response = ReqwasmReq::get("/list")
-        .header("content-type", "application/json")
+        .header("content-type", "application/x-www-form-urlencoded")
         // .body(serde_json::to_string(&params).unwrap())
         .send()
         .await

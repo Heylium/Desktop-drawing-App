@@ -15,6 +15,7 @@ yew-router = "0.16"
 yewdux = "0.7"
 yewdux-functional = "0.1"
 reqwasm = {version="0.5.0"}
+url = "2.2.2"
 serde = "1.0"
 serde_json = "1.0"
 
