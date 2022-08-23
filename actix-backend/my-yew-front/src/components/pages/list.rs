@@ -7,18 +7,18 @@ use crate::components::atoms::show_label::ShowLabel;
 use crate::components::molecules::custom_form::Data;
 use crate::components::atoms::custom_button::CustomButton;
 use crate::router::Route;
-use gloo::console::log;
-use reqwasm::http::Request;
-use crate::api::api_list;
-use gloo::*;
+
+
+
+
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{RequestInit, RequestMode, Response};
+
 
 
 use yew::prelude::*;
-use yew_router::{prelude::*, history};
+use yew_router::{prelude::*};
 
 
 #[function_component(List)]
