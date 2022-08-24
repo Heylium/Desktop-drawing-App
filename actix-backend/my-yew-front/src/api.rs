@@ -94,12 +94,8 @@ pub struct Params {
 
 
 pub async fn api_list(page:u32, limit: u32) -> Vec<Data> {
-    let params = [
-        ("page", &page.to_string()),
-        ("limit", &limit.to_string())
-    ];
+    
     let url = format!("/list?page={}&limit={}",page,limit);
-    // let url = Url::parse_with_params(url, &params).unwrap();
     let list_response = ReqwasmReq::get(&url)
         .header("content-type", "application/x-www-form-urlencoded")
         .send()

@@ -30,6 +30,9 @@ pub fn list() -> Html {
     
     let history = use_history().unwrap();
     let go_home_onclick = Callback::from(move |_| history.push(Route::Home) );
+
+    // let edit_history = use_history().unwrap();
+    // let edit_onclick = Callback::from(move |_| edit_history.push(Route::Edit));
     
 
     html!{
@@ -38,7 +41,7 @@ pub fn list() -> Html {
                 if let Some(d) = data.deref() {
                     d.deref().into_iter().map(|v| {
                             html!{
-                                <div> 
+                                <div > 
                                     <ShowLabel label={v.chem_name.clone()} />
                                     <ShowLabel label={v.chem_cas.clone()} />
                                     <ShowLabel label={v.chem_quantity.clone()} />

@@ -17,6 +17,7 @@ const STYLE_FILE: &str = include_str!("../styles/list.css");
 #[derive(Properties,PartialEq)]
 pub struct Props{
     pub data: Data,
+    pub onclick: Option<Callback<()>>
 }
 
 #[function_component(LabelRow)]
