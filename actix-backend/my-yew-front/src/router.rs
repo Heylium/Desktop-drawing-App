@@ -17,8 +17,8 @@ pub enum Route {
     Hello,
     #[at("new")]
     New,
-    #[at("edit")]
-    Edit,
+    #[at("edit/:id")]
+    Edit {id: String},
     #[at("list")]
     List
 }
@@ -28,7 +28,7 @@ pub fn switch(route: &Route) -> Html {
         Route::Home => html!( <Home />),
         Route::Hello => html!( <Hello />),
         Route::New => html!( <New />),
-        Route::Edit => html!( <Edit /> ),
+        Route::Edit{id} => html!( <Edit id={&**id} /> ),
         Route::List => html!( <List /> ),
     }
 }

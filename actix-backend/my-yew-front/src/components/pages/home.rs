@@ -23,7 +23,7 @@ pub fn home() -> Html{
             </div>
             <LabelRow data={data} />
             <div>
-                <Link <Route> to={Route::Edit}>{"To Edit Page"}</Link<Route>>
+                <Link <Route> to={Route::Edit{id}}>{"To Edit Page"}</Link<Route>>
             </div>
 
             <div>

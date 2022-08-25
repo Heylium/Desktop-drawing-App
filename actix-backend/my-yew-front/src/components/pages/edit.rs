@@ -9,8 +9,8 @@ use crate::api::api_edit;
 
 
 #[derive(Properties, PartialEq)]
-pub struct Props{
-    pub data: Data,
+pub struct EditProps{
+    pub id: String,
 }
 
 pub struct Edit{
@@ -19,7 +19,7 @@ pub struct Edit{
 
 impl Component for Edit{
     type Message = ();
-    type Properties = ();
+    type Properties = EditProps;
 
     fn create(ctx: &Context<Self>) -> Self {
         Self {
