@@ -19,7 +19,8 @@ pub struct Edit{
 
 impl Component for Edit{
     type Message = ();
-    type Properties = EditProps;
+    type Properties = ();
+    // type Properties = EditProps;
 
     fn create(ctx: &Context<Self>) -> Self {
         Self {

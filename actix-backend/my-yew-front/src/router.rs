@@ -28,7 +28,7 @@ pub fn switch(route: &Route) -> Html {
         Route::Home => html!( <Home />),
         Route::Hello => html!( <Hello />),
         Route::New => html!( <New />),
-        Route::Edit{id} => html!( <Edit id={&**id} /> ),
+        Route::Edit => html!( <Edit  /> ),
         Route::List => html!( <List /> ),
     }
 }
