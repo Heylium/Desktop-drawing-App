@@ -1,13 +1,22 @@
 <!DOCTYPE html><html lang="en"><head>
-    <meta charset="UTF-8">
-    <title>My-Yew</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="//demo.realworld.io/main.css">
+    <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      a { cursor: pointer; /* Fix yew_router for now: https://github.com/yewstack/yew_router/issues/225 */}
+    </style>
+    <title>Conduit</title>
+  
+<link rel="preload" href="/conduit-wasm-6c63a7ec4a4a23ca_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/conduit-wasm-6c63a7ec4a4a23ca.js"></head>
+  <body>
+    <script src="static/index.ts"></script>
+  
 
-<link rel="preload" href="/my-yew-front-2241ba0ba5e0525c_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/my-yew-front-2241ba0ba5e0525c.js"></head>
-<body>
-
-
-<script type="module">import init from '/my-yew-front-2241ba0ba5e0525c.js';init('/my-yew-front-2241ba0ba5e0525c_bg.wasm');</script><script>(function () {
+<script type="module">import init from '/conduit-wasm-6c63a7ec4a4a23ca.js';init('/conduit-wasm-6c63a7ec4a4a23ca_bg.wasm');</script><script>(function () {
     var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     var url = protocol + '//' + window.location.host + '/_trunk/ws';
     var poll_interval = 5000;
