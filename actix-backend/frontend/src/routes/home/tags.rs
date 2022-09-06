@@ -26,7 +26,7 @@ pub fn tags(props: &Props) -> Html {
                         Callback::from(
                             move |e: MouseEvent| {
                                 e.prevent_default();
-                                callback.emit(tag.clone());
+                                callback.emit(tag.clone().to_string());
                             }
                         )
                     };
