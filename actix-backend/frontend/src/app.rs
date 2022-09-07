@@ -12,6 +12,8 @@ use crate::routes::{switch, AppRoute};
 #[function_component(App)]
 pub fn app() -> Html {
     html! {
+        <>
+        <p>{"M"}</p>
         <UserContextProvider>
             <BrowserRouter>
                 <Header />
@@ -19,5 +21,6 @@ pub fn app() -> Html {
                 <Footer />
             </BrowserRouter>
         </UserContextProvider>
+        </>
     }
 }
