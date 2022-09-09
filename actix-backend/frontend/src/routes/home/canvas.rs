@@ -63,7 +63,7 @@ pub fn canvas()->Html {
 
 
     html!{
-        《div>
+        <div>
         </div>
     }
 }
