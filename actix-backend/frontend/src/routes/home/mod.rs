@@ -1,6 +1,7 @@
 mod banner;
 mod main_view;
 mod tags;
+mod canvas;
 
 use yew::prelude::*;
 
