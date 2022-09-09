@@ -11,8 +11,8 @@ pub fn canvas()->Html {
     let canvas = document.create_element("canvas").unwrap().dyn_into::<web_sys::HtmlCanvasElement>().unwrap();
 
     document.body().unwrap().append_child(&canvas);
-    canvas.set_width(900);
-    canvas.set_height(900);
+    canvas.set_width(800);
+    canvas.set_height(800);
 
     canvas.style().set_property("border", "solid").unwrap();
     let context = canvas.get_context("2d").unwrap().unwrap().dyn_into::<web_sys::CanvasRenderingContext2d>().unwrap();
@@ -63,6 +63,7 @@ pub fn canvas()->Html {
 
 
     html!{
-        <></>
+        《div>
+        </div>
     }
 }
