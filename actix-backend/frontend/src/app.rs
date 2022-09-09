@@ -13,7 +13,6 @@ use crate::routes::{switch, AppRoute};
 pub fn app() -> Html {
     html! {
         <>
-        <p>{"M"}</p>
         <UserContextProvider>
             <BrowserRouter>
                 <Header />

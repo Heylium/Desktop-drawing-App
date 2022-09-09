@@ -8,6 +8,7 @@ use yew::prelude::*;
 use banner::Banner;
 use main_view::MainView;
 use tags::Tags;
+use canvas::Canvas;
 
 /// Home page with an article list and a tag list.
 #[function_component(Home)]
@@ -30,10 +31,12 @@ pub fn home() -> Html {
                         <div class="sidebar">
                             <p>{ "Popular Tags" }</p>
                             <Tags {callback} />
+                            <Canvas />
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     }
 }
