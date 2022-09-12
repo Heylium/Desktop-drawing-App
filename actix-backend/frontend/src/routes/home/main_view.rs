@@ -85,6 +85,7 @@ pub fn main_view(props: &Props) -> Html {
                 </ul>
             </div>
 
+            // list articles
             <ArticleList filter={(*filter).clone()} />
         </div>
     }
