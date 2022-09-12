@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [workspace]
-members = [".", "entity", "migration","my-yew-front","frontend"]
+members = [".", "entity", "migration","frontend","my-yew-front","conduit-frontend"]
 
 [dependencies]
 futures = { version = "0.3" }
