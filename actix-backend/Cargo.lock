@@ -822,6 +822,26 @@ dependencies = [
 [[package]]
 name = "frontend"
 version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dotenv_codegen",
+ "gloo 0.4.2",
+ "js-sys",
+ "lazy_static",
+ "log",
+ "parking_lot 0.10.2",
+ "pulldown-cmark",
+ "reqwest",
+ "serde",
+ "thiserror",
+ "wasm-bindgen",
+ "wasm-logger",
+ "web-sys",
+ "wee_alloc",
+ "yew",
+ "yew-hooks",
+ "yew-router",
+]
 
 [[package]]
 name = "futures"
