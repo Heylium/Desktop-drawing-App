@@ -1,6 +1,7 @@
 use yew::prelude::*;
 use yew_hooks::prelude::*;
 
+
 // use super::article_preview::ArticlePreview;
 use super::list_pagination::ListPagination;
 use crate::services::articles::*;
@@ -68,14 +69,18 @@ pub fn article_list(props: &Props) -> Html {
             current_page.set(page);
         })
     };
+    // html!{
+    //     <div>{"Hello from article !!!"}</div>
+    // }
 
     if let Some(article_list) = &article_list.data {
+
         if !article_list.articles.is_empty() {
             html! {
                 <>
-                    // {for article_list.articles.iter().map(|article| {
-                    //     html! { <ArticlePreview article={article.clone()} /> }
-                    // })}
+                    {for article_list.articles.iter().map(|article| {
+                        html! { <ArticlePreview article={article.clone()} /> }
+                    })}
                     <ListPagination
                         total_count={article_list.articles_count}
                         current_page={*current_page}
@@ -92,4 +97,5 @@ pub fn article_list(props: &Props) -> Html {
             <div class="article-preview">{ "Loading..." }</div>
         }
     }
+    
 }
