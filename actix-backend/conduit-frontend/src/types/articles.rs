@@ -9,13 +9,13 @@ pub struct ArticleInfo {
     pub slug: String,
     pub title: String,
     pub description: String,
-    pub body: String,
-    pub tag_list: Vec<String>,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
-    pub favorited: bool,
-    pub favorites_count: u32,
-    pub author: ProfileInfo,
+    // pub body: String,
+    // pub tag_list: Vec<String>,
+    // pub created_at: DateTime<Utc>,
+    // pub updated_at: DateTime<Utc>,
+    // pub favorited: bool,
+    // pub favorites_count: u32,
+    // pub author: ProfileInfo,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
