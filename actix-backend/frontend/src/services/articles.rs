@@ -4,7 +4,7 @@ use crate::types::*;
 
 /// Get all articles
 pub async fn all(page: u32) -> Result<ArticleListInfo, Error> {
-    // request_get::<ArticleListInfo>(format!("/articles?{}", limit(10, page))).await
+    // request_get::<ArticleListInfo>(format!("/list?{}", limit(10, page))).await
     let articles = vec![
         ArticleInfo{
             title: "Benzene".to_owned(),
