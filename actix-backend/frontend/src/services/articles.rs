@@ -4,22 +4,22 @@ use crate::types::*;
 
 /// Get all articles
 pub async fn all(page: u32) -> Result<ArticleListInfo, Error> {
-    // request_get::<ArticleListInfo>(format!("/list?{}", limit(10, page))).await
-    let articles = vec![
-        ArticleInfo{
-            title: "Benzene".to_owned(),
-            description: "72-17-4".to_owned(),
-            favorites_count: 12u32,
-        },
-        ArticleInfo{
-            title: "Toluene".to_owned(),
-            description: "108-88-3".to_owned(),
-            favorites_count: 118u32,
-        }
-    ];
-    Ok(
-        ArticleListInfo { articles: articles, articles_count: 2 }
-    )
+    request_get::<ArticleListInfo>(format!("/list?{}", limit(10, page))).await
+    // let articles = vec![
+    //     ArticleInfo{
+    //         title: "Benzene".to_owned(),
+    //         description: "72-17-4".to_owned(),
+    //         favorites_count: 12u32,
+    //     },
+    //     ArticleInfo{
+    //         title: "Toluene".to_owned(),
+    //         description: "108-88-3".to_owned(),
+    //         favorites_count: 118u32,
+    //     }
+    // ];
+    // Ok(
+    //     ArticleListInfo { articles: articles, articles_count: 2 }
+    // )
 
 }
 
