@@ -2,7 +2,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -17,9 +19,10 @@ import androidx.compose.ui.input.pointer.consumeDownChange
 import androidx.compose.ui.input.pointer.consumePositionChange
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.unit.dp
+import components.menu.DrawingPropertiesMenu
 import gesture.MotionEvent
-import model.PathProperties
 import gesture.dragMotionEvent
+import model.PathProperties
 
 
 @Composable
@@ -30,7 +33,7 @@ fun DrawingApp() {
     val pathsUndone = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
 
     var motionEvent by remember { mutableStateOf(MotionEvent.Idle) }
-    val drawMode by remember { mutableStateOf(DrawMode.Draw) }
+    var drawMode by remember { mutableStateOf(DrawMode.Draw) }
 
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
     var currentPath by remember { mutableStateOf(Path()) }
@@ -183,5 +186,45 @@ fun DrawingApp() {
             }
 
         }
+
+        DrawingPropertiesMenu(
+            modifier = Modifier
+                .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+                .shadow(1.dp, RoundedCornerShape(8.dp))
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(4.dp),
+            pathProperties = currentPathProperty,
+            drawMode = drawMode,
+            onUndo = {
+                if (paths.isNotEmpty()) {
+
+                    val lastItem = paths.last()
+                    val lastPath = lastItem.first
+                    val lastPathProperty = lastItem.second
+                    paths.remove(lastItem)
+
+                    pathsUndone.add(Pair(lastPath, lastPathProperty))
+
+                }
+            },
+            onRedo = {
+                if (pathsUndone.isEmpty()) {
+                    val lastPath = pathsUndone.last().first
+                    val lastPathProperty = pathsUndone.last().second
+                    pathsUndone.removeLast()
+                    paths.add(Pair(lastPath, lastPathProperty))
+                }
+            },
+            onPathPropertiesChange = {
+                motionEvent = MotionEvent.Idle
+            },
+            onDrawModeChanged = {
+                motionEvent = MotionEvent.Idle
+                drawMode = it
+                currentPathProperty.eraseMode = (drawMode == DrawMode.Erase)
+
+            }
+        )
     }
 }
