@@ -102,7 +102,7 @@ fun DrawingPropertiesMenu (
         }) {
             Icon(Icons.Filled.Undo, contentDescription = null, tint = Color.LightGray)
         }
-
+//Compose desktop not supported, doesnot work right now
 //        IconButton(onClick = {
 //            onRedo()
 //        }) {
