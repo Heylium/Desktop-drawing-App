@@ -187,6 +187,7 @@ fun DrawingApp() {
 
         }
 
+        //drawing app properties modified menu
         DrawingPropertiesMenu(
             modifier = Modifier
                 .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
