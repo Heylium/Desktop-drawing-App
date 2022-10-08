@@ -18,7 +18,7 @@ fun main() = application {
         title = "Compose Drawing App"
 
     ) {
-//        App()
-        MyCanvase()
+        App()
+//        MyCanvas()
     }
 }
