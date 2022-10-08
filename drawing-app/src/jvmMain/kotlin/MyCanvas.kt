@@ -13,8 +13,9 @@ fun MyCanvas() {
     Canvas(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White)
-    ) {
-
-    }
+            .background(color = Color.White),
+        onDraw = {
+            drawPath()
+        }
+    )
 }
