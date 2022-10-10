@@ -29,10 +29,10 @@ import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import components.dialogs.ColorSelectionDialog
 import model.PathProperties
 import ui.ColorWheel
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun DrawingPropertiesMenu (
     modifier: Modifier = Modifier,
@@ -43,6 +43,7 @@ fun DrawingPropertiesMenu (
     onPathPropertiesChange: (PathProperties) -> Unit,
     onDrawModeChanged: (DrawMode) -> Unit
 ) {
+    val properties by rememberUpdatedState(newValue = pathProperties)
     var showColorDialog by remember { mutableStateOf(false) }
     var showPropertiesDialog by remember { mutableStateOf(false) }
     var currentDrawMode = drawMode
@@ -102,13 +103,24 @@ fun DrawingPropertiesMenu (
         }) {
             Icon(Icons.Filled.Undo, contentDescription = null, tint = Color.LightGray)
         }
-//Compose desktop not supported, does not work right now
-//        IconButton(onClick = {
-//            onRedo()
-//        }) {
-//            Icon(Icons.Filled.Redo, contentDescription = null, tint = Color.LightGray)
-//        }
 
+        IconButton(onClick = {
+            onRedo()
+        }) {
+            Icon(Icons.Filled.Redo, contentDescription = null, tint = Color.LightGray)
+        }
+    }
+
+    if (showColorDialog) {
+        ColorSelectionDialog(
+            properties.color,
+            onDismiss = { showColorDialog = !showColorDialog},
+            onNegativeClick = { showColorDialog = !showColorDialog },
+            onPositiveClick = {color: Color ->
+                showColorDialog = !showColorDialog
+                properties.color = color
+            }
+        )
     }
 
 }
