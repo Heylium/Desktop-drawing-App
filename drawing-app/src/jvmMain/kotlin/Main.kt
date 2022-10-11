@@ -12,13 +12,22 @@ fun App() {
     }
 }
 
+@Composable
+@Preview
+fun MyApp() {
+    MaterialTheme {
+        MyCanvas()
+    }
+}
+
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         title = "Compose Drawing App"
 
     ) {
-        App()
-//        MyCanvas()
+//        App()
+        MyApp()
+
     }
 }
