@@ -112,15 +112,16 @@ fun DrawingPropertiesMenu (
     }
 
     if (showColorDialog) {
-        ColorSelectionDialog(
-            properties.color,
-            onDismiss = { showColorDialog = !showColorDialog},
-            onNegativeClick = { showColorDialog = !showColorDialog },
-            onPositiveClick = {color: Color ->
-                showColorDialog = !showColorDialog
-                properties.color = color
-            }
-        )
+        println("showColorDialog value: $showColorDialog")
+//        ColorSelectionDialog(
+//            properties.color,
+//            onDismiss = { showColorDialog = !showColorDialog},
+//            onNegativeClick = { showColorDialog = !showColorDialog },
+//            onPositiveClick = {color: Color ->
+//                showColorDialog = !showColorDialog
+//                properties.color = color
+//            }
+//        )
     }
 
 }
