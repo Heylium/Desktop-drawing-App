@@ -55,7 +55,8 @@ fun Modifier.dragMotionEvent(onTouchEvent: (MotionEvent, PointerInputChange) -> 
 suspend fun AwaitPointerEventScope.awaitDragMotionEvent (
     onDragStart: (PointerInputChange) -> Unit = {},
     onDrag: (PointerInputChange) -> Unit = {},
-    onDragEnd: (PointerInputChange) -> Unit = {}
+    onDragEnd: (PointerInputChange) -> Unit = {},
+    onClick: (PointerInputChange) -> Unit = {},
 ) {
     val down: PointerInputChange = awaitFirstDown()
     onDragStart(down)
@@ -88,12 +89,13 @@ suspend fun AwaitPointerEventScope.awaitDragMotionEvent (
 fun Modifier.dragMotionEvent (
     onDragStart: (PointerInputChange) -> Unit = {},
     onDrag: (PointerInputChange) -> Unit = {},
-    onDragEnd: (PointerInputChange) -> Unit = {}
+    onDragEnd: (PointerInputChange) -> Unit = {},
+    onClick: (PointerInputChange) -> Unit = {}
 ) = this.then(
     Modifier.pointerInput(Unit) {
         forEachGesture {
             awaitPointerEventScope {
-                awaitDragMotionEvent(onDragStart, onDrag, onDragEnd)
+                awaitDragMotionEvent(onDragStart, onDrag, onDragEnd, onClick)
             }
         }
     }
