@@ -16,7 +16,8 @@ fun App() {
 @Preview
 fun MyApp() {
     MaterialTheme {
-        MyCanvas()
+//        MyCanvas()
+
     }
 }
 
