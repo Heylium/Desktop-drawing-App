@@ -21,6 +21,8 @@ fun CustomCanvas(){
 
     var motionEvent by remember { mutableStateOf(false) }
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
+    var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
+    var currentPath by remember { mutableStateOf(Path()) }
     val paths = remember { mutableStateListOf<Path>() }
 
     Canvas(
@@ -33,6 +35,9 @@ fun CustomCanvas(){
                         awaitFirstDown().also {
                             motionEvent = true
                             currentPosition = it.position
+                            currentPath.lineTo(currentPosition.x + 10, currentPosition.y + 10)
+                            paths.add(currentPath)
+
                         }
                     }
                 }
