@@ -33,9 +33,12 @@ fun CustomCanvas(){
                 forEachGesture {
                     awaitPointerEventScope {
                         awaitFirstDown().also {
-                            motionEvent = true
                             currentPosition = it.position
-                            currentPath.lineTo(currentPosition.x + 10, currentPosition.y + 10)
+                            println("position: ${it.position}")
+                            previousPosition = currentPosition
+                            currentPath.moveTo(currentPosition.x, currentPosition.y)
+                            currentPath.lineTo(previousPosition.x + 20, previousPosition.y + 20)
+
                             paths.add(currentPath)
 
                         }
