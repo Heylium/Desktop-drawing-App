@@ -61,5 +61,8 @@ fun CustomCanvas(){
             }
         }
     }
+}
 
+fun getPointByAngle(length: Float, angle: Float, srartPoint: Pair<Float, Float>) {
+    return Pair<startPoint.first + length * cos(angle), startPoint.second + length * sin(angle)>
 }
