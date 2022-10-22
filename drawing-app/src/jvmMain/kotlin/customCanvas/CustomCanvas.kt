@@ -37,6 +37,7 @@ fun CustomCanvas(){
                             println("position: ${it.position}")
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
+                            val toPoint = getPointByAngle(20f, 30f, Pair(currentPosition.x, currentPosition.y))
                             currentPath.lineTo(previousPosition.x + 20, previousPosition.y + 20)
 
                             paths.add(currentPath)
