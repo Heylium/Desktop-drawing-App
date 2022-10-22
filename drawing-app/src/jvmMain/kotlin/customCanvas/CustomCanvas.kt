@@ -13,7 +13,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Path
-
+import kotlin.math.cos
+import kotlin.math.sin
 
 
 @Composable
@@ -24,6 +25,7 @@ fun CustomCanvas(){
     var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
     var currentPath by remember { mutableStateOf(Path()) }
     val paths = remember { mutableStateListOf<Path>() }
+    val randomAngle = listOf<Float>(45f, -45f)
 
     Canvas(
         modifier = Modifier
@@ -37,8 +39,9 @@ fun CustomCanvas(){
                             println("position: ${it.position}")
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
-                            val toPoint = getPointByAngle(20f, 30f, Pair(currentPosition.x, currentPosition.y))
-                            currentPath.lineTo(previousPosition.x + 20, previousPosition.y + 20)
+                            val angle = randomAngle.random()
+                            val toPoint = getPointByAngle(40f, angle, Pair(currentPosition.x, currentPosition.y))
+                            currentPath.lineTo(toPoint.first, toPoint.second)
 
                             paths.add(currentPath)
 
@@ -64,6 +67,6 @@ fun CustomCanvas(){
     }
 }
 
-fun getPointByAngle(length: Float, angle: Float, srartPoint: Pair<Float, Float>) {
-    return Pair<startPoint.first + length * cos(angle), startPoint.second + length * sin(angle)>
+fun getPointByAngle(length: Float, angle: Float, startPoint: Pair<Float, Float>): Pair<Float, Float> {
+    return Pair(startPoint.first + length * cos(angle), startPoint.second + length * sin(angle))
 }
