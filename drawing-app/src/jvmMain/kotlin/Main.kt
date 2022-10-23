@@ -3,7 +3,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import customCanvas.CustomCanvas
+import customCanvas.customCanvas
 @Composable
 @Preview
 fun App() {
@@ -23,7 +23,7 @@ fun MyApp() {
 
 @Composable
 fun ClickApp() {
-    CustomCanvas()
+    customCanvas()
 }
 
 fun main() = application {
