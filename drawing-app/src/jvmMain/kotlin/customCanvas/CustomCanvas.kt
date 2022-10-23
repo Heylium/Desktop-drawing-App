@@ -11,18 +11,22 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.graphics.Path
 import kotlin.math.cos
 import kotlin.math.sin
 
+data class PathProperties(val Angle: Float, val length: Float, val startPoint: Pair<Float, Float>)
 
 @Composable
 fun customCanvas(){
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
     var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
+//    var currentPath by remember { mutableStateOf(Path()) }
+//    val paths = remember { mutableStateListOf<Path>() }
+    val randomAngle = listOf(45f, -45f)
+
+    var paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
-    val paths = remember { mutableStateListOf<Path>() }
-    val randomAngle = listOf<Float>(45f, -45f)
+
 
     Canvas(
         modifier = Modifier
@@ -32,16 +36,22 @@ fun customCanvas(){
                 forEachGesture {
                     awaitPointerEventScope {
                         awaitFirstDown().also {
+//                            currentPosition = it.position
+//                            println("position: ${it.position}")
+//                            previousPosition = currentPosition
+//                            currentPath.moveTo(currentPosition.x, currentPosition.y)
+//                            val angle = randomAngle.random()
+//                            //get the end point of the path
+//                            val toPoint = getPointByAngle(40f, angle, Pair(currentPosition.x, currentPosition.y))
+//                            currentPath.lineTo(toPoint.first, toPoint.second)
+//                            paths.add(currentPath)
+
                             currentPosition = it.position
-                            println("position: ${it.position}")
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
                             val angle = randomAngle.random()
-                            //get the end point of the path
-                            val toPoint = getPointByAngle(40f, angle, Pair(currentPosition.x, currentPosition.y))
-                            currentPath.lineTo(toPoint.first, toPoint.second)
 
-                            paths.add(currentPath)
+                            paths.add(Pair(currentPath, PathProperties(angle, 30f, Pair(currentPosition.x, currentPosition.y))))
 
                         }
                     }
@@ -50,16 +60,28 @@ fun customCanvas(){
     ){
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
-            paths.forEach { it: Path ->
-                drawPath(
+//            paths.forEach { it: Path ->
+//                drawPath(
+//                    color = Color.Black,
+//                    path = it,
+//                    style = Stroke(
+//                        width = 4f,
+//                        cap = StrokeCap.Round,
+//                        join = StrokeJoin.Round,
+//                    )
+//                )
+//            }
+
+            paths.forEach { it: Pair<Path, PathProperties> ->
+                rotate(it.second.Angle, it.second.startPoint.first, it.second.startPoint.second )
+                drawLine(
                     color = Color.Black,
-                    path = it,
-                    style = Stroke(
-                        width = 4f,
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round,
-                    )
+                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
+                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
+                    cap = StrokeCap.Round
                 )
+                rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
+
             }
         }
     }
