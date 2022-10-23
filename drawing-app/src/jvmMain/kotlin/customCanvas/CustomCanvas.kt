@@ -1,7 +1,6 @@
 package customCanvas
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
@@ -18,9 +17,7 @@ import kotlin.math.sin
 
 
 @Composable
-fun CustomCanvas(){
-
-    var motionEvent by remember { mutableStateOf(false) }
+fun customCanvas(){
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
     var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
     var currentPath by remember { mutableStateOf(Path()) }
@@ -40,6 +37,7 @@ fun CustomCanvas(){
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
                             val angle = randomAngle.random()
+                            //get the end point of the path
                             val toPoint = getPointByAngle(40f, angle, Pair(currentPosition.x, currentPosition.y))
                             currentPath.lineTo(toPoint.first, toPoint.second)
 
@@ -67,6 +65,7 @@ fun CustomCanvas(){
     }
 }
 
+//calculate the end point x and y coordinate by cos() and sin()
 fun getPointByAngle(length: Float, angle: Float, startPoint: Pair<Float, Float>): Pair<Float, Float> {
     return Pair(startPoint.first + length * cos(angle), startPoint.second + length * sin(angle))
 }
