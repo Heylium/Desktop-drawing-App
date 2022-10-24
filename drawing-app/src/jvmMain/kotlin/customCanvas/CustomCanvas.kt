@@ -6,16 +6,20 @@ import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.cos
 import kotlin.math.sin
 
 data class PathProperties(val Angle: Float, val length: Float, val startPoint: Pair<Float, Float>)
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun customCanvas(){
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
@@ -26,6 +30,7 @@ fun customCanvas(){
 
     var paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
+    var show by remember { mutableStateOf(false) }
 
 
     Canvas(
@@ -57,6 +62,10 @@ fun customCanvas(){
                     }
                 }
             }
+            .onPointerEvent(PointerEventType.Move) {
+                val position = it.changes.first().position
+                show = (position.x in 90f..110f)  && position.y in 90f..110f
+            }
     ){
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
@@ -83,6 +92,12 @@ fun customCanvas(){
                 rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
 
             }
+
+//            drawCircle(
+//                color = if (show) Color.Green else Color.White,
+//                center= Offset(100f, 100f),
+//                radius = 10f,
+//            )
         }
     }
 }
@@ -91,3 +106,4 @@ fun customCanvas(){
 fun getPointByAngle(length: Float, angle: Float, startPoint: Pair<Float, Float>): Pair<Float, Float> {
     return Pair(startPoint.first + length * cos(angle), startPoint.second + length * sin(angle))
 }
+
