@@ -93,11 +93,11 @@ fun customCanvas(){
 
             }
 
-//            drawCircle(
-//                color = if (show) Color.Green else Color.White,
-//                center= Offset(100f, 100f),
-//                radius = 10f,
-//            )
+            drawCircle(
+                color = if (show) Color.Green else Color.White,
+                center= Offset(100f, 100f),
+                radius = 10f,
+            )
         }
     }
 }
