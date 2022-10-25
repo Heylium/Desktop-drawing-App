@@ -89,6 +89,13 @@ fun customCanvas(){
                     end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
                     cap = StrokeCap.Round
                 )
+                drawLine(
+                    color = Color.White,
+                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
+                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
+                    strokeWidth = 10f,
+                    cap = StrokeCap.Square
+                )
                 rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
 
             }
