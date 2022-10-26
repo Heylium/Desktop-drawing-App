@@ -61,7 +61,6 @@ fun customCanvas(){
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
 
-
             paths.forEach { it: Pair<Path, PathProperties> ->
                 rotate(it.second.Angle, it.second.startPoint.first, it.second.startPoint.second )
                 drawLine(
@@ -79,7 +78,6 @@ fun customCanvas(){
                     cap = StrokeCap.Round
                 )
                 rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
-
             }
 
             drawCircle(
