@@ -41,15 +41,6 @@ fun customCanvas(){
                 forEachGesture {
                     awaitPointerEventScope {
                         awaitFirstDown().also {
-//                            currentPosition = it.position
-//                            println("position: ${it.position}")
-//                            previousPosition = currentPosition
-//                            currentPath.moveTo(currentPosition.x, currentPosition.y)
-//                            val angle = randomAngle.random()
-//                            //get the end point of the path
-//                            val toPoint = getPointByAngle(40f, angle, Pair(currentPosition.x, currentPosition.y))
-//                            currentPath.lineTo(toPoint.first, toPoint.second)
-//                            paths.add(currentPath)
 
                             currentPosition = it.position
                             previousPosition = currentPosition
@@ -69,32 +60,23 @@ fun customCanvas(){
     ){
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
-//            paths.forEach { it: Path ->
-//                drawPath(
-//                    color = Color.Black,
-//                    path = it,
-//                    style = Stroke(
-//                        width = 4f,
-//                        cap = StrokeCap.Round,
-//                        join = StrokeJoin.Round,
-//                    )
-//                )
-//            }
+
 
             paths.forEach { it: Pair<Path, PathProperties> ->
                 rotate(it.second.Angle, it.second.startPoint.first, it.second.startPoint.second )
-                drawLine(
-                    color = Color.Black,
-                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
-                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
-                    cap = StrokeCap.Round
-                )
                 drawLine(
                     color = Color.White,
                     start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
                     end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
                     strokeWidth = 10f,
                     cap = StrokeCap.Square
+                )
+
+                drawLine(
+                    color = Color.Black,
+                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
+                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
+                    cap = StrokeCap.Round
                 )
                 rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
 
