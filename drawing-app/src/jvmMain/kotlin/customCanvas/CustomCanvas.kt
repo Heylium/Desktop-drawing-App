@@ -17,7 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.cos
 import kotlin.math.sin
 
-data class PathProperties(val Angle: Float, val length: Float, val startPoint: Pair<Float, Float>)
+data class PathProperties(val Angle: Float, val length: Float, val startPoint: Pair<Float, Float>, val endPoint: Pair<Float, Float>)
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -31,6 +31,7 @@ fun customCanvas(){
     var paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
     var show by remember { mutableStateOf(false) }
+    val lineLength = 30f
 
 
     Canvas(
@@ -47,8 +48,10 @@ fun customCanvas(){
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
                             val angle = randomAngle.random()
 
-                            paths.add(Pair(currentPath, PathProperties(angle, 30f, Pair(currentPosition.x, currentPosition.y))))
+                            val startPoint = Pair(currentPosition.x, currentPosition.y)
+                            val endPoint = getPointByAngle(lineLength, angle, startPoint)
 
+                            paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
                         }
                     }
                 }
@@ -62,7 +65,7 @@ fun customCanvas(){
             val checkPoint = saveLayer(null, null)
 
             paths.forEach { it: Pair<Path, PathProperties> ->
-                rotate(it.second.Angle, it.second.startPoint.first, it.second.startPoint.second )
+
                 drawLine(
                     color = Color.White,
                     start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
@@ -77,14 +80,9 @@ fun customCanvas(){
                     end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
                     cap = StrokeCap.Round
                 )
-                rotate(-it.second.Angle, it.second.startPoint.first, it.second.startPoint.second)
-            }
 
-            drawCircle(
-                color = if (show) Color.Green else Color.White,
-                center= Offset(100f, 100f),
-                radius = 10f,
-            )
+            }
+            
         }
     }
 }
