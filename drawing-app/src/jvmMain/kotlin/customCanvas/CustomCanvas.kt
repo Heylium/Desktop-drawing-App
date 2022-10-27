@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -29,7 +30,7 @@ fun customCanvas(){
 //    val paths = remember { mutableStateListOf<Path>() }
     val randomAngle = listOf(45f, -45f)
 
-    var paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
+    val paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
     var show by remember { mutableStateOf(false) }
     val lineLength = 30f
@@ -86,7 +87,7 @@ fun customCanvas(){
                 drawCircle(
                     color = Color.Cyan,
                     radius = 8f,
-                    center = Offset(it.second.endPoint.first, it.second.endPoint.second)
+                    center = Offset(it.second.endPoint.first, it.second.endPoint.second),
                 )
 
             }
