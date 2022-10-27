@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -50,7 +51,7 @@ fun customCanvas(){
 
                             val startPoint = Pair(currentPosition.x, currentPosition.y)
                             val endPoint = getPointByAngle(lineLength, angle, startPoint)
-
+                            currentPath.lineTo(endPoint.first, endPoint.second)
                             paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
                         }
                     }
@@ -66,23 +67,29 @@ fun customCanvas(){
 
             paths.forEach { it: Pair<Path, PathProperties> ->
 
-                drawLine(
-                    color = Color.White,
-                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
-                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
-                    strokeWidth = 10f,
-                    cap = StrokeCap.Square
+                drawPath(
+                    color = Color.Black,
+                    path = it.first,
+                    style = Stroke(
+                        width = 3f,
+                        cap = StrokeCap.Round,
+                        join = StrokeJoin.Round,
+                    )
+
                 )
 
-                drawLine(
-                    color = Color.Black,
-                    start = Offset(it.second.startPoint.first, it.second.startPoint.second ),
-                    end = Offset(it.second.startPoint.first + it.second.length, it.second.startPoint.second),
-                    cap = StrokeCap.Round
+                drawCircle(
+                    color = Color.Cyan,
+                    radius = 8f,
+                    center = Offset(it.second.startPoint.first, it.second.startPoint.second),
+                )
+                drawCircle(
+                    color = Color.Cyan,
+                    radius = 8f,
+                    center = Offset(it.second.endPoint.first, it.second.endPoint.second)
                 )
 
             }
-            
         }
     }
 }
@@ -91,4 +98,5 @@ fun customCanvas(){
 fun getPointByAngle(length: Float, angle: Float, startPoint: Pair<Float, Float>): Pair<Float, Float> {
     return Pair(startPoint.first + length * cos(angle), startPoint.second + length * sin(angle))
 }
+
 
