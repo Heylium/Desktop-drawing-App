@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -36,7 +35,7 @@ fun customCanvas(){
     val lineLength = 30f
 
     var cPaths = remember { mutableStateListOf<Rect>() }
-    var colorPath = remember { mutableStateListOf<Color>() }
+    var dotList = remember { mutableStateListOf<Color>() }
 
 
     Canvas(
@@ -65,20 +64,19 @@ fun customCanvas(){
                                 bottom = currentPosition.y + 4,
 
                             ))
-                            colorPath.add(Color.Cyan)
+                            dotList.add(Color.Cyan)
                         }
                     }
                 }
             }
             .onPointerEvent(PointerEventType.Move) {
                 val position = it.changes.first().position
-//                show = (position.x in 90f..110f)  && position.y in 90f..110f
                 for ((idx, rect) in cPaths.withIndex()) {
                     if (rect.contains(position)) {
-                        colorPath[idx] = Color.Black
+                        dotList[idx] = Color.Black
                         break
                     } else {
-                        colorPath[idx] = Color.Cyan
+                        dotList[idx] = Color.Cyan
                     }
                 }
 
@@ -98,16 +96,15 @@ fun customCanvas(){
                         cap = StrokeCap.Round,
                         join = StrokeJoin.Round,
                     )
-
                 )
 
                 drawCircle(
-                    color = colorPath[idx],
+                    color = dotList[idx],
                     radius = 8f,
                     center = Offset(it.second.startPoint.first, it.second.startPoint.second),
                 )
                 drawCircle(
-                    color = colorPath[idx],
+                    color = dotList[idx],
                     radius = 8f,
                     center = Offset(it.second.endPoint.first, it.second.endPoint.second),
                 )
