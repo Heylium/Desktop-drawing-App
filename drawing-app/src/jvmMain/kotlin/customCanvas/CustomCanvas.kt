@@ -35,6 +35,9 @@ fun customCanvas(){
     var show by remember { mutableStateOf(false) }
     val lineLength = 30f
 
+    var cPaths = remember { mutableStateListOf<Rect>() }
+    var colorPath = remember { mutableStateListOf<Color>() }
+
 
     Canvas(
         modifier = Modifier
@@ -54,19 +57,38 @@ fun customCanvas(){
                             val endPoint = getPointByAngle(lineLength, angle, startPoint)
                             currentPath.lineTo(endPoint.first, endPoint.second)
                             paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
+
+                            cPaths.add(Rect(
+                                left = currentPosition.x - 4,
+                                right = currentPosition.x + 4,
+                                top = currentPosition.y - 4,
+                                bottom = currentPosition.y + 4,
+
+                            ))
+                            colorPath.add(Color.Cyan)
                         }
                     }
                 }
             }
             .onPointerEvent(PointerEventType.Move) {
                 val position = it.changes.first().position
-                show = (position.x in 90f..110f)  && position.y in 90f..110f
+//                show = (position.x in 90f..110f)  && position.y in 90f..110f
+                for ((idx, rect) in cPaths.withIndex()) {
+                    if (rect.contains(position)) {
+                        colorPath[idx] = Color.Black
+                        break
+                    } else {
+                        colorPath[idx] = Color.Cyan
+                    }
+                }
+
             }
+
     ){
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
 
-            paths.forEach { it: Pair<Path, PathProperties> ->
+            paths.forEachIndexed() { idx,it: Pair<Path, PathProperties> ->
 
                 drawPath(
                     color = Color.Black,
@@ -80,12 +102,12 @@ fun customCanvas(){
                 )
 
                 drawCircle(
-                    color = Color.Cyan,
+                    color = colorPath[idx],
                     radius = 8f,
                     center = Offset(it.second.startPoint.first, it.second.startPoint.second),
                 )
                 drawCircle(
-                    color = Color.Cyan,
+                    color = colorPath[idx],
                     radius = 8f,
                     center = Offset(it.second.endPoint.first, it.second.endPoint.second),
                 )
