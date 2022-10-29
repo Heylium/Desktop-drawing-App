@@ -18,6 +18,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.cos
 import kotlin.math.sin
 
+data class Point(val x: Float, val y: Float)
+
 data class PathProperties(
     val Angle: Float,
     val length: Float,
