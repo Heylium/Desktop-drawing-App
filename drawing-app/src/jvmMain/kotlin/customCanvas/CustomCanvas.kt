@@ -23,8 +23,8 @@ data class Point(val x: Float, val y: Float)
 data class PathProperties(
     val Angle: Float,
     val length: Float,
-    val startPoint: Pair<Float, Float>,
-    val endPoint: Pair<Float, Float>
+    val startPoint: Point,
+    val endPoint: Point
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -57,26 +57,26 @@ fun customCanvas() {
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
                             val angle = randomAngle.random()
 
-                            val startPoint = Pair(currentPosition.x, currentPosition.y)
+                            val startPoint = Point(currentPosition.x, currentPosition.y)
                             val endPoint = getPointByAngle(lineLength, angle, startPoint)
-                            currentPath.lineTo(endPoint.first, endPoint.second)
+                            currentPath.lineTo(endPoint.x, endPoint.y)
                             paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
 
                             cPaths.add(
                                 Rect(
-                                    left = startPoint.first - 4,
-                                    right = startPoint.first + 4,
-                                    top = startPoint.second - 4,
-                                    bottom = startPoint.second + 4,
+                                    left = startPoint.x - 4,
+                                    right = startPoint.x + 4,
+                                    top = startPoint.y - 4,
+                                    bottom = startPoint.y + 4,
                                 )
                             )
                             dotList.add(Color.Cyan)
                             cPaths.add(
                                 Rect(
-                                    left = endPoint.first - 4,
-                                    right = endPoint.first + 4,
-                                    top = endPoint.second - 4,
-                                    bottom = endPoint.second + 4,
+                                    left = endPoint.x - 4,
+                                    right = endPoint.x + 4,
+                                    top = endPoint.y - 4,
+                                    bottom = endPoint.y + 4,
                                 )
                             )
                             dotList.add(Color.Cyan)
@@ -98,7 +98,6 @@ fun customCanvas() {
 
     ) {
         with(drawContext.canvas.nativeCanvas) {
-            val checkPoint = saveLayer(null, null)
 
             paths.forEachIndexed() { idx, it: Pair<Path, PathProperties> ->
 
@@ -106,12 +105,12 @@ fun customCanvas() {
                 drawCircle(
                     color = dotList[idx],
                     radius = 8f,
-                    center = Offset(it.second.startPoint.first, it.second.startPoint.second),
+                    center = Offset(it.second.startPoint.x, it.second.startPoint.x),
                 )
                 drawCircle(
                     color = dotList[idx],
                     radius = 8f,
-                    center = Offset(it.second.endPoint.first, it.second.endPoint.second),
+                    center = Offset(it.second.endPoint.x, it.second.endPoint.y),
                 )
                 drawPath(
                     color = Color.Black,
@@ -129,8 +128,8 @@ fun customCanvas() {
 }
 
 //calculate the end point x and y coordinate by cos() and sin()
-fun getPointByAngle(length: Float, angle: Float, startPoint: Pair<Float, Float>): Pair<Float, Float> {
-    return Pair(startPoint.first + length * cos(angle), startPoint.second + length * sin(angle))
+fun getPointByAngle(length: Float, angle: Float, startPoint: Point): Point {
+    return Point(startPoint.x + length * cos(angle), startPoint.y + length * sin(angle))
 }
 
 
