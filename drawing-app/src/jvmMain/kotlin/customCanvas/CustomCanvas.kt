@@ -18,20 +18,23 @@ import androidx.compose.ui.input.pointer.pointerInput
 import kotlin.math.cos
 import kotlin.math.sin
 
-data class PathProperties(val Angle: Float, val length: Float, val startPoint: Pair<Float, Float>, val endPoint: Pair<Float, Float>)
+data class PathProperties(
+    val Angle: Float,
+    val length: Float,
+    val startPoint: Pair<Float, Float>,
+    val endPoint: Pair<Float, Float>
+)
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun customCanvas(){
+fun customCanvas() {
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
     var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
-//    var currentPath by remember { mutableStateOf(Path()) }
-//    val paths = remember { mutableStateListOf<Path>() }
     val randomAngle = listOf(45f, -45f)
 
     val paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
-    var show by remember { mutableStateOf(false) }
+
     val lineLength = 30f
 
     var cPaths = remember { mutableStateListOf<Rect>() }
@@ -57,13 +60,23 @@ fun customCanvas(){
                             currentPath.lineTo(endPoint.first, endPoint.second)
                             paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
 
-                            cPaths.add(Rect(
-                                left = currentPosition.x - 4,
-                                right = currentPosition.x + 4,
-                                top = currentPosition.y - 4,
-                                bottom = currentPosition.y + 4,
-
-                            ))
+                            cPaths.add(
+                                Rect(
+                                    left = startPoint.first - 4,
+                                    right = startPoint.first + 4,
+                                    top = startPoint.second - 4,
+                                    bottom = startPoint.second + 4,
+                                )
+                            )
+                            dotList.add(Color.Cyan)
+                            cPaths.add(
+                                Rect(
+                                    left = endPoint.first - 4,
+                                    right = endPoint.first + 4,
+                                    top = endPoint.second - 4,
+                                    bottom = endPoint.second + 4,
+                                )
+                            )
                             dotList.add(Color.Cyan)
                         }
                     }
@@ -79,24 +92,14 @@ fun customCanvas(){
                         dotList[idx] = Color.Cyan
                     }
                 }
-
             }
 
-    ){
+    ) {
         with(drawContext.canvas.nativeCanvas) {
             val checkPoint = saveLayer(null, null)
 
-            paths.forEachIndexed() { idx,it: Pair<Path, PathProperties> ->
+            paths.forEachIndexed() { idx, it: Pair<Path, PathProperties> ->
 
-                drawPath(
-                    color = Color.Black,
-                    path = it.first,
-                    style = Stroke(
-                        width = 3f,
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round,
-                    )
-                )
 
                 drawCircle(
                     color = dotList[idx],
@@ -107,6 +110,15 @@ fun customCanvas(){
                     color = dotList[idx],
                     radius = 8f,
                     center = Offset(it.second.endPoint.first, it.second.endPoint.second),
+                )
+                drawPath(
+                    color = Color.Black,
+                    path = it.first,
+                    style = Stroke(
+                        width = 3f,
+                        cap = StrokeCap.Round,
+                        join = StrokeJoin.Round,
+                    )
                 )
 
             }
