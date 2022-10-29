@@ -105,7 +105,7 @@ fun customCanvas() {
                 drawCircle(
                     color = dotList[idx],
                     radius = 8f,
-                    center = Offset(it.second.startPoint.x, it.second.startPoint.x),
+                    center = Offset(it.second.startPoint.x, it.second.startPoint.y),
                 )
                 drawCircle(
                     color = dotList[idx],
@@ -129,7 +129,7 @@ fun customCanvas() {
 
 //calculate the end point x and y coordinate by cos() and sin()
 fun getPointByAngle(length: Float, angle: Float, startPoint: Point): Point {
-    return Point(startPoint.x + length * cos(angle), startPoint.y + length * sin(angle))
+    return Point(startPoint.x + length * cos(angle), startPoint.y - length * sin(angle))
 }
 
 
