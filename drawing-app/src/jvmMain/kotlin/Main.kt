@@ -4,22 +4,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import customCanvas.customCanvas
-@Composable
-@Preview
-fun App() {
-    MaterialTheme {
-        DrawingApp()
-    }
-}
-
-@Composable
-@Preview
-fun MyApp() {
-    MaterialTheme {
-        MyCanvas()
-
-    }
-}
+//@Composable
+//@Preview
+//fun App() {
+//    MaterialTheme {
+//        DrawingApp()
+//    }
+//}
+//
+//@Composable
+//@Preview
+//fun MyApp() {
+//    MaterialTheme {
+//        MyCanvas()
+//
+//    }
+//}
 
 @Composable
 fun ClickApp() {
@@ -32,8 +32,6 @@ fun main() = application {
         title = "Compose Drawing App"
 
     ) {
-//        App()
-//        MyApp()
         ClickApp()
     }
 }
