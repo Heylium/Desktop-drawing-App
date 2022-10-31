@@ -32,7 +32,7 @@ data class PathProperties(
 fun customCanvas() {
     var currentPosition by remember { mutableStateOf(Offset.Unspecified) }
     var previousPosition by remember { mutableStateOf(Offset.Unspecified) }
-    val randomAngle = listOf(45f, -45f)
+    var angle by remember { mutableStateOf(-150f) }
 
     val paths = remember { mutableStateListOf<Pair<Path, PathProperties>>() }
     var currentPath by remember { mutableStateOf(Path()) }
@@ -55,12 +55,12 @@ fun customCanvas() {
                             currentPosition = it.position
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
-                            val angle = randomAngle.random()
+                            angle *= -1
 
                             val startPoint = Point(currentPosition.x, currentPosition.y)
                             val endPoint = getPointByAngle(lineLength, angle, startPoint)
                             currentPath.lineTo(endPoint.x, endPoint.y)
-                            paths.add(Pair(currentPath, PathProperties(angle, 30f, startPoint, endPoint)))
+                            paths.add(Pair(currentPath, PathProperties(angle, lineLength, startPoint, endPoint)))
 
                             cPaths.add(
                                 Rect(
@@ -79,7 +79,7 @@ fun customCanvas() {
                                     bottom = endPoint.y + 4,
                                 )
                             )
-                            dotList.add(Color.Cyan)
+                            dotList.add(Color.Gray)
                         }
                     }
                 }
@@ -91,7 +91,7 @@ fun customCanvas() {
                         dotList[idx] = Color.Black
                         break
                     } else {
-                        dotList[idx] = Color.Cyan
+                        dotList[idx] = Color.Gray
                     }
                 }
             }
