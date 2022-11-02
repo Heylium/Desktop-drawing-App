@@ -53,6 +53,13 @@ fun customCanvas() {
                         awaitFirstDown().also {
 
                             currentPosition = it.position
+                            cPaths.forEachIndexed { index, rect ->
+                                if (rect.contains(currentPosition)) {
+                                    dotList[index] = Color.Black
+
+                                }
+                            }
+
                             previousPosition = currentPosition
                             currentPath.moveTo(currentPosition.x, currentPosition.y)
                             angle *= -1
