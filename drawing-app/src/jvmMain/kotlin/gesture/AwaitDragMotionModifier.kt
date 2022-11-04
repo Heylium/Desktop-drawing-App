@@ -56,7 +56,6 @@ suspend fun AwaitPointerEventScope.awaitDragMotionEvent (
     onDragStart: (PointerInputChange) -> Unit = {},
     onDrag: (PointerInputChange) -> Unit = {},
     onDragEnd: (PointerInputChange) -> Unit = {},
-    onClick: (PointerInputChange) -> Unit = {},
 ) {
     val down: PointerInputChange = awaitFirstDown()
     onDragStart(down)
