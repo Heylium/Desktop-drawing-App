@@ -94,7 +94,7 @@ fun Modifier.dragMotionEvent (
     Modifier.pointerInput(Unit) {
         forEachGesture {
             awaitPointerEventScope {
-                awaitDragMotionEvent(onDragStart, onDrag, onDragEnd, onClick)
+                awaitDragMotionEvent(onDragStart, onDrag, onDragEnd)
             }
         }
     }
