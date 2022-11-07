@@ -9,12 +9,12 @@ import androidx.compose.ui.input.pointer.*
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun Modifier.clickMotionEvent(
+    onPointerMove: (PointerEventType) -> Unit = {},
 
 ) = this.then(
     Modifier.pointerInput(Unit) {
         forEachGesture {
             awaitPointerEventScope {
-//                awaitFirstDown ()
                 onPointerEvent(PointerEventType.Move) {pointerEvent: PointerEvent ->
                     val position = pointerEvent.changes.first().position
                 }
