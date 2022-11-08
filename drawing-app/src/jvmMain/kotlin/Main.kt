@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import customCanvas.customCanvas
+import customClick.clickCanvas
 //@Composable
 //@Preview
 //fun App() {
@@ -23,7 +24,8 @@ import customCanvas.customCanvas
 
 @Composable
 fun ClickApp() {
-    customCanvas()
+//    customCanvas()
+    clickCanvas()
 }
 
 fun main() = application {
