@@ -104,7 +104,7 @@ fun customCanvas() {
             }
 
     ) {
-        with(drawContext.canvas.nativeCanvas) {
+//        with(drawContext.canvas.nativeCanvas) {
 
             paths.forEachIndexed() { idx, it: Pair<Path, PathProperties> ->
 
@@ -130,7 +130,7 @@ fun customCanvas() {
                 )
 
             }
-        }
+//        }
     }
 }
 
