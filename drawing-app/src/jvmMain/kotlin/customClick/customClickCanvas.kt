@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.input.pointer.pointerInput
@@ -23,19 +25,25 @@ data class PathProperties(
 @Composable
 fun clickCanvas() {
     var pointList = remember { mutableStateListOf<Point>() }
+    var paths = remember { mutableStateListOf<Path>() }
 
 
     Canvas(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Gray)
-            .onPointerEvent(PointerEventType.Move) {
-                val position = it.changes.first().position
+            .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
+                val position = movePointerEvent.changes.first().position
 //                color = Color(position.x.toInt() % 256, position.y.toInt() %256, 0)
             }
-            .onPointerEvent(PointerEventType.Press) {
-                val presPosit = it.changes.first().position
-                println("pressed: $presPosit")
+            .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
+                val presPosit = pressPointerEvent.changes.first().position
+                if (pointList.isEmpty()) {
+                    return@onPointerEvent
+                }
+                val prevPosition = pointList.last()
+
+                pointList.add(Point(presPosit.x, presPosit.y))
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
