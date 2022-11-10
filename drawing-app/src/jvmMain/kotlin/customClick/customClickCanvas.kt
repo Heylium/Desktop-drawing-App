@@ -27,7 +27,8 @@ data class PathProperties(
 fun clickCanvas() {
     val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
-    var path by remember { mutableStateOf(Path()) }
+    val path by remember { mutableStateOf(Path()) }
+
 
 
     Canvas(
@@ -40,7 +41,8 @@ fun clickCanvas() {
             }
             .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
                 val currPosition = pressPointerEvent.changes.first().position
-                println("pressed as :$currPosition")
+//                println("pressed as :$currPosition")
+
 
 
                 if (pointList.isEmpty()) {
