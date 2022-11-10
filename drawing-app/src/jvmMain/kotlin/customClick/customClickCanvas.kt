@@ -8,8 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
@@ -24,8 +25,9 @@ data class PathProperties(
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun clickCanvas() {
-    var pointList = remember { mutableStateListOf<Point>() }
-    var paths = remember { mutableStateListOf<Path>() }
+    val pointList = remember { mutableStateListOf<Point>() }
+    val pathList = remember { mutableStateListOf<Path>() }
+    var path by remember { mutableStateOf(Path()) }
 
 
     Canvas(
@@ -37,13 +39,20 @@ fun clickCanvas() {
 //                color = Color(position.x.toInt() % 256, position.y.toInt() %256, 0)
             }
             .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
-                val presPosit = pressPointerEvent.changes.first().position
-                if (pointList.isEmpty()) {
-                    return@onPointerEvent
-                }
-                val prevPosition = pointList.last()
+                val currPosition = pressPointerEvent.changes.first().position
+                println("pressed as :$currPosition")
 
-                pointList.add(Point(presPosit.x, presPosit.y))
+
+                if (pointList.isEmpty()) {
+                    pointList.add(Point(currPosition.x, currPosition.y))
+                } else {
+                    val prevPosition = pointList.last()
+                    pointList.add(Point(currPosition.x, currPosition.y))
+                    path.moveTo(prevPosition.x, prevPosition.y)
+                    path.lineTo(currPosition.x, currPosition.y)
+                    pathList.add(path)
+                }
+
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
@@ -52,10 +61,27 @@ fun clickCanvas() {
             }
     ) {
 
+        pathList.forEach { path: Path ->
+            drawPath(
+                path = path,
+                color = Color.Black,
+                style = Stroke(
+                    width = 3f,
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round,
+                )
+            )
+        }
+        pointList.forEach { point: Point ->
+            drawCircle(
+                color = Color.Black,
+                radius = 6f,
+                center = Offset(point.x, point.y)
+            )
+        }
+
 
 
     }
-
-
 
 }
