@@ -41,7 +41,6 @@ fun clickCanvas() {
             }
             .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
                 val currPosition = pressPointerEvent.changes.first().position
-//                println("pressed as :$currPosition")
 
 
 
