@@ -53,25 +53,14 @@ fun clickCanvas() {
             }
             .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-//                for (idx in rectList.indices.reversed()) {
-//                    if (rectList[idx].contains(position)) {
-////                        pointList[idx].color = Color.Red
-//                        colorList[idx] = Color.Red
-//                        return@onPointerEvent
-//                    } else {
-////                        pointList[idx].color = Color.Black
-//                        colorList[idx] = Color.Black
-//                    }
-//                }
-                val rectListLength = rectList.size
-                rectList.forEachIndexed { idx, rect ->
-                        if (rect.contains(position)) {
-                            colorList[idx] = Color.Red
-                            return@forEachIndexed
-                        } else {
-                            colorList[rectListLength - idx - 1] = Color.Black
-                        }
+                for (idx in rectList.indices.reversed()) {
+                    if (rectList[idx].contains(position)) {
+                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+                        return@onPointerEvent
+                    } else {
+                        pointList[idx] = pointList[idx].copy(color = Color.Black)
                     }
+                }
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
@@ -93,7 +82,7 @@ fun clickCanvas() {
         }
         pointList.forEachIndexed() { idx, point: Point ->
             drawCircle(
-                color = colorList[idx],
+                color = point.color,
                 radius = 6f,
                 center = Offset(point.x, point.y),
             )
