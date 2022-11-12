@@ -53,17 +53,24 @@ fun clickCanvas() {
             }
             .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-                for (idx in rectList.indices.reversed()) {
-                    if (rectList[idx].contains(position)) {
-//                        pointList[idx].color = Color.Red
-                        colorList[idx] = Color.Red
-                        return@onPointerEvent
-                    } else {
-//                        pointList[idx].color = Color.Black
-                        colorList[idx] = Color.Black
+//                for (idx in rectList.indices.reversed()) {
+//                    if (rectList[idx].contains(position)) {
+////                        pointList[idx].color = Color.Red
+//                        colorList[idx] = Color.Red
+//                        return@onPointerEvent
+//                    } else {
+////                        pointList[idx].color = Color.Black
+//                        colorList[idx] = Color.Black
+//                    }
+//                }
+                rectList.reversed().forEachIndexed { idx, rect ->
+                        if (rect.contains(position)) {
+                            colorList[idx] = Color.Red
+                            return@forEachIndexed
+                        } else {
+                            colorList[idx] = Color.Black
+                        }
                     }
-                }
-                rectList
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
