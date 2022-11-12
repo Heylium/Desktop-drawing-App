@@ -63,12 +63,13 @@ fun clickCanvas() {
 //                        colorList[idx] = Color.Black
 //                    }
 //                }
-                rectList.reversed().forEachIndexed { idx, rect ->
+                val rectListLength = rectList.size
+                rectList.forEachIndexed { idx, rect ->
                         if (rect.contains(position)) {
                             colorList[idx] = Color.Red
                             return@forEachIndexed
                         } else {
-                            colorList[idx] = Color.Black
+                            colorList[rectListLength - idx - 1] = Color.Black
                         }
                     }
             }
