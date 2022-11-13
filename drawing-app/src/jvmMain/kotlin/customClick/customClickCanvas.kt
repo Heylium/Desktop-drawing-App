@@ -31,6 +31,8 @@ fun clickCanvas() {
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
     val path by remember { mutableStateOf(Path()) }
+    var draging by remember { mutableStateOf(false) }
+    var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
 
 
     Canvas(
@@ -64,7 +66,9 @@ fun clickCanvas() {
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
-                    println("drag change: ${change.position}")
+                    draging = true
+//                    println("drag change: ${change.position}")
+                    mousePosition = change.position
                 }
             }
     ) {
@@ -85,6 +89,14 @@ fun clickCanvas() {
                 color = point.color,
                 radius = 6f,
                 center = Offset(point.x, point.y),
+            )
+        }
+
+        if (draging) {
+            drawCircle(
+                color = Color.Green,
+                radius = 6f,
+                center = mousePosition
             )
         }
 
