@@ -3,6 +3,7 @@ package customClick
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
@@ -31,8 +32,9 @@ fun clickCanvas() {
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
     val path by remember { mutableStateOf(Path()) }
-    var draging by remember { mutableStateOf(false) }
+    var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
+    var mousePath by remember { mutableStateOf(Path()) }
 
 
     Canvas(
@@ -66,11 +68,20 @@ fun clickCanvas() {
             }
             .pointerInput(Unit) {
                 detectDragGestures { change, dragAmount ->
-                    draging = true
+                    dragging = true
 //                    println("drag change: ${change.position}")
                     mousePosition = change.position
+                    if (pointList.isNotEmpty()) {
+                        val lastPoint = pointList.last()
+                        mousePath.moveTo(lastPoint.x, lastPoint.y)
+                    }
                 }
             }
+            .combinedClickable(
+                onClick = {
+
+                }
+            )
     ) {
 
         pathList.forEach { path: Path ->
@@ -92,12 +103,22 @@ fun clickCanvas() {
             )
         }
 
-        if (draging) {
+        if (dragging) {
             drawCircle(
                 color = Color.Green,
                 radius = 6f,
                 center = mousePosition
             )
+            drawPath(
+                path = mousePath,
+                color = Color.Black,
+                style = Stroke(
+                    width = 3f,
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round,
+                )
+            )
+
         }
 
 
