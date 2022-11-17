@@ -89,7 +89,6 @@ fun Modifier.dragMotionEvent (
     onDragStart: (PointerInputChange) -> Unit = {},
     onDrag: (PointerInputChange) -> Unit = {},
     onDragEnd: (PointerInputChange) -> Unit = {},
-    onClick: (PointerInputChange) -> Unit = {}
 ) = this.then(
     Modifier.pointerInput(Unit) {
         forEachGesture {
