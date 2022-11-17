@@ -4,7 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -13,10 +13,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.pointer.PointerEvent
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.onPointerEvent
-import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.*
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
 data class PathProperties(
@@ -41,47 +38,81 @@ fun clickCanvas() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Gray)
-            .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
-                val currPosition = pressPointerEvent.changes.first().position
-
-                if (pointList.isNotEmpty()) {
-                    val prevPosition = pointList.last()
-                    path.moveTo(prevPosition.x, prevPosition.y)
-                    path.lineTo(currPosition.x, currPosition.y)
-                    pathList.add(path)
-                }
-                pointList.add(Point(currPosition.x, currPosition.y, Color.Black))
-                rectList.add(Rect(left = currPosition.x - 6f, right = currPosition.x + 6f, top = currPosition.y - 6f, bottom = currPosition.y + 6f))
-                colorList.add(Color.Black)
-
-            }
-            .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
-                val position = movePointerEvent.changes.first().position
-                for (idx in rectList.indices.reversed()) {
-                    if (rectList[idx].contains(position)) {
-                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-                        return@onPointerEvent
-                    } else {
-                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-                    }
-                }
-            }
+            .mouseMotionEvent()
             .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
-                    dragging = true
-//                    println("drag change: ${change.position}")
-                    mousePosition = change.position
-                    if (pointList.isNotEmpty()) {
-                        val lastPoint = pointList.last()
-                        mousePath.moveTo(lastPoint.x, lastPoint.y)
+                forEachGesture {
+                    awaitPointerEventScope {
+                        val downEvent = awaitFirstDown()
+                        val change: PointerInputChange? = awaitTouchSlopOrCancellation(downEvent.id) {
+                            change: PointerInputChange, overSlop: Offset ->
+                            if (change.positionChange() != Offset.Zero) change.consume()
+                        }
+                        if (change != null) {
+                            drag(change.id) {pointerInputChange: PointerInputChange ->
+                                dragging = true
+                                mousePosition = pointerInputChange.position
+                            }
+                            dragging = false
+                        } else {
+                            dragging = false
+                        }
+
                     }
                 }
             }
-            .combinedClickable(
-                onClick = {
-
-                }
-            )
+//            .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
+//                val currPosition = pressPointerEvent.changes.first().position
+//
+//                if (pointList.isNotEmpty()) {
+//                    val prevPosition = pointList.last()
+//                    path.moveTo(prevPosition.x, prevPosition.y)
+//                    path.lineTo(currPosition.x, currPosition.y)
+//                    pathList.add(path)
+//                }
+//                pointList.add(Point(currPosition.x, currPosition.y, Color.Black))
+//                rectList.add(Rect(left = currPosition.x - 6f, right = currPosition.x + 6f, top = currPosition.y - 6f, bottom = currPosition.y + 6f))
+//                colorList.add(Color.Black)
+//
+//            }
+//            .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
+//                val position = movePointerEvent.changes.first().position
+//                for (idx in rectList.indices.reversed()) {
+//                    if (rectList[idx].contains(position)) {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+//                        return@onPointerEvent
+//                    } else {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+//                    }
+//                }
+//            }
+//            .pointerInput(Unit) {
+//                detectDragGestures { change, dragAmount ->
+//                    dragging = true
+////                    println("drag change: ${change.position}")
+//                    mousePosition = change.position
+//                    if (pointList.isNotEmpty()) {
+//                        val lastPoint = pointList.last()
+//                        mousePath.moveTo(lastPoint.x, lastPoint.y)
+//                    }
+//                }
+//
+//            }
+//            .pointerInput(Unit) {
+//                detectTapGestures(
+//                    onTap = {currPosition:Offset ->
+//                        if (pointList.isNotEmpty()) {
+//                            val prevPosition = pointList.last()
+//                            path.moveTo(prevPosition.x, prevPosition.y)
+//                            path.lineTo(currPosition.x, currPosition.y)
+//                            pathList.add(path)
+//                        }
+//                        pointList.add(Point(currPosition.x, currPosition.y, Color.Black))
+//                        rectList.add(Rect(left = currPosition.x - 6f, right = currPosition.x + 6f, top = currPosition.y - 6f, bottom = currPosition.y + 6f))
+//                        colorList.add(Color.Black)
+//
+//                    }
+//                )
+//            }
     ) {
 
         pathList.forEach { path: Path ->
