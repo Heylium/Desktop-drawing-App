@@ -55,9 +55,6 @@ fun MyCanvas() {
                     motionEvent = MotionEvent.Up
                     pointerInputChange.consumeDownChange()
                 },
-                onClick = {pointerInputChange ->
-                    motionEvent = MotionEvent.Down
-                }
             )
     ) {
         when(motionEvent) {
