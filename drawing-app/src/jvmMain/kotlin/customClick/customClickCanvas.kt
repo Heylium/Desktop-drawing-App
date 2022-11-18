@@ -111,22 +111,6 @@ fun clickCanvas() {
 //                }
 //
 //            }
-//            .pointerInput(Unit) {
-//                detectTapGestures(
-//                    onTap = {currPosition:Offset ->
-//                        if (pointList.isNotEmpty()) {
-//                            val prevPosition = pointList.last()
-//                            path.moveTo(prevPosition.x, prevPosition.y)
-//                            path.lineTo(currPosition.x, currPosition.y)
-//                            pathList.add(path)
-//                        }
-//                        pointList.add(Point(currPosition.x, currPosition.y, Color.Black))
-//                        rectList.add(Rect(left = currPosition.x - 6f, right = currPosition.x + 6f, top = currPosition.y - 6f, bottom = currPosition.y + 6f))
-//                        colorList.add(Color.Black)
-//
-//                    }
-//                )
-//            }
     ) {
 
         pathList.forEach { path: Path ->
