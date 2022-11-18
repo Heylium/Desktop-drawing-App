@@ -73,6 +73,18 @@ fun clickCanvas() {
                     }
                 )
             }
+            .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
+                val position = movePointerEvent.changes.first().position
+                for (idx in rectList.indices.reversed()) {
+                    if (rectList[idx].contains(position)) {
+                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+                        return@onPointerEvent
+                    } else {
+                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+                    }
+                }
+            }
+
 
 //            .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
 //                val currPosition = pressPointerEvent.changes.first().position
@@ -88,29 +100,7 @@ fun clickCanvas() {
 //                colorList.add(Color.Black)
 //
 //            }
-//            .onPointerEvent(PointerEventType.Move) {movePointerEvent: PointerEvent ->
-//                val position = movePointerEvent.changes.first().position
-//                for (idx in rectList.indices.reversed()) {
-//                    if (rectList[idx].contains(position)) {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-//                        return@onPointerEvent
-//                    } else {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-//                    }
-//                }
-//            }
-//            .pointerInput(Unit) {
-//                detectDragGestures { change, dragAmount ->
-//                    dragging = true
-////                    println("drag change: ${change.position}")
-//                    mousePosition = change.position
-//                    if (pointList.isNotEmpty()) {
-//                        val lastPoint = pointList.last()
-//                        mousePath.moveTo(lastPoint.x, lastPoint.y)
-//                    }
-//                }
-//
-//            }
+
     ) {
 
         pathList.forEach { path: Path ->
