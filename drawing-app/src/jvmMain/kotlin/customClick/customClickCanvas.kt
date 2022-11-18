@@ -36,20 +36,7 @@ fun clickCanvas() {
             .fillMaxSize()
             .background(color = Color.Gray)
             .mouseMotionEvent()
-            .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragStart = {
-                        dragging = true
-                    },
-                    onDrag = { change: PointerInputChange, _: Offset ->
-                        mousePosition = change.position
-                    },
-                    onDragEnd = {
-                        dragging = false
-                        mousePosition = Offset.Unspecified
-                    }
-                )
-            }
+                //mouse tap(click) event
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { pressPointerEvent: Offset ->
@@ -73,6 +60,22 @@ fun clickCanvas() {
                     }
                 )
             }
+                //mouse drag event
+            .pointerInput(Unit) {
+                detectDragGestures(
+                    onDragStart = {
+                        dragging = true
+                    },
+                    onDrag = { change: PointerInputChange, _: Offset ->
+                        mousePosition = change.position
+                    },
+                    onDragEnd = {
+                        dragging = false
+                        mousePosition = Offset.Unspecified
+                    }
+                )
+            }
+                //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
                 for (idx in rectList.indices.reversed()) {
