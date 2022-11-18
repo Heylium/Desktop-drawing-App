@@ -1,9 +1,6 @@
 package customClick
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
@@ -40,26 +37,43 @@ fun clickCanvas() {
             .background(color = Color.Gray)
             .mouseMotionEvent()
             .pointerInput(Unit) {
-                forEachGesture {
-                    awaitPointerEventScope {
-                        val downEvent = awaitFirstDown()
-                        val change: PointerInputChange? = awaitTouchSlopOrCancellation(downEvent.id) {
-                            change: PointerInputChange, overSlop: Offset ->
-                            if (change.positionChange() != Offset.Zero) change.consume()
+                detectDragGestures(
+                    onDragStart = {
+                        dragging = true
+                    },
+                    onDrag = { change: PointerInputChange, _: Offset ->
+                        mousePosition = change.position
+                    },
+                    onDragEnd = {
+                        dragging = false
+                        mousePosition = Offset.Unspecified
+                    }
+                )
+            }
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { pressPointerEvent: Offset ->
+                        if (pointList.isNotEmpty()) {
+                            val prevPosition = pointList.last()
+                            path.moveTo(prevPosition.x, prevPosition.y)
+                            path.lineTo(pressPointerEvent.x, pressPointerEvent.y)
+                            pathList.add(path)
                         }
-                        if (change != null) {
-                            drag(change.id) {pointerInputChange: PointerInputChange ->
-                                dragging = true
-                                mousePosition = pointerInputChange.position
-                            }
-                            dragging = false
-                        } else {
-                            dragging = false
-                        }
+                        pointList.add(Point(pressPointerEvent.x, pressPointerEvent.y, Color.Black))
+                        rectList.add(
+                            Rect(
+                                left = pressPointerEvent.x - 6f,
+                                right = pressPointerEvent.x + 6f,
+                                top = pressPointerEvent.y - 6f,
+                                bottom = pressPointerEvent.y + 6f
+                            )
+                        )
+                        colorList.add(Color.Black)
 
                     }
-                }
+                )
             }
+
 //            .onPointerEvent(PointerEventType.Press) {pressPointerEvent: PointerEvent ->
 //                val currPosition = pressPointerEvent.changes.first().position
 //
