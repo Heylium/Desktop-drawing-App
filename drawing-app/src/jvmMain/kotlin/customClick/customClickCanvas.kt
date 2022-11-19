@@ -39,20 +39,26 @@ fun clickCanvas() {
                 //mouse tap(click) event
             .pointerInput(Unit) {
                 detectTapGestures(
-                    onTap = { pressPointerEvent: Offset ->
+                    onTap = { pressPointer: Offset ->
                         if (pointList.isNotEmpty()) {
                             val prevPosition = pointList.last()
                             path.moveTo(prevPosition.x, prevPosition.y)
-                            path.lineTo(pressPointerEvent.x, pressPointerEvent.y)
+                            path.lineTo(pressPointer.x, pressPointer.y)
                             pathList.add(path)
+
+                            rectList.forEachIndexed { index, rect ->
+                                if (rect.contains(pressPointer)) {
+                                    return@detectTapGestures
+                                }
+                            }
                         }
-                        pointList.add(Point(pressPointerEvent.x, pressPointerEvent.y, Color.Black))
+                        pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
                         rectList.add(
                             Rect(
-                                left = pressPointerEvent.x - 6f,
-                                right = pressPointerEvent.x + 6f,
-                                top = pressPointerEvent.y - 6f,
-                                bottom = pressPointerEvent.y + 6f
+                                left = pressPointer.x - 6f,
+                                right = pressPointer.x + 6f,
+                                top = pressPointer.y - 6f,
+                                bottom = pressPointer.y + 6f
                             )
                         )
                         colorList.add(Color.Black)
