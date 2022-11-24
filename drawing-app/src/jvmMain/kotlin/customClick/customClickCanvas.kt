@@ -30,6 +30,7 @@ fun clickCanvas() {
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
     var mousePath by remember { mutableStateOf(Path()) }
 
+    var pointerPath by remember { mutableStateOf(Path()) }
 
     Canvas(
         modifier = Modifier
@@ -84,8 +85,24 @@ fun clickCanvas() {
                 //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-                for (idx in rectList.indices.reversed()) {
-                    if (rectList[idx].contains(position)) {
+//                for (idx in rectList.indices.reversed()) {
+//                    if (rectList[idx].contains(position)) {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+//                        return@onPointerEvent
+//                    } else {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+//                    }
+//                }
+
+
+
+                val rectF = Rect(
+                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
+                )
+                pointerPath.moveTo(position.x, position.y)
+                pointerPath.addRect(rectF)
+                for (idx in pathList.indices.reversed()) {
+                    if (Path().op(pathList[idx], pointerPath, PathOperation.Difference)) {
                         pointList[idx] = pointList[idx].copy(color = Color.Red)
                         return@onPointerEvent
                     } else {
