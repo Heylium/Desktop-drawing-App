@@ -11,7 +11,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
-import 	android.graphics.PathMeasure
+import android.graphics.PathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
 data class PathProperties(
