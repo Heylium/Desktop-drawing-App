@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
+import 	android.graphics.PathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
 data class PathProperties(
@@ -157,16 +158,15 @@ fun clickCanvas() {
 }
 
 fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
-    val pathMeasure = PathMeasure()
-    pathMeasure.setPath(this, false)
-    val length = pathMeasure.length
+    val measure = PathMeasure(this, false)
+    val length = measure.length
     val delta = width / 2f
     val position = floatArrayOf(0f, 0f)
     val bounds = Rect()
     var distance = 0f
     var intersects = false
     while (distance <= length) {
-        pathMeasure.getPosTan(distance, position, null)
+        measure.getPosTan(distance, position, null)
         bounds.set(
             position[0] - delta,
             position[1] - delta,
