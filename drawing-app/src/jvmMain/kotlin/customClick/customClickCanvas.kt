@@ -11,9 +11,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
-import android.graphics.PathMeasure
-import android.graphics.Path as AndroidPath
-import android.graphics.RectF as AndroidRectF
+import org.jetbrains.skia.PathMeasure as sPathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
 data class PathProperties(
@@ -26,8 +24,6 @@ data class PathProperties(
 fun clickCanvas() {
     val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
-    val androidPathList = remember { mutableStateListOf<AndroidPath>() }
-    val androidPath by remember { mutableStateOf(AndroidPath()) }
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
     val path by remember { mutableStateOf(Path()) }
@@ -41,7 +37,6 @@ fun clickCanvas() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.Gray)
-            .mouseMotionEvent()
                 //mouse tap(click) event
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -51,10 +46,6 @@ fun clickCanvas() {
                             path.moveTo(prevPosition.x, prevPosition.y)
                             path.lineTo(pressPointer.x, pressPointer.y)
                             pathList.add(path)
-
-                            androidPath.moveTo(prevPosition.x, prevPosition.y)
-                            androidPath.lineTo(pressPointer.x, pressPointer.y)
-                            androidPathList.add(androidPath)
 
                             rectList.forEachIndexed { index, rect ->
                                 if (rect.contains(pressPointer)) {
@@ -94,14 +85,14 @@ fun clickCanvas() {
                 //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-//                for (idx in rectList.indices.reversed()) {
-//                    if (rectList[idx].contains(position)) {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-//                        return@onPointerEvent
-//                    } else {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-//                    }
-//                }
+                for (idx in rectList.indices.reversed()) {
+                    if (rectList[idx].contains(position)) {
+                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+                        return@onPointerEvent
+                    } else {
+                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+                    }
+                }
 
 //                val rectF = Rect(
 //                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
@@ -116,14 +107,6 @@ fun clickCanvas() {
 //                        pointList[idx] = pointList[idx].copy(color = Color.Black)
 //                    }
 //                }
-                for (idx in pathList.indices.reversed()) {
-                    if (androidPathList[idx].doIntersect(position.x, position.y, 3f)) {
-                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-                        return@onPointerEvent
-                    } else {
-                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-                    }
-                }
             }
 
     ) {
@@ -169,27 +152,11 @@ fun clickCanvas() {
 
 }
 
-fun AndroidPath.doIntersect(x: Float, y: Float, width: Float): Boolean {
-    val measure = PathMeasure(this, false)
-    val length = measure.length
-    val delta = width / 2f
-    val position = floatArrayOf(0f, 0f)
-    val bounds = AndroidRectF()
-    var distance = 0f
-    var intersects = false
-    while (distance <= length) {
-        measure.getPosTan(distance, position, null)
-        bounds.set(
-            position[0] - delta,
-            position[1] - delta,
-            position[0] + delta,
-            position[1] + delta
-        )
-        if (bounds.contains(x, y)) {
-            intersects = true
-            break
-        }
-        distance += delta / 2f
-    }
-    return intersects
+
+
+fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
+    val pathMeasure = sPathMeasure(this.asSkiaPath())
+
+
+    return false
 }
