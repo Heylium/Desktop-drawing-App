@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
 import android.graphics.PathMeasure
+import android.graphics.Path as AndroidPath
+import android.graphics.RectF as AndroidRectF
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
 data class PathProperties(
@@ -24,6 +26,8 @@ data class PathProperties(
 fun clickCanvas() {
     val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
+    val androidPathList = remember { mutableStateListOf<AndroidPath>() }
+    val androidPath by remember { mutableStateOf(AndroidPath()) }
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
     val path by remember { mutableStateOf(Path()) }
@@ -47,6 +51,10 @@ fun clickCanvas() {
                             path.moveTo(prevPosition.x, prevPosition.y)
                             path.lineTo(pressPointer.x, pressPointer.y)
                             pathList.add(path)
+
+                            androidPath.moveTo(prevPosition.x, prevPosition.y)
+                            androidPath.lineTo(pressPointer.x, pressPointer.y)
+                            androidPathList.add(androidPath)
 
                             rectList.forEachIndexed { index, rect ->
                                 if (rect.contains(pressPointer)) {
@@ -95,15 +103,21 @@ fun clickCanvas() {
 //                    }
 //                }
 
-
-
-                val rectF = Rect(
-                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
-                )
-                pointerPath.moveTo(position.x, position.y)
-                pointerPath.addRect(rectF)
+//                val rectF = Rect(
+//                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
+//                )
+//                pointerPath.moveTo(position.x, position.y)
+//                pointerPath.addRect(rectF)
+//                for (idx in pathList.indices.reversed()) {
+//                    if (Path().op(pathList[idx], pointerPath, PathOperation.Difference)) {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+//                        return@onPointerEvent
+//                    } else {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+//                    }
+//                }
                 for (idx in pathList.indices.reversed()) {
-                    if (Path().op(pathList[idx], pointerPath, PathOperation.Difference)) {
+                    if (androidPathList[idx].doIntersect(position.x, position.y, 3f)) {
                         pointList[idx] = pointList[idx].copy(color = Color.Red)
                         return@onPointerEvent
                     } else {
@@ -151,18 +165,16 @@ fun clickCanvas() {
 
         }
 
-
-
     }
 
 }
 
-fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
+fun AndroidPath.doIntersect(x: Float, y: Float, width: Float): Boolean {
     val measure = PathMeasure(this, false)
     val length = measure.length
     val delta = width / 2f
     val position = floatArrayOf(0f, 0f)
-    val bounds = Rect()
+    val bounds = AndroidRectF()
     var distance = 0f
     var intersects = false
     while (distance <= length) {
