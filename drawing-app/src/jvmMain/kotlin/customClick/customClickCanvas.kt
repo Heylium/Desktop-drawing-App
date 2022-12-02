@@ -111,7 +111,7 @@ fun clickCanvas() {
                     if (pathList[idx].doIntersect(position.x, position.y, 3f)) {
 //                        pointList[idx] = pointList[idx].copy(color = Color.Red)
                         colorList[idx] = Color.Red
-//                        return@onPointerEvent
+                        return@onPointerEvent
                     } else {
 //                        pointList[idx] = pointList[idx].copy(color = Color.Black)
                         colorList[idx] = Color.Black
@@ -174,7 +174,7 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
     var intersects = false
     while (distance <= length) {
         val point = measure.getPosition(distance)!!
-        println("point as: $point")
+
 //        bounds.set(
 //            position[0] - delta,
 //            position[1] - delta,
@@ -187,7 +187,8 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
             point.x + delta,
             point.y + delta
         )
-        if (bounds.contains(Offset(point.x, point.y))) {
+        if (bounds.contains(Offset(x, y))) {
+            println("point as: $point")
             intersects = true
             break
         }
