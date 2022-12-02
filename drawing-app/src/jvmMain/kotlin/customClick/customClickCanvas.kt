@@ -155,8 +155,26 @@ fun clickCanvas() {
 
 
 fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
-    val pathMeasure = sPathMeasure(this.asSkiaPath())
-
-
-    return false
+    val measure = sPathMeasure(this.asSkiaPath())
+    val length = measure.length
+    val delta = width / 2f
+    val position = floatArrayOf(0f, 0f)
+    val bounds = RectF()
+    var distance = 0f
+    var intersects = false
+    while (distance <= length) {
+        measure.getPosTan(distance, position, null)
+        bounds.set(
+            position[0] - delta,
+            position[1] - delta,
+            position[0] + delta,
+            position[1] + delta
+        )
+        if (bounds.contains(x, y)) {
+            intersects = true
+            break
+        }
+        distance += delta / 2f
+    }
+    return intersects
 }
