@@ -85,14 +85,14 @@ fun clickCanvas() {
                 //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-                for (idx in rectList.indices.reversed()) {
-                    if (rectList[idx].contains(position)) {
-                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-                        return@onPointerEvent
-                    } else {
-                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-                    }
-                }
+//                for (idx in rectList.indices.reversed()) {
+//                    if (rectList[idx].contains(position)) {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+//                        return@onPointerEvent
+//                    } else {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+//                    }
+//                }
 
 //                val rectF = Rect(
 //                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
@@ -107,14 +107,24 @@ fun clickCanvas() {
 //                        pointList[idx] = pointList[idx].copy(color = Color.Black)
 //                    }
 //                }
+                for (idx in pathList.indices.reversed()) {
+                    if (pathList[idx].doIntersect(position.x, position.y, 3f)) {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
+                        colorList[idx] = Color.Red
+//                        return@onPointerEvent
+                    } else {
+//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
+                        colorList[idx] = Color.Black
+                    }
+                }
             }
 
     ) {
 
-        pathList.forEach { path: Path ->
+        pathList.forEachIndexed() { idx, path: Path ->
             drawPath(
                 path = path,
-                color = Color.Black,
+                color = colorList[idx],
                 style = Stroke(
                     width = 3f,
                     cap = StrokeCap.Round,
@@ -159,18 +169,25 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
     val length = measure.length
     val delta = width / 2f
     val position = floatArrayOf(0f, 0f)
-    val bounds = RectF()
+//    val bounds = RectF()
     var distance = 0f
     var intersects = false
     while (distance <= length) {
-        measure.getPosTan(distance, position, null)
-        bounds.set(
-            position[0] - delta,
-            position[1] - delta,
-            position[0] + delta,
-            position[1] + delta
+        val point = measure.getPosition(distance)!!
+        println("point as: $point")
+//        bounds.set(
+//            position[0] - delta,
+//            position[1] - delta,
+//            position[0] + delta,
+//            position[1] + delta
+//        )
+        val bounds = Rect(
+            point.x - delta,
+            point.y - delta,
+            point.x + delta,
+            point.y + delta
         )
-        if (bounds.contains(x, y)) {
+        if (bounds.contains(Offset(point.x, point.y))) {
             intersects = true
             break
         }
