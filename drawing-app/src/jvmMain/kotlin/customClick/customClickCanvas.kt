@@ -26,10 +26,9 @@ fun clickCanvas() {
     val pathList = remember { mutableStateListOf<Path>() }
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
-    val path by remember { mutableStateOf(Path()) }
     var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
-    var mousePath by remember { mutableStateOf(Path()) }
+    val mousePath by remember { mutableStateOf(Path()) }
 
     var pointerPath by remember { mutableStateOf(Path()) }
 
