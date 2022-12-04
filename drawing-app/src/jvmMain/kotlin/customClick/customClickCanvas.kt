@@ -43,6 +43,7 @@ fun clickCanvas() {
                         if (pointList.isNotEmpty()) {
                             val prevPosition = pointList.last()
 
+                            //Build a new path object
                             val subPath = Path()
                             subPath.moveTo(prevPosition.x, prevPosition.y)
                             subPath.lineTo(pressPointer.x, pressPointer.y)
