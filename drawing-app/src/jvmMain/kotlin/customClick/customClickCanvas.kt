@@ -43,10 +43,11 @@ fun clickCanvas() {
                     onTap = { pressPointer: Offset ->
                         if (pointList.isNotEmpty()) {
                             val prevPosition = pointList.last()
-                            path.moveTo(prevPosition.x, prevPosition.y)
-                            path.lineTo(pressPointer.x, pressPointer.y)
-                            pathList.add(path)
 
+                            val subPath = Path()
+                            subPath.moveTo(prevPosition.x, prevPosition.y)
+                            subPath.lineTo(pressPointer.x, pressPointer.y)
+                            pathList.add(subPath)
                             rectList.forEachIndexed { index, rect ->
                                 if (rect.contains(pressPointer)) {
                                     return@detectTapGestures
@@ -108,7 +109,7 @@ fun clickCanvas() {
 //                    }
 //                }
                 for (idx in pathList.indices.reversed()) {
-                    if (pathList[idx].doIntersect(position.x, position.y, 3f)) {
+                    if (pathList[idx].doIntersect(position.x, position.y, 6f)) {
 //                        pointList[idx] = pointList[idx].copy(color = Color.Red)
                         colorList[idx] = Color.Red
                         return@onPointerEvent
@@ -126,7 +127,7 @@ fun clickCanvas() {
                 path = path,
                 color = colorList[idx],
                 style = Stroke(
-                    width = 3f,
+                    width = 6f,
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round,
                 )
@@ -188,7 +189,7 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
             point.y + delta
         )
         if (bounds.contains(Offset(x, y))) {
-            println("point as: $point")
+            println("rect at: $bounds")
             intersects = true
             break
         }
