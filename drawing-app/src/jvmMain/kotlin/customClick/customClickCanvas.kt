@@ -163,24 +163,17 @@ fun clickCanvas() {
 }
 
 
-
+/**
+ * check whether a point is on a Compose Path(), the precision is limited by param width
+ */
 fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
     val measure = sPathMeasure(this.asSkiaPath())
     val length = measure.length
     val delta = width / 2f
-    val position = floatArrayOf(0f, 0f)
-//    val bounds = RectF()
     var distance = 0f
     var intersects = false
     while (distance <= length) {
         val point = measure.getPosition(distance)!!
-
-//        bounds.set(
-//            position[0] - delta,
-//            position[1] - delta,
-//            position[0] + delta,
-//            position[1] + delta
-//        )
         val bounds = Rect(
             point.x - delta,
             point.y - delta,
