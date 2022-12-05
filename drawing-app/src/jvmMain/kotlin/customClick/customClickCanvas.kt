@@ -22,6 +22,9 @@ data class PathProperties(
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun clickCanvas() {
+    val blackColor = Color.Black
+    val grayColor = Color.Gray
+    val redColor = Color.Red
     val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
     val rectList = remember { mutableStateListOf<Rect>() }
@@ -29,8 +32,6 @@ fun clickCanvas() {
     var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
     val mousePath by remember { mutableStateOf(Path()) }
-
-    var pointerPath by remember { mutableStateOf(Path()) }
 
     Canvas(
         modifier = Modifier
@@ -41,6 +42,7 @@ fun clickCanvas() {
                 detectTapGestures(
                     onTap = { pressPointer: Offset ->
                         if (pointList.isNotEmpty()) {
+                            //the last point position
                             val prevPosition = pointList.last()
 
                             //Build a new path object
@@ -48,12 +50,13 @@ fun clickCanvas() {
                             subPath.moveTo(prevPosition.x, prevPosition.y)
                             subPath.lineTo(pressPointer.x, pressPointer.y)
                             pathList.add(subPath)
-                            rectList.forEachIndexed { index, rect ->
+                            rectList.forEachIndexed { _, rect ->
                                 if (rect.contains(pressPointer)) {
                                     return@detectTapGestures
                                 }
                             }
                         }
+                        colorList.add(grayColor)
                         pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
                         rectList.add(
                             Rect(
@@ -63,7 +66,7 @@ fun clickCanvas() {
                                 bottom = pressPointer.y + 6f
                             )
                         )
-                        colorList.add(Color.Black)
+
 
                     }
                 )
@@ -86,36 +89,12 @@ fun clickCanvas() {
                 //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
-//                for (idx in rectList.indices.reversed()) {
-//                    if (rectList[idx].contains(position)) {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-//                        return@onPointerEvent
-//                    } else {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-//                    }
-//                }
-
-//                val rectF = Rect(
-//                    position.x - 1, position.y - 1 , position.x + 1, position.y + 1
-//                )
-//                pointerPath.moveTo(position.x, position.y)
-//                pointerPath.addRect(rectF)
-//                for (idx in pathList.indices.reversed()) {
-//                    if (Path().op(pathList[idx], pointerPath, PathOperation.Difference)) {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-//                        return@onPointerEvent
-//                    } else {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-//                    }
-//                }
                 for (idx in pathList.indices.reversed()) {
                     if (pathList[idx].doIntersect(position.x, position.y, 6f)) {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Red)
-                        colorList[idx] = Color.Red
+                        colorList[idx] = redColor
                         return@onPointerEvent
                     } else {
-//                        pointList[idx] = pointList[idx].copy(color = Color.Black)
-                        colorList[idx] = Color.Black
+                        colorList[idx] = grayColor
                     }
                 }
             }
@@ -128,6 +107,16 @@ fun clickCanvas() {
                 color = colorList[idx],
                 style = Stroke(
                     width = 6f,
+                    cap = StrokeCap.Round,
+                    join = StrokeJoin.Round,
+
+                )
+            )
+            drawPath(
+                path = path,
+                color = blackColor,
+                style = Stroke(
+                    width = 2f,
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round,
                 )
@@ -182,7 +171,7 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
             point.y + delta
         )
         if (bounds.contains(Offset(x, y))) {
-            println("rect at: $bounds")
+//            println("rect at: $bounds")
             intersects = true
             break
         }
