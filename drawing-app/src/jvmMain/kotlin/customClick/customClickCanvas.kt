@@ -11,6 +11,8 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
+import kotlin.math.abs
+import kotlin.math.hypot
 import org.jetbrains.skia.PathMeasure as sPathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
@@ -18,6 +20,16 @@ data class PathProperties(
     val startPoint: Point,
     val endPoint: Point,
 )
+
+/**
+ * calculate the distance between two points
+ */
+fun Point.calcDistance(firstPoint: Point, secondPoint: Point): Float {
+    val xDiff = abs(secondPoint.x - firstPoint.x)
+    val yDiff = abs(secondPoint.y - firstPoint.y)
+    return hypot(xDiff, yDiff)
+}
+
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @Composable
