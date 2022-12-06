@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
 import kotlin.math.abs
 import kotlin.math.hypot
+import kotlin.math.sqrt
 import org.jetbrains.skia.PathMeasure as sPathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
@@ -24,10 +25,11 @@ data class PathProperties(
 /**
  * calculate the distance between two points
  */
-fun Point.calcDistance(firstPoint: Point, secondPoint: Point): Float {
+fun Point.calcDistance(secondPoint: Point): Float {
+    val firstPoint = this
     val xDiff = abs(secondPoint.x - firstPoint.x)
     val yDiff = abs(secondPoint.y - firstPoint.y)
-    return hypot(xDiff, yDiff)
+    return sqrt(hypot(xDiff, yDiff))
 }
 
 
@@ -53,6 +55,7 @@ fun clickCanvas() {
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { pressPointer: Offset ->
+                        var pressPoint = Point(pressPointer.x, pressPointer.y)
                         if (pointList.isNotEmpty()) {
                             //the last point position
                             val prevPosition = pointList.last()
@@ -60,16 +63,24 @@ fun clickCanvas() {
                             //Build a new path object
                             val subPath = Path()
                             subPath.moveTo(prevPosition.x, prevPosition.y)
-                            subPath.lineTo(pressPointer.x, pressPointer.y)
+                            subPath.lineTo(pressPoint.x, pressPoint.y)
                             pathList.add(subPath)
-                            rectList.forEachIndexed { _, rect ->
-                                if (rect.contains(pressPointer)) {
-                                    return@detectTapGestures
+                            pointList.forEachIndexed { idx, point ->
+                                if (pressPoint.calcDistance(point) < 3f) {
+                                    println("distance: ${pressPoint.calcDistance(prevPosition)}")
+                                    pressPoint = point
                                 }
                             }
+
+//                            rectList.forEachIndexed { _, rect ->
+//                                if (rect.contains(pressPointer)) {
+//                                    return@detectTapGestures
+//                                }
+//                            }
                         }
                         colorList.add(grayColor)
-                        pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
+                        //pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
+                        pointList.add(pressPoint)
                         rectList.add(
                             Rect(
                                 left = pressPointer.x - 6f,
