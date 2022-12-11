@@ -68,12 +68,12 @@ fun clickCanvas() {
                             subPath.moveTo(prevPosition.x, prevPosition.y)
                             subPath.lineTo(pressPoint.x, pressPoint.y)
                             pathList.add(subPath)
-                            pointList.forEachIndexed { idx, point ->
-                                if (pressPoint.calcDistance(point) < 3f) {
-                                    println("distance: ${pressPoint.calcDistance(prevPosition)}")
-                                    pressPoint = point
-                                }
-                            }
+//                            pointList.forEachIndexed { idx, point ->
+//                                if (pressPoint.calcDistance(point) < 3f) {
+//                                    println("distance: ${pressPoint.calcDistance(prevPosition)}")
+//                                    pressPoint = point
+//                                }
+//                            }
                             for ((id, point) in pointsMap) {
                                 if (pressPoint.calcDistance(point) < 3f) {
                                     pressPoint = point.copy()
