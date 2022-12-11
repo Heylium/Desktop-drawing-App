@@ -39,6 +39,7 @@ fun clickCanvas() {
     val blackColor = Color.Black
     val grayColor = Color.Gray
     val redColor = Color.Red
+    val bondL = 20f
     val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
     val rectList = remember { mutableStateListOf<Rect>() }
@@ -71,6 +72,9 @@ fun clickCanvas() {
                                     pressPoint = point
                                 }
                             }
+                            val clickPoint = Path()
+                                clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
+                            pathList.add(clickPoint)
 
 //                            rectList.forEachIndexed { _, rect ->
 //                                if (rect.contains(pressPointer)) {
@@ -79,6 +83,7 @@ fun clickCanvas() {
 //                            }
                         }
                         colorList.add(grayColor)
+                        colorList.add(blackColor)
                         //pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
                         pointList.add(pressPoint)
                         rectList.add(
@@ -89,8 +94,6 @@ fun clickCanvas() {
                                 bottom = pressPointer.y + 6f
                             )
                         )
-
-
                     }
                 )
             }
@@ -113,7 +116,7 @@ fun clickCanvas() {
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
                 for (idx in pathList.indices.reversed()) {
-                    if (pathList[idx].doIntersect(position.x, position.y, 6f)) {
+                    if (pathList[idx].doIntersect(position.x, position.y, 3f)) {
                         colorList[idx] = redColor
                         return@onPointerEvent
                     } else {
@@ -145,13 +148,15 @@ fun clickCanvas() {
                 )
             )
         }
-        pointList.forEachIndexed() { idx, point: Point ->
-            drawCircle(
-                color = point.color,
-                radius = 6f,
-                center = Offset(point.x, point.y),
-            )
-        }
+
+
+//        pointList.forEachIndexed() { idx, point: Point ->
+//            drawCircle(
+//                color = point.color,
+//                radius = 6f,
+//                center = Offset(point.x, point.y),
+//            )
+//        }
 
         if (dragging) {
             drawCircle(
@@ -183,7 +188,7 @@ fun Path.doIntersect(x: Float, y: Float, width: Float): Boolean {
     val measure = sPathMeasure(this.asSkiaPath())
     val length = measure.length
     val delta = width / 2f
-    var distance = 0f
+    var distance = 3f
     var intersects = false
     while (distance <= length) {
         val point = measure.getPosition(distance)!!
