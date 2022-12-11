@@ -47,6 +47,8 @@ fun clickCanvas() {
     var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
     val mousePath by remember { mutableStateOf(Path()) }
+    val pointsMap = remember { mutableStateMapOf<UInt, Point>() }
+    var pointId by remember { mutableStateOf(0u) }
 
     Canvas(
         modifier = Modifier
@@ -72,6 +74,11 @@ fun clickCanvas() {
                                     pressPoint = point
                                 }
                             }
+                            for ((id, point) in pointsMap) {
+                                if (pressPoint.calcDistance(point) < 3f) {
+                                    pressPoint = point.copy()
+                                }
+                            }
                             val clickPoint = Path()
                                 clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
                             pathList.add(clickPoint)
@@ -85,7 +92,9 @@ fun clickCanvas() {
                         colorList.add(grayColor)
                         colorList.add(blackColor)
                         //pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
-                        pointList.add(pressPoint)
+//                        pointList.add(pressPoint)
+                        pointId += 1u
+                        pointsMap.put(pointId, pressPoint)
                         rectList.add(
                             Rect(
                                 left = pressPointer.x - 6f,
