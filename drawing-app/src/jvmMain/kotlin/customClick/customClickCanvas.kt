@@ -59,7 +59,7 @@ fun clickCanvas() {
                 detectTapGestures(
                     onTap = { pressPointer: Offset ->
                         var pressPoint = Point(pressPointer.x, pressPointer.y)
-                        if (pointList.isNotEmpty()) {
+                        if (pointsMap.isNotEmpty()) {
                             //the last point position
                             val prevPosition = pointList.last()
 
@@ -94,7 +94,7 @@ fun clickCanvas() {
                         //pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
 //                        pointList.add(pressPoint)
                         pointId += 1u
-                        pointsMap.put(pointId, pressPoint)
+                        pointsMap[pointId] = pressPoint
                         rectList.add(
                             Rect(
                                 left = pressPointer.x - 6f,
@@ -155,6 +155,14 @@ fun clickCanvas() {
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round,
                 )
+            )
+        }
+
+        for ((idx, point) in pointsMap) {
+            drawCircle(
+                color = blackColor,
+                radius = 6f,
+                center = Offset(point.x, point.y)
             )
         }
 
