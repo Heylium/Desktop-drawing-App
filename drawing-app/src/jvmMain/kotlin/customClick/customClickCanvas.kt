@@ -68,12 +68,7 @@ fun clickCanvas() {
                             subPath.moveTo(prevPosition.x, prevPosition.y)
                             subPath.lineTo(pressPoint.x, pressPoint.y)
                             pathList.add(subPath)
-//                            pointList.forEachIndexed { idx, point ->
-//                                if (pressPoint.calcDistance(point) < 3f) {
-//                                    println("distance: ${pressPoint.calcDistance(prevPosition)}")
-//                                    pressPoint = point
-//                                }
-//                            }
+
                             for ((id, point) in pointsMap) {
                                 if (pressPoint.calcDistance(point) < 3f) {
                                     pressPoint = point.copy()
@@ -83,16 +78,10 @@ fun clickCanvas() {
                                 clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
                             pathList.add(clickPoint)
 
-//                            rectList.forEachIndexed { _, rect ->
-//                                if (rect.contains(pressPointer)) {
-//                                    return@detectTapGestures
-//                                }
-//                            }
                         }
                         colorList.add(grayColor)
                         colorList.add(blackColor)
-                        //pointList.add(Point(pressPointer.x, pressPointer.y, Color.Black))
-//                        pointList.add(pressPoint)
+
                         pointId += 1u
                         pointsMap[pointId] = pressPoint
                         rectList.add(
