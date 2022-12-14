@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
 import kotlin.math.abs
 import kotlin.math.hypot
-import kotlin.math.sqrt
 import org.jetbrains.skia.PathMeasure as sPathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
@@ -25,11 +24,28 @@ data class PathProperties(
 /**
  * calculate the distance between two points
  */
-fun Point.calcDistance(secondPoint: Point): Float {
+fun Point.calcDist(secondPoint: Point): Float {
     val firstPoint = this
     val xDiff = abs(secondPoint.x - firstPoint.x)
     val yDiff = abs(secondPoint.y - firstPoint.y)
-    return sqrt(hypot(xDiff, yDiff))
+    return hypot(xDiff, yDiff)
+}
+
+/**
+ * check if mouse pointer position on a point
+ */
+fun MutableMap<UInt, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: MutableMap<UInt, Color>) {
+    for ((idx, point) in this) {
+        if (colorMap[idx] != null) {
+            if (point.calcDist(mousePoint) < 6f) {
+                println("mouse moved: ${point.calcDist(mousePoint)} ")
+                colorMap[idx] = Color.Green
+            }
+            else {
+                colorMap[idx] = Color.Black
+            }
+        }
+    }
 }
 
 
@@ -39,8 +55,7 @@ fun clickCanvas() {
     val blackColor = Color.Black
     val grayColor = Color.Gray
     val redColor = Color.Red
-    val bondL = 20f
-    val pointList = remember { mutableStateListOf<Point>() }
+    //val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
@@ -48,6 +63,7 @@ fun clickCanvas() {
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
     val mousePath by remember { mutableStateOf(Path()) }
     val pointsMap = remember { mutableStateMapOf<UInt, Point>() }
+    val colorMap = remember { mutableStateMapOf<UInt, Color>() }
     var pointId by remember { mutableStateOf(0u) }
 
     Canvas(
@@ -59,31 +75,32 @@ fun clickCanvas() {
                 detectTapGestures(
                     onTap = { pressPointer: Offset ->
                         var pressPoint = Point(pressPointer.x, pressPointer.y)
-                        if (pointsMap.isNotEmpty()) {
-                            //the last point position
-                            val prevPosition = pointList.last()
-
-                            //Build a new path object
-                            val subPath = Path()
-                            subPath.moveTo(prevPosition.x, prevPosition.y)
-                            subPath.lineTo(pressPoint.x, pressPoint.y)
-                            pathList.add(subPath)
-
-                            for ((id, point) in pointsMap) {
-                                if (pressPoint.calcDistance(point) < 3f) {
-                                    pressPoint = point.copy()
-                                }
-                            }
-                            val clickPoint = Path()
-                                clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
-                            pathList.add(clickPoint)
-
-                        }
-                        colorList.add(grayColor)
-                        colorList.add(blackColor)
+//                        if (pointsMap.isNotEmpty()) {
+//                            //the last point position
+//                            val prevPosition = pointList.last()
+//
+//                            //Build a new path object
+//                            val subPath = Path()
+//                            subPath.moveTo(prevPosition.x, prevPosition.y)
+//                            subPath.lineTo(pressPoint.x, pressPoint.y)
+//                            pathList.add(subPath)
+//
+//                            for ((id, point) in pointsMap) {
+//                                if (pressPoint.calcDistance(point) < 3f) {
+//                                    pressPoint = point.copy()
+//                                }
+//                            }
+//                            val clickPoint = Path()
+//                                clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
+//                            pathList.add(clickPoint)
+//
+//                        }
+                        //colorList.add(grayColor)
+                        //colorList.add(blackColor)
 
                         pointId += 1u
                         pointsMap[pointId] = pressPoint
+                        colorMap[pointId] = Color.Black
                         rectList.add(
                             Rect(
                                 left = pressPointer.x - 6f,
@@ -113,6 +130,7 @@ fun clickCanvas() {
                 //mouse move event
             .onPointerEvent(PointerEventType.Move) { movePointerEvent: PointerEvent ->
                 val position = movePointerEvent.changes.first().position
+                val movePoint = Point(position.x, position.y)
                 for (idx in pathList.indices.reversed()) {
                     if (pathList[idx].doIntersect(position.x, position.y, 3f)) {
                         colorList[idx] = redColor
@@ -121,6 +139,7 @@ fun clickCanvas() {
                         colorList[idx] = grayColor
                     }
                 }
+                pointsMap.checkMouseOnPoint(movePoint, colorMap)
             }
 
     ) {
@@ -149,7 +168,7 @@ fun clickCanvas() {
 
         for ((idx, point) in pointsMap) {
             drawCircle(
-                color = blackColor,
+                color = colorMap[idx]!!,
                 radius = 6f,
                 center = Offset(point.x, point.y)
             )
