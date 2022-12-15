@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.*
+import java.util.UUID
 import kotlin.math.abs
 import kotlin.math.hypot
 import org.jetbrains.skia.PathMeasure as sPathMeasure
@@ -34,7 +35,7 @@ fun Point.calcDist(secondPoint: Point): Float {
 /**
  * check if mouse pointer position on a point
  */
-fun MutableMap<UInt, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: MutableMap<UInt, Color>) {
+fun MutableMap<UUID, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: MutableMap<UUID, Color>) {
     for ((idx, point) in this) {
         if (colorMap[idx] != null) {
             if (point.calcDist(mousePoint) < 6f) {
@@ -62,9 +63,9 @@ fun clickCanvas() {
     var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
     val mousePath by remember { mutableStateOf(Path()) }
-    val pointsMap = remember { mutableStateMapOf<UInt, Point>() }
-    val colorMap = remember { mutableStateMapOf<UInt, Color>() }
-    var pointId by remember { mutableStateOf(0u) }
+    val pointsMap = remember { mutableStateMapOf<UUID, Point>() }
+    val colorMap = remember { mutableStateMapOf<UUID, Color>() }
+//    val pointId by remember { mutableStateOf(0u) }
 
     Canvas(
         modifier = Modifier
@@ -98,7 +99,7 @@ fun clickCanvas() {
                         //colorList.add(grayColor)
                         //colorList.add(blackColor)
 
-                        pointId += 1u
+                        val pointId = UUID.randomUUID()
                         pointsMap[pointId] = pressPoint
                         colorMap[pointId] = Color.Black
                         rectList.add(
