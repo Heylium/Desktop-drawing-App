@@ -75,30 +75,7 @@ fun clickCanvas() {
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { pressPointer: Offset ->
-                        var pressPoint = Point(pressPointer.x, pressPointer.y)
-//                        if (pointsMap.isNotEmpty()) {
-//                            //the last point position
-//                            val prevPosition = pointList.last()
-//
-//                            //Build a new path object
-//                            val subPath = Path()
-//                            subPath.moveTo(prevPosition.x, prevPosition.y)
-//                            subPath.lineTo(pressPoint.x, pressPoint.y)
-//                            pathList.add(subPath)
-//
-//                            for ((id, point) in pointsMap) {
-//                                if (pressPoint.calcDistance(point) < 3f) {
-//                                    pressPoint = point.copy()
-//                                }
-//                            }
-//                            val clickPoint = Path()
-//                                clickPoint.addArc(Rect(pressPoint.x - 3f, pressPoint.y -3f, pressPoint.x + 3f,pressPoint.y +3f), 0f, 360f)
-//                            pathList.add(clickPoint)
-//
-//                        }
-                        //colorList.add(grayColor)
-                        //colorList.add(blackColor)
-
+                        val pressPoint = Point(pressPointer.x, pressPointer.y)
                         val pointId = UUID.randomUUID()
                         pointsMap[pointId] = pressPoint
                         colorMap[pointId] = Color.Black
