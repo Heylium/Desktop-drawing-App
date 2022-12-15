@@ -65,7 +65,6 @@ fun clickCanvas() {
     val mousePath by remember { mutableStateOf(Path()) }
     val pointsMap = remember { mutableStateMapOf<UUID, Point>() }
     val colorMap = remember { mutableStateMapOf<UUID, Color>() }
-//    val pointId by remember { mutableStateOf(0u) }
 
     Canvas(
         modifier = Modifier
