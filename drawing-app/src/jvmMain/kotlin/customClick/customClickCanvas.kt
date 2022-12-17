@@ -150,15 +150,7 @@ fun clickCanvas() {
                 center = Offset(point.x, point.y)
             )
         }
-
-
-//        pointList.forEachIndexed() { idx, point: Point ->
-//            drawCircle(
-//                color = point.color,
-//                radius = 6f,
-//                center = Offset(point.x, point.y),
-//            )
-//        }
+        
 
         if (dragging) {
             drawCircle(
