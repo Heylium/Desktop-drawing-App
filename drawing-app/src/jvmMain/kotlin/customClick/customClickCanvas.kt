@@ -17,6 +17,8 @@ import kotlin.math.hypot
 import org.jetbrains.skia.PathMeasure as sPathMeasure
 
 data class Point(val x: Float, val y: Float, var color: Color = Color.Black)
+
+data class Line(val startPoint: Point, val endPoint: Point)
 data class PathProperties(
     val startPoint: Point,
     val endPoint: Point,
@@ -39,7 +41,7 @@ fun MutableMap<UUID, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: Mutab
     for ((idx, point) in this) {
         if (colorMap[idx] != null) {
             if (point.calcDist(mousePoint) < 6f) {
-                println("mouse moved: ${point.calcDist(mousePoint)} ")
+                //println("mouse moved: ${point.calcDist(mousePoint)} ")
                 colorMap[idx] = Color.Green
             }
             else {
@@ -65,6 +67,7 @@ fun clickCanvas() {
     val mousePath by remember { mutableStateOf(Path()) }
     val pointsMap = remember { mutableStateMapOf<UUID, Point>() }
     val colorMap = remember { mutableStateMapOf<UUID, Color>() }
+    val lineMap = remember { mutableStateMapOf<UUID, Line>() }
 
     Canvas(
         modifier = Modifier
@@ -76,6 +79,10 @@ fun clickCanvas() {
                     onTap = { pressPointer: Offset ->
                         val pressPoint = Point(pressPointer.x, pressPointer.y)
                         val pointId = UUID.randomUUID()
+                        if (pointsMap.size > 1) {
+                            val points = pointsMap.values
+                            lineMap[UUID.randomUUID()] = Line(points.last(), pressPoint)
+                        }
                         pointsMap[pointId] = pressPoint
                         colorMap[pointId] = Color.Black
                         rectList.add(
@@ -148,6 +155,15 @@ fun clickCanvas() {
                 color = colorMap[idx]!!,
                 radius = 6f,
                 center = Offset(point.x, point.y)
+            )
+        }
+
+        for ((id, line) in lineMap) {
+            drawLine(
+                color = Color.Black,
+                start = Offset(line.startPoint.x, line.startPoint.y),
+                end = Offset(line.endPoint.x, line.endPoint.y),
+                strokeWidth = 2f,
             )
         }
         
