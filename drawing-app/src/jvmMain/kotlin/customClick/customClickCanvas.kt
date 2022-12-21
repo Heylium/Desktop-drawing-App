@@ -10,6 +10,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.input.pointer.*
 import java.util.UUID
 import kotlin.math.abs
@@ -58,7 +59,6 @@ fun clickCanvas() {
     val blackColor = Color.Black
     val grayColor = Color.Gray
     val redColor = Color.Red
-    //val pointList = remember { mutableStateListOf<Point>() }
     val pathList = remember { mutableStateListOf<Path>() }
     val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
@@ -68,6 +68,7 @@ fun clickCanvas() {
     val pointsMap = remember { mutableStateMapOf<UUID, Point>() }
     val colorMap = remember { mutableStateMapOf<UUID, Color>() }
     val lineMap = remember { mutableStateMapOf<UUID, Line>() }
+    var prevPoint:Point? = null
 
     Canvas(
         modifier = Modifier
@@ -79,10 +80,12 @@ fun clickCanvas() {
                     onTap = { pressPointer: Offset ->
                         val pressPoint = Point(pressPointer.x, pressPointer.y)
                         val pointId = UUID.randomUUID()
-                        if (pointsMap.size > 1) {
-                            val points = pointsMap.values
-                            lineMap[UUID.randomUUID()] = Line(points.last(), pressPoint)
+                        if (pointsMap.size >= 1) {
+                            if (prevPoint != null) {
+                                lineMap[UUID.randomUUID()] = Line(prevPoint!!, pressPoint)
+                            }
                         }
+                        prevPoint = pressPoint
                         pointsMap[pointId] = pressPoint
                         colorMap[pointId] = Color.Black
                         rectList.add(
