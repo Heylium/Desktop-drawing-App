@@ -60,7 +60,6 @@ fun clickCanvas() {
     val grayColor = Color.Gray
     val redColor = Color.Red
     val pathList = remember { mutableStateListOf<Path>() }
-    val rectList = remember { mutableStateListOf<Rect>() }
     val colorList = remember { mutableStateListOf<Color>() }
     var dragging by remember { mutableStateOf(false) }
     var mousePosition by remember { mutableStateOf(Offset.Unspecified) }
@@ -88,14 +87,6 @@ fun clickCanvas() {
                         prevPoint = pressPoint
                         pointsMap[pointId] = pressPoint
                         colorMap[pointId] = Color.Black
-                        rectList.add(
-                            Rect(
-                                left = pressPointer.x - 6f,
-                                right = pressPointer.x + 6f,
-                                top = pressPointer.y - 6f,
-                                bottom = pressPointer.y + 6f
-                            )
-                        )
                     }
                 )
             }
