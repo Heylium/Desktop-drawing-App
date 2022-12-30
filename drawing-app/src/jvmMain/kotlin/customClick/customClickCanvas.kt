@@ -82,6 +82,11 @@ fun clickCanvas() {
                         if (pointsMap.size >= 1) {
                             if (prevPoint != null) {
                                 lineMap[UUID.randomUUID()] = Line(prevPoint!!, pressPoint)
+                                for ((idx, point) in pointsMap) {
+                                    if (point.calcDist(pressPoint) < 3f) {
+                                        
+                                    }
+                                }
                             }
                         }
                         prevPoint = pressPoint
