@@ -53,7 +53,7 @@ fun MutableMap<UUID, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: Mutab
 }
 
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun clickCanvas() {
     val blackColor = Color.Black
@@ -84,7 +84,8 @@ fun clickCanvas() {
                                 lineMap[UUID.randomUUID()] = Line(prevPoint!!, pressPoint)
                                 for ((idx, point) in pointsMap) {
                                     if (point.calcDist(pressPoint) < 3f) {
-                                        
+
+
                                     }
                                 }
                             }
