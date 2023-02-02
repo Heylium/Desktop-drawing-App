@@ -1,9 +1,0 @@
-C:\Programming\Rust\Rust_works\published-sea-orm-and-yew\sea-orm-and-yew\sea-orm-and-yew\actix-backend\target\release\deps\zstd_sys-4602b9aeb6efbd7b.rmeta: C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\lib.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zstd_std.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zdict_std.rs
-
-C:\Programming\Rust\Rust_works\published-sea-orm-and-yew\sea-orm-and-yew\sea-orm-and-yew\actix-backend\target\release\deps\libzstd_sys-4602b9aeb6efbd7b.rlib: C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\lib.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zstd_std.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zdict_std.rs
-
-C:\Programming\Rust\Rust_works\published-sea-orm-and-yew\sea-orm-and-yew\sea-orm-and-yew\actix-backend\target\release\deps\zstd_sys-4602b9aeb6efbd7b.d: C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\lib.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zstd_std.rs C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zdict_std.rs
-
-C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\lib.rs:
-C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zstd_std.rs:
-C:\Programming\Rust\.cargo\registry\src\rsproxy.cn-8f6827c7555bfaf8\zstd-sys-2.0.1+zstd.1.5.2\src\bindings_zdict_std.rs:
