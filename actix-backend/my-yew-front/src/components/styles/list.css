@@ -1,8 +1,0 @@
-.row-label {
-    color: #009688;
-    padding: 2px;
-}
-
-.row-label:not(:last-child) {
-    border-right: 1px solid black;
-}
