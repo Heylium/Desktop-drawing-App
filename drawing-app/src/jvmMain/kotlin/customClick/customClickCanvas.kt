@@ -127,6 +127,24 @@ fun clickCanvas() {
             }
 
     ) {
+        val _startP = Offset(20f, 20f)
+        val _endP = Offset(40f, 40f)
+        drawLine(
+            color = Color.Black,
+            start = _startP,
+            end = _endP,
+            strokeWidth = 6f
+        )
+
+        drawLine(
+            color = Color.Gray,
+            start = _startP,
+            end = _endP,
+            strokeWidth = 2f
+        )
+
+
+
 
         pathList.forEachIndexed() { idx, path: Path ->
             drawPath(
