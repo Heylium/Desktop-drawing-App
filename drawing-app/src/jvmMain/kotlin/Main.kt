@@ -5,22 +5,6 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import customCanvas.customCanvas
 import customClick.clickCanvas
-//@Composable
-//@Preview
-//fun App() {
-//    MaterialTheme {
-//        DrawingApp()
-//    }
-//}
-//
-//@Composable
-//@Preview
-//fun MyApp() {
-//    MaterialTheme {
-//        MyCanvas()
-//
-//    }
-//}
 
 @Composable
 fun ClickApp() {
