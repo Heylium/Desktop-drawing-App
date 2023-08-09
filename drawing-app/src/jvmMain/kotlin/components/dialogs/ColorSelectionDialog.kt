@@ -1,10 +1,8 @@
 package components.dialogs
 
-//import androidx.compose.foundation.layout.ColumnScopeInstance.weight
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*

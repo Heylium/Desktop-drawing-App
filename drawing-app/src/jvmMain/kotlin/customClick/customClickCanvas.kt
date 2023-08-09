@@ -52,7 +52,9 @@ fun MutableMap<UUID, Point>.checkMouseOnPoint(mousePoint: Point, colorMap: Mutab
     }
 }
 
-
+/**
+ * canvas which is monitoring mouse move and draw lines
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun clickCanvas() {
