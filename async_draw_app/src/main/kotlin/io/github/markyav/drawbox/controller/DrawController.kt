@@ -99,12 +99,6 @@ class DrawController {
     internal fun insertNewPath(newPoint: Offset) {
         (state.value as? DrawBoxConnectionState.Connected)?.let {
             require(activeDrawingPath.value == null)
-            /*val pathWrapper = PathWrapper(
-                points = mutableStateListOf(newPoint.div(it.size.toFloat())),
-                strokeColor = color.value,
-                alpha = opacity.value,
-                strokeWidth = strokeWidth.value.div(it.size.toFloat()),
-            )*/
             activeDrawingPath.value = listOf(newPoint.div(it.size.toFloat()))
             canceledPaths.value = emptyList()
         }
@@ -142,6 +136,15 @@ class DrawController {
     internal fun onTap(newPoint: Offset) {
         insertNewPath(newPoint)
         finalizePath()
+    }
+
+    internal fun onTap2(newPoint: Offset) {
+        insertNewPath(newPoint)
+
+        val Point2 = Offset(x = newPoint.x + 10, y = newPoint.y + 10)
+        insertNewPath(Point2)
+        finalizePath()
+
     }
 
     private fun List<PathWrapper>.scale(size: Float): List<PathWrapper> {
