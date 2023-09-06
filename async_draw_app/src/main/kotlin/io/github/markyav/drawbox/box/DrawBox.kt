@@ -30,7 +30,7 @@ fun DrawBox(
             openedImage = openedImage,
             alpha = canvasOpacity,
             onSizeChanged = controller::connectToDrawBox,
-            onTap = controller::onTap,
+            onTap = controller::onTap2,
             onDragStart = controller::insertNewPath,
             onDrag = controller::updateLatestPath,
             onDragEnd = controller::finalizePath,
