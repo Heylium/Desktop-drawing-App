@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import drawbox.canvas.controller.DrawController2
 import io.github.markyav.drawbox.box.DrawBox
 import io.github.markyav.drawbox.controller.DrawController
 
@@ -18,6 +19,7 @@ import io.github.markyav.drawbox.controller.DrawController
 fun DrawBox2() {
 
     val controller = remember { DrawController() }
+    val controller2 = remember { DrawController2() }
 
 
     DrawBox(
