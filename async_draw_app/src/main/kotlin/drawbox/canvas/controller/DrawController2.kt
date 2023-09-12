@@ -2,6 +2,7 @@ package drawbox.canvas.controller
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
 import io.github.markyav.drawbox.model.PathWrapper
@@ -19,6 +20,6 @@ class DrawController2 {
     /** A stateful list of [Path] that was drawn on the [Canvas] but user retracted his action. */
     private val canceledPaths: MutableStateFlow<List<PathWrapper>> = MutableStateFlow(emptyList())
 
-
+    val openedImage: MutableStateFlow<ImageBitmap?> = MutableStateFlow(null)
 
 }
