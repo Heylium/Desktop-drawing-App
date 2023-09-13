@@ -141,9 +141,13 @@ class DrawController {
     internal fun onTap2(newPoint: Offset) {
         insertNewPath(newPoint)
 
-        val Point2 = Offset(x = newPoint.x + 10, y = newPoint.y + 10)
-        insertNewPath(Point2)
+//        finalizePath()
+
+        val Point2 = Offset(x = newPoint.x + 30, y = newPoint.y + 30)
+
+        updateLatestPath(Point2)
         finalizePath()
+//        insertNewPath(Point2)
 
     }
 
