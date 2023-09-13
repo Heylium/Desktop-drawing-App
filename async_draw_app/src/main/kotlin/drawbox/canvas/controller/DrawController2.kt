@@ -38,4 +38,12 @@ class DrawController2 {
 
     /** A [background] of the background of DrawBox */
     var background: MutableStateFlow<DrawBoxBackground> = MutableStateFlow(DrawBoxBackground.NoBackground)
+
+    /** Clear drawn paths and the bitmap image. */
+    fun reset() {
+        drawnPaths.value = emptyList()
+        canceledPaths.value = emptyList()
+    }
+
+
 }
