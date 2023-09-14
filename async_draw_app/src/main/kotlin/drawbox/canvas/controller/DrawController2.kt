@@ -45,5 +45,24 @@ class DrawController2 {
         canceledPaths.value = emptyList()
     }
 
+    /** Call this function when user starts drawing a path. */
+    internal fun updateLatestPath(newPoint: Offset) {
+        (state.value as? DrawBoxConnectionState.Connected)?.let {
+            require(activeDrawingPath.value != null)
+            val list = activeDrawingPath.value!!.toMutableList()
+            list.add(newPoint.div(it.size.toFloat()))
+            activeDrawingPath.value = list
+        }
+    }
+
+    /** When dragging call this function to update the last path. */
+    internal fun insertNewPath(newPoint: Offset) {
+        (state.value as? DrawBoxConnectionState.Connected)?.let {
+            require(activeDrawingPath.value == null)
+            activeDrawingPath.value = listOf(newPoint.div(it.size.toFloat()))
+            canceledPaths.value = emptyList()
+        }
+    }
+
 
 }
