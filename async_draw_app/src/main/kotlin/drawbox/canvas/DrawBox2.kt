@@ -19,7 +19,7 @@ import io.github.markyav.drawbox.controller.DrawController
 fun DrawBox2() {
 
     val controller = remember { DrawController() }
-    val controller2 = remember { DrawController2() }
+//    val controller2 = remember { DrawController2() }
 
 
     DrawBox(
@@ -27,7 +27,7 @@ fun DrawBox2() {
         modifier = Modifier
             .fillMaxHeight()
             .aspectRatio(1f)
-            .padding(100.dp)
+            .padding(50.dp)
             .border(width = 1.dp, color = Color.Blue),
     )
 
