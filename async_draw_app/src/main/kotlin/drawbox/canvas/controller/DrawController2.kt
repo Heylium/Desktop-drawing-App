@@ -64,5 +64,26 @@ class DrawController2 {
         }
     }
 
+    internal fun finalizePath() {
+        (state.value as? DrawBoxConnectionState.Connected)?.let {
+            require(activeDrawingPath.value != null)
+            val _drawnPaths = drawnPaths.value.toMutableList()
+
+            val pathWrapper = PathWrapper(
+                points = activeDrawingPath.value!!,
+                strokeColor = color.value,
+                alpha = opacity.value,
+                strokeWidth = strokeWidth.value.div(it.size.toFloat()),
+            )
+            _drawnPaths.add(pathWrapper)
+
+            drawnPaths.value = _drawnPaths
+            activeDrawingPath.value = null
+        }
+    }
+
+
+
+
 
 }
