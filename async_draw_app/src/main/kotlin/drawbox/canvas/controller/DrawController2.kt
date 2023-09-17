@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.unit.IntSize
 import io.github.markyav.drawbox.controller.DrawBoxBackground
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
 import io.github.markyav.drawbox.model.PathWrapper
@@ -82,7 +83,24 @@ class DrawController2 {
         }
     }
 
+    /** Call this function to connect to the [DrawBox]. */
+    internal fun connectToDrawBox(size: IntSize) {
+        if (
+            size.width > 0 &&
+            size.height > 0 &&
+            size.width == size.height
+        ) {
+            state.value = DrawBoxConnectionState.Connected(size = size.width)
+        }
+    }
 
+    internal fun onTap(newPoint: Offset) {
+        insertNewPath(newPoint)
+
+        val point2 = Offset(x = newPoint.x + 30, y = newPoint.y + 30)
+        updateLatestPath(point2)
+        finalizePath()
+    }
 
 
 
