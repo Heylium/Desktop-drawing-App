@@ -8,8 +8,12 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.unit.IntSize
 import io.github.markyav.drawbox.controller.DrawBoxBackground
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
+import io.github.markyav.drawbox.controller.DrawBoxSubscription
 import io.github.markyav.drawbox.model.PathWrapper
+import io.github.markyav.drawbox.util.addNotNull
+import io.github.markyav.drawbox.util.combineStates
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 class DrawController2 {
 
@@ -102,6 +106,15 @@ class DrawController2 {
         finalizePath()
     }
 
-
+    private fun List<PathWrapper>.scale(size: Float): List<PathWrapper> {
+        return this.map { pw ->
+            val t = pw.points.map { it.times(size) }
+            pw.copy(
+                points = mutableListOf<Offset>().also { it.addAll(t) },
+                strokeWidth = pw.strokeWidth * size
+            )
+        }
+    }
+    
 
 }
