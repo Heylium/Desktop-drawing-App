@@ -115,6 +115,27 @@ class DrawController2 {
             )
         }
     }
-    
 
+    private fun getDynamicUpdateDrawnPath(): StateFlow<List<PathWrapper>> {
+        return combineStates(drawnPaths, activeDrawingPath) { a, b ->
+            val _a = a.toMutableList()
+            (state.value as? DrawBoxConnectionState.Connected)?.let {
+                val pathWrapper = PathWrapper(
+                    points = activeDrawingPath.value ?: emptyList(),
+                    strokeColor = color.value,
+                    alpha = opacity.value,
+                    strokeWidth = strokeWidth.value.div(it.size.toFloat()),
+                )
+                _a.addNotNull(pathWrapper)
+            }
+            _a
+        }
+    }
+
+    fun getDrawPath(subscription: DrawBoxSubscription): StateFlow<List<PathWrapper>> {
+        return when (subscription) {
+            is DrawBoxSubscription.DynamicUpdate -> getDynamicUpdateDrawnPath()
+            is DrawBoxSubscription.FinishDrawingUpdate -> drawnPaths
+        }
+    }
 }
