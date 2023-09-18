@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.IntSize
 import io.github.markyav.drawbox.controller.DrawBoxBackground
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
 import io.github.markyav.drawbox.controller.DrawBoxSubscription
+import io.github.markyav.drawbox.controller.OpenedImage
 import io.github.markyav.drawbox.model.PathWrapper
 import io.github.markyav.drawbox.util.addNotNull
 import io.github.markyav.drawbox.util.combineStates
@@ -136,6 +137,29 @@ class DrawController2 {
         return when (subscription) {
             is DrawBoxSubscription.DynamicUpdate -> getDynamicUpdateDrawnPath()
             is DrawBoxSubscription.FinishDrawingUpdate -> drawnPaths
+        }
+    }
+
+    internal fun getPathWrappersForDrawbox(subscription: DrawBoxSubscription): StateFlow<List<PathWrapper>> {
+        return combineStates(getDrawPath(subscription), state) { paths, st ->
+            val size = (st as? DrawBoxConnectionState.Connected)?.size ?: 1
+            paths.scale(size.toFloat())
+        }
+    }
+
+    internal fun getOpenImageForDrawbox(size: Int?): StateFlow<OpenedImage> {
+        return combineStates(openedImage, state) { image, st ->
+            if (image !=  null) {
+                OpenedImage.Image(
+                    image,
+                    dstSize = IntSize(
+                        width = size ?: (st as? DrawBoxConnectionState.Connected)?.size ?: 1,
+                        height = size ?: (st as? DrawBoxConnectionState.Connected)?.size ?: 1,
+                    ),
+                )
+            } else {
+                OpenedImage.None
+            }
         }
     }
 }
