@@ -1,10 +1,7 @@
 package drawbox.canvas.controller
 
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Canvas
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.IntSize
 import io.github.markyav.drawbox.controller.DrawBoxBackground
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
@@ -13,6 +10,7 @@ import io.github.markyav.drawbox.controller.OpenedImage
 import io.github.markyav.drawbox.model.PathWrapper
 import io.github.markyav.drawbox.util.addNotNull
 import io.github.markyav.drawbox.util.combineStates
+import io.github.markyav.drawbox.util.createPath
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -162,4 +160,36 @@ class DrawController2 {
             }
         }
     }
+
+    fun getBitmap(size: Int, subscription: DrawBoxSubscription): StateFlow<ImageBitmap> {
+        val path = getDrawPath(subscription)
+        return combineStates(getOpenImageForDrawbox(size), path) { openImage, p ->
+            val bitmap = ImageBitmap(size, size, ImageBitmapConfig.Argb8888)
+            val canvas = Canvas(bitmap)
+            (openImage as? OpenedImage.Image)?.let {
+                canvas.drawImageRect(
+                    image = it.image,
+                    srcOffset = it.srcOffset,
+                    srcSize = it.srcSize,
+                    dstSize = it.dstSize,
+                    paint = Paint()
+                )
+            }
+            p.scale(size.toFloat()).forEach { pw ->
+                canvas.drawPath(
+                    createPath(pw.points),
+                    paint = Paint().apply {
+                        color = pw.strokeColor
+                        alpha = pw.alpha
+                        style = PaintingStyle.Stroke
+                        strokeCap = StrokeCap.Round
+                        strokeJoin = StrokeJoin.Round
+                        strokeWidth = pw.strokeWidth
+                    }
+                )
+            }
+            bitmap
+        }
+    }
+
 }
