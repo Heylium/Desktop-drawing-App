@@ -1,5 +1,7 @@
 package view
 
+import androidx.compose.ui.graphics.drawscope.DrawScope
+
 interface Drawable {
-    fun draw()
+    fun draw(drawScope: DrawScope)
 }
