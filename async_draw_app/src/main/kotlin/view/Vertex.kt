@@ -13,6 +13,7 @@ class Vertex(val pathWrapper: PathWrapper, val color: Color = Color.Black): Draw
 
     override fun draw(drawScope: DrawScope) {
         val path = createPath(pathWrapper.points)
+
         drawScope.drawPath(
             path = path,
             color = color,
