@@ -2,6 +2,8 @@ package view
 
 import androidx.compose.ui.graphics.drawscope.DrawScope
 
+typealias DrawAction = DrawScope.() -> Unit
+
 interface Drawable {
-    fun draw(drawScope: DrawScope)
+    fun createDrawAction(): DrawAction
 }
