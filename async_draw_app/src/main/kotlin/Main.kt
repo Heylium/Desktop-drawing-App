@@ -14,7 +14,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 
 import androidx.compose.ui.window.application
-import drawbox.canvas.DrawBox2
+import drawbox.DrawBox2
 
 @Composable
 @Preview
