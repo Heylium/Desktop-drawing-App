@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun DrawCanvas(
+    controller: DrawController,
     drawActionListWrapper: StateFlow<List<DrawAction>>,
     alpha: Float,
     onSizeChanged: (IntSize) -> Unit,
