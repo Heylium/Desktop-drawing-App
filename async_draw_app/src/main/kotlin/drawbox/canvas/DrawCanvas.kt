@@ -36,6 +36,10 @@ fun DrawCanvas(
     }
 
     val drawActionList by drawActionListWrapper.collectAsState()
+//    TODO: need get draw action from StateFlow
+//    val drawActionWrapper: StateFlow<List<DrawAction>> = remember {
+//        controller.get
+//    }
 
 
     Canvas(
