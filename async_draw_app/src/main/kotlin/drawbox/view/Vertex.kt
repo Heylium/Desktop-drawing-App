@@ -21,9 +21,9 @@ class Vertex(
             val drawScope: DrawScope = this
             drawPath(
                 path = createPath(pathWrapper.points),
-                color = color,
+                color = pathWrapper.strokeColor,
                 style = Stroke(
-                    width = width,
+                    width = pathWrapper.strokeWidth,
                     cap = StrokeCap.Round,
                     join = StrokeJoin.Round,
                 )
