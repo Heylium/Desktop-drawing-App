@@ -1,7 +1,6 @@
 package drawbox.view
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -11,9 +10,10 @@ import io.github.markyav.drawbox.util.createPath
 
 class Vertex(
     val pathWrapper: PathWrapper,
-    val width: Float,
-    val color: Color = Color.Black
+    val startPoint: Offset,
+    val endPoint: Offset,
 ) : Drawable {
+
 
     override fun createDrawAction(): DrawAction {
         val drawObject: Vertex = this
