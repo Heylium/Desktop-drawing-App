@@ -4,6 +4,7 @@ import drawbox.view.DrawAction
 import drawbox.view.Vertex
 import io.github.markyav.drawbox.controller.DrawBoxConnectionState
 import io.github.markyav.drawbox.controller.DrawBoxSubscription
+import io.github.markyav.drawbox.model.PathWrapper
 import io.github.markyav.drawbox.util.combineStates
 import kotlinx.coroutines.flow.*
 
@@ -21,10 +22,7 @@ class DrawController3 {
     private fun _getDynamicUpdateDrawAction(): StateFlow<List<DrawAction>> {
         return combineStates(_drawActions, _activeDrawActions) { flowA, flowB ->
             val _flowA = flowA.toMutableList()
-            (_drawBoxState.value as? DrawBoxConnectionState.Connected)?.let {
-//                val _drawAction =
-            }
-
+            _flowA
         }
     }
 
