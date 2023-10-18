@@ -13,5 +13,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="butlerov" style="height: 600px; width: 600px;"></div>
+  <div id="butlerov" class="border" style="height: 600px; width: 600px;"></div>
 </template>
+
+<style scoped>
+.border {
+  border: dashed 2px black;
+}
+
+</style>
