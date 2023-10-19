@@ -6,7 +6,7 @@
     "distDir": "../tauri_vite/dist"
   },
   "package": {
-    "productName": "tauri_demo",
+    "productName": "chemeditor",
     "version": "0.1.0"
   },
   "tauri": {
@@ -28,7 +28,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "tauri.chem.editor",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,9 +56,10 @@
       {
         "fullscreen": false,
         "height": 800,
+        "width": 800,
         "resizable": true,
-        "title": "tauri_demo",
-        "width": 800
+        "title": "Chem Editor"
+
       }
     ]
   }
