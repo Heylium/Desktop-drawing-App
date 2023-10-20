@@ -1,5 +1,14 @@
+**/.idea/
+**/.vscode/
+
 
 async_draw_app/.idea/uiDesigner.xml
 async_draw_app/.idea/gradle.xml
 async_draw_app/.idea/kotlinc.xml
 async_draw_app/.idea/misc.xml
+tauri-app/.idea/tauri-app.iml
+
+target/
+node_modules/
+dist/
+
