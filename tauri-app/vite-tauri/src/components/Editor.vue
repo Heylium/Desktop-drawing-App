@@ -1,15 +1,15 @@
 <script setup lang="ts">
-// 启用了 TypeScript
+// @ts-ignore
 import { onMounted } from 'vue'
 
 // @ts-ignore
 import {MoleculeEditor} from "butlerov"
 
 onMounted(() => {
-
   const element: HTMLDivElement = document.getElementById("butlerov") as HTMLDivElement;
   MoleculeEditor.from_html_element(element);
 });
+
 </script>
 
 <template>
