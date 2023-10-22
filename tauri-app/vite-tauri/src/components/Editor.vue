@@ -13,12 +13,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="butlerov" class="border" style="height: 600px; width: 600px;"></div>
+  <div class="page-wrapper">
+    <div class="column-left">
+      <button>Clear</button>
+    </div>
+    <div class="column-right">
+      <div id="butlerov" class="border" style="height: 600px; width: 600px;"></div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .border {
   border: dashed 2px black;
+}
+
+.page-wrapper {
+  display: flex;
+}
+
+.column-left {
+  flex: 70%;
+  padding: 20px 5px 20px 15px;
+}
+.column-right {
+  flex: 30%;
+  padding: 20px 5px 20px 15px;
+  border-left: solid 2px #555;
 }
 
 
