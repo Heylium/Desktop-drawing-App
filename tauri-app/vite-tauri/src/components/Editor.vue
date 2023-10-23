@@ -5,17 +5,26 @@ import { onMounted } from 'vue'
 // @ts-ignore
 import {MoleculeEditor} from "butlerov"
 
+let editor: MoleculeEditor;
+
 onMounted(() => {
   const element: HTMLDivElement = document.getElementById("butlerov") as HTMLDivElement;
-  MoleculeEditor.from_html_element(element);
+  editor = MoleculeEditor.from_html_element(element);
 });
+
+/**
+ * clear the drawing on editor
+ */
+const clearDrawing = () => {
+  editor.clear();
+}
 
 </script>
 
 <template>
   <div class="page-wrapper">
     <div class="column-left">
-      <button>Clear</button>
+      <button @click="clearDrawing">Clear</button>
     </div>
     <div class="column-right">
       <div id="butlerov" class="border" style="height: 600px; width: 600px;"></div>
