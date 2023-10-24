@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.*
 
 class DrawController3 {
 
-    private var _drawBoxState: MutableStateFlow<DrawBoxConnectionState> = MutableStateFlow(DrawBoxConnectionState.Disconnected)
+    /** draw path connect state */
+    private var connectState: MutableStateFlow<DrawBoxConnectionState> = MutableStateFlow(DrawBoxConnectionState.Disconnected)
 
     /**
      * canvas [DrawAction] State list.
