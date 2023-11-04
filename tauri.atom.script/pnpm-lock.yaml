@@ -27,7 +27,7 @@ importers:
 
   apps/vite.app:
     dependencies:
-      '@packages/shared':
+      '@infra/shared':
         specifier: workspace:^
         version: link:../../packages/shared
       vue:
@@ -52,7 +52,7 @@ importers:
 
   packages/components:
     dependencies:
-      '@packages/utils':
+      '@infra/utils':
         specifier: workspace:^
         version: link:../utils
 
