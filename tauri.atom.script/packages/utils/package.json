@@ -1,5 +1,5 @@
 {
-  "name": "@packages/utils",
+  "name": "@infra/utils",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
