@@ -58,11 +58,19 @@ importers:
 
   packages/shared: {}
 
+  packages/threejs:
+    dependencies:
+      three:
+        specifier: ^0.158.0
+        version: 0.158.0
+
   packages/utils:
     dependencies:
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
+
+  packages/webgpu: {}
 
 packages:
 
@@ -552,6 +560,10 @@ packages:
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
+
+  /three@0.158.0:
+    resolution: {integrity: sha512-TALj4EOpdDPF1henk2Q+s17K61uEAAWQ7TJB68nr7FKxqwyDr3msOt5IWdbGm4TaWKjrtWS8DJJWe9JnvsWOhQ==}
+    dev: false
 
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
