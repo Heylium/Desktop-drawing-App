@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="fabric.js"></script>
+
+<canvas id="c" width="800" height="800"></canvas>
+<script !src="">
+    const canvasEl = document.getElementById('c');
+    const canvas = new fabric.Canvas(canvasEl);
+
+    // const rect = new fabric.Rect({
+    //     left: 50,
+    //     top: 50,
+    //     width: 100,
+    //     height: 100,
+    //     fill: 'green',
+    // });
+    //
+    // const iTxt = new fabric.IText('99999', {
+    //     left: rect.left + 10,
+    //     top: rect.top + 10,
+    //     width: 80,
+    //     height: 80,
+    // });
+    // iTxt.on('mousedown', function () {
+    //     console.log('down')
+    // });
+    // canvas.add(iTxt);
+    // const group = new fabric.Group([rect, iTxt], {
+    //     subTargetCheck: true,
+    // });
+    // canvas.add(group);
+    //
+    // canvas.requestRenderAll();
+
+
+    function createGroup() {
+        let circle = new fabric.Circle({
+            radius:40,
+            fill: 'rgba(200, 0, 0, 0.3)',
+            originX: 'center',
+            originY: 'center',
+        });
+
+        let text = new fabric.Textbox("AJLoveChina", {
+            originX: 'center',
+            originY: 'center',
+            textAlign: 'center',
+            fontSize: 12,
+        })
+
+        let group = new fabric.Group([circle, text], {
+            left: 100,
+            top: 100,
+            originX: 'center',
+            originY: 'center',
+        });
+
+        group.on('mousedblclick', () => {
+            // textForEditing is temporary obj,
+            // and will be removed after editing
+            let textForEditing = new fabric.Textbox(text.text, {
+                originX: 'center',
+                originY: 'center',
+                textAlign: text.textAlign,
+                fontSize: text.fontSize,
+
+                left: group.left,
+                top: group.top,
+            })
+
+            // hide group inside text
+            text.visible = false;
+            // note important, text cannot be hidden without this
+            group.addWithUpdate();
+
+            textForEditing.visible = true;
+            // do not give controls, do not allow move/resize/rotation on this
+            textForEditing.hasConstrols = false;
+
+
+            // now add this temporary obj to canvas
+            canvas.add(textForEditing);
+            canvas.setActiveObject(textForEditing);
+            // make the cursor showing
+            textForEditing.enterEditing();
+            textForEditing.selectAll();
+
+
+            // editing:exited means you click outside of the textForEditing
+            textForEditing.on('editing:exited', () =>{
+                let newVal = textForEditing.text;
+                let oldVal = text.text;
+
+                // then we check if text is changed
+                if (newVal !== oldVal) {
+                    text.set({
+                        text: newVal,
+                        visible: true,
+                    })
+
+                    // comment before, you must call this
+                    group.addWithUpdate();
+
+                    // we do not need textForEditing anymore
+                    textForEditing.visible = false;
+                    canvas.remove(textForEditing);
+
+                    // optional, buf for better user experience
+                    canvas.setActiveObject(group);
+                }
+            })
+        })
+
+        canvas.add(group);
+    }
+
+    createGroup();
+</script>
+</body>
+</html>
