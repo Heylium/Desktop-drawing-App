@@ -26,8 +26,20 @@ const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement);
 
-const control = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.addEventListener('change', () => {
+    console.log('changed')
+})
 
+// orbit damping added.
+controls.enableDamping = true;
+controls.dampingFactor = 0.01;
+
+// added auto rotate
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+
+// add grid
 const grid = new THREE.GridHelper(10, 10)
 scene.add(grid)
 
@@ -38,7 +50,7 @@ const animate = () => {
     mesh.rotation.x += 0.01;
 
     // update controller
-    control.update()
+    controls.update()
 
     renderer.render(scene, camera);
 }
