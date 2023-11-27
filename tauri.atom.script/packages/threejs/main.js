@@ -39,6 +39,11 @@ controls.dampingFactor = 0.01;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 0.5;
 
+// axis helper
+const axesHelper = new THREE.AxesHelper(5);
+axesHelper.position.y = 3;
+scene.add(axesHelper);
+
 // add grid
 const grid = new THREE.GridHelper(10, 10)
 scene.add(grid)
