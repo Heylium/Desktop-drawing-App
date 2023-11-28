@@ -3,6 +3,16 @@ import {OrbitControls} from "three/addons";
 
 const scene = new THREE.Scene();
 
+// add scene background
+scene.background = new THREE.Color(0x666666);
+
+// add picture as background
+// const pic = new THREE.CubeTextureLoader.setPath('/').load()
+
+// add scene fog
+const fog = new THREE.Fog(0xcccccc, 10, 15);
+scene.fog = fog;
+
 const camera = new THREE.PerspectiveCamera();
 camera.position.z = 10;
 camera.position.y = 2;
