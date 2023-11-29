@@ -31,6 +31,11 @@ scene.add(mesh);
 
 console.log(mesh);
 
+const moveMesh = () => {
+    mesh.position.set(3,5,0);
+    camera.lookAt(mesh.position)
+}
+
 // using webgl2 renderer
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
