@@ -7,7 +7,9 @@ export default defineComponent({
 <script setup lang="ts">
 import {ButtonProps} from './types.ts'
 
-defineProps<ButtonProps>()
+withDefaults(defineProps<ButtonProps>(), {
+  nativeType: 'button',
+})
 </script>
 
 <template>
@@ -22,6 +24,8 @@ defineProps<ButtonProps>()
         'is-disabled': disabled,
       }"
       :disabled="disabled"
+      :autofocus="autofocus"
+      :type="nativeType"
   >
     <span>
       <slot></slot>
