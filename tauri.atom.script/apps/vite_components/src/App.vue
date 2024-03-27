@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import MyButton from "./components/Button/Button.vue";
+import {onMounted, ref} from "vue";
+import type {ButtonInstance} from "./components/Button/types.ts";
+
+const buttonRef = ref<ButtonInstance | null>(null)
+onMounted(() => {
+  console.log(`buttonRef:`, buttonRef.value?.ref)
+})
 </script>
 
 <template>
@@ -12,7 +19,7 @@ import MyButton from "./components/Button/Button.vue";
     </a>
   </div>
 
-  <my-button type="primary" plain>Defined Button</my-button>
+  <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
 
 </template>
 
