@@ -1,5 +1,2 @@
 @import "./vars.css";
-
-:root {
-    --main-bg-color: blue;
-}
+@import "./reset.css";
