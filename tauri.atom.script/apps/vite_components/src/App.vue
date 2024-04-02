@@ -19,8 +19,16 @@ onMounted(() => {
     </a>
   </div>
 
-  <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
 
+  <main>
+    <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
+    <my-button plain >Plain</my-button>
+    <my-button round >Round</my-button>
+    <my-button circle >Circle</my-button>
+    <my-button disabled >Disabled</my-button>
+  </main>
+
+  <a href="#">The link</a>
 </template>
 
 <style scoped>
