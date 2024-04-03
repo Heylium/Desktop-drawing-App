@@ -6,7 +6,8 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 import {ButtonProps} from './types.ts'
-import {ref} from "vue";
+import {ref} from "vue"
+import './styles.css'
 
 withDefaults(defineProps<ButtonProps>(), {
   nativeType: 'button',
@@ -21,10 +22,10 @@ defineExpose({
 <template>
   <button
       ref="_ref"
-      class="my-button"
+      class="vk-button"
       :class="{
-        [`my-button--${type}`]: type,
-        [`my-button--${size}`]: size,
+        [`vk-button--${type}`]: type,
+        [`vk-button--${size}`]: size,
         'is-plain': plain,
         'is-round': round,
         'is-circle': circle,
@@ -41,9 +42,6 @@ defineExpose({
 
 </template>
 
-<style >
-.my-button {
-  background-color: var(--main-bg-color);
-}
+<style scoped>
 
 </style>
