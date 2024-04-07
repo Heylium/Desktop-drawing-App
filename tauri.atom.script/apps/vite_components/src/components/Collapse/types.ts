@@ -1,5 +1,8 @@
+
+export type NameType = string | number
+
 export interface CollapseItemProps {
-    name: string | number;
+    name: NameType;
     title?: string;
     disabled?: boolean;
 }
