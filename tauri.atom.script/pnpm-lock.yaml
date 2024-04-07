@@ -124,25 +124,6 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2
 
-  packages/threejs.demo:
-    dependencies:
-      three:
-        specifier: ^0.158.0
-        version: 0.158.0
-
-  packages/threejs/threejs:
-    dependencies:
-      three:
-        specifier: ^0.158.0
-        version: 0.158.0
-    devDependencies:
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-      vite:
-        specifier: ^5.0.0
-        version: 5.0.2
-
   packages/utils:
     dependencies:
       dayjs:
