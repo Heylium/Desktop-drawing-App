@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import MyButton from "./components/Button/Button.vue";
+import Collapse from "./components/Collapse/Collapse.vue";
+import Item from "./components/Collapse/CollapseItem.vue";
 import {onMounted, ref} from "vue";
 import type {ButtonInstance} from "./components/Button/types.ts";
 
@@ -26,6 +28,22 @@ onMounted(() => {
     <my-button round >Round</my-button>
     <my-button circle >Circle</my-button>
     <my-button disabled >Disabled</my-button>
+
+    <Collapse>
+      <Item name="a">
+        <template #title>
+          <h1>nice title</h1>
+        </template>
+        <h1>headline title</h1>
+        <div> this is content area </div>
+      </Item>
+      <Item name="b" title="nice title b item b">
+        <div>this is area b</div>
+      </Item>
+      <Item name="c" title="nice title c " disabled>
+        <div> this is area c </div>
+      </Item>
+    </Collapse>
   </main>
 
   <a href="#">The link</a>
