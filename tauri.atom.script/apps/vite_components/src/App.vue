@@ -31,7 +31,7 @@ const openedValue = ref(['a'])
     <my-button circle >Circle</my-button>
     <my-button disabled >Disabled</my-button>
 
-    <Collapse v-model="openedValue">
+    <Collapse v-model="openedValue" accordion>
       <Item name="a">
         <template #title>
           <h1>nice title</h1>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, provide} from "vue"
+import {ref, provide, watch} from "vue"
 import type {NameType, CollapseProps, CollapseEmits} from "./types.ts";
 import {collapseContextKey} from "./types.ts";
 
@@ -9,17 +9,29 @@ defineOptions({
 })
 const props = defineProps<CollapseProps>()
 const emits = defineEmits<CollapseEmits>()
-const activeNames = ref<NameType[]>([props.modelValue])
+const activeNames = ref<NameType[]>(props.modelValue)
+
+// watching active names change
+watch(() => props.modelValue, () => {
+  activeNames.value = props.modelValue
+})
+if (props.accordion && activeNames.value.length > 1) {
+  console.warn(`accordion mode should only have one active item`)
+}
+
 const handleItemClick = (item: NameType) => {
-  const index = activeNames.value.indexOf(item)
-  if (index > -1) {
-    activeNames.value.splice(index, 1)
+  if (props.accordion) {
+    activeNames.value = [ activeNames.value[0] === item ? '' : item ]
   } else {
-    activeNames.value.push(item)
+    const index = activeNames.value.indexOf(item)
+    if (index > -1) {
+      activeNames.value.splice(index, 1)
+    } else {
+      activeNames.value.push(item)
+    }
   }
   emits('update:modelValue', activeNames.value)
   emits('change', activeNames.value)
-
 }
 
 provide(collapseContextKey, {

@@ -7,7 +7,7 @@ export default defineComponent({
 <script setup lang="ts">
 import {ButtonProps} from './types.ts'
 import {ref} from "vue"
-import './styles.css'
+import './style.css'
 
 withDefaults(defineProps<ButtonProps>(), {
   nativeType: 'button',
