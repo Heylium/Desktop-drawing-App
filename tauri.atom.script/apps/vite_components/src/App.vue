@@ -9,6 +9,8 @@ const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
   console.log(`buttonRef:`, buttonRef.value?.ref)
 })
+
+const openedValue = ref(['a'])
 </script>
 
 <template>
@@ -29,7 +31,7 @@ onMounted(() => {
     <my-button circle >Circle</my-button>
     <my-button disabled >Disabled</my-button>
 
-    <Collapse>
+    <Collapse v-model="openedValue">
       <Item name="a">
         <template #title>
           <h1>nice title</h1>
@@ -44,6 +46,7 @@ onMounted(() => {
         <div> this is area c </div>
       </Item>
     </Collapse>
+    {{openedValue}}
   </main>
 
   <a href="#">The link</a>
