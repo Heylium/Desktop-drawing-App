@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import {ref, provide} from "vue"
-import type {NameType} from "./types.ts";
+import type {NameType, CollapseProps, CollapseEmits} from "./types.ts";
 import {collapseContextKey} from "./types.ts";
 
 
 defineOptions({
   name: 'VkCollapse'
 })
-const activeNames = ref<NameType[]>([])
+const props = defineProps<CollapseProps>()
+const emits = defineEmits<CollapseEmits>()
+const activeNames = ref<NameType[]>([props.modelValue])
 const handleItemClick = (item: NameType) => {
   const index = activeNames.value.indexOf(item)
   if (index > -1) {
@@ -15,6 +17,9 @@ const handleItemClick = (item: NameType) => {
   } else {
     activeNames.value.push(item)
   }
+  emits('update:modelValue', activeNames.value)
+  emits('change', activeNames.value)
+
 }
 
 provide(collapseContextKey, {
