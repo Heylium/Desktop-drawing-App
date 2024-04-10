@@ -21,16 +21,18 @@ const handleClick = () => {
 <div
   class="vk-collapse-item"
   :class="{
-      'is-disabled': disabled
+      'is-disabled': disabled,
+      'is-active': isActive,
     }"
 >
   <div class="vk-collapse-item__header" :id="`item-header-${name}`" @click="handleClick">
     <slot name="title">{{title}}</slot>
   </div>
-
-  <div class="vk-collapse-item__content" :id="`item-content-${name}`" v-show="isActive">
-    <slot></slot>
-  </div>
+  <Transition name="fade">
+    <div class="vk-collapse-item__content" :id="`item-content-${name}`" v-show="isActive">
+      <slot></slot>
+    </div>
+  </Transition>
 </div>
 </template>
 
