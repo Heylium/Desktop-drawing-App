@@ -61,5 +61,5 @@
     opacity: 1;
 }
 .fade-enter-active, .fade-leave-from {
-    transition: opacity 1s ease-in-out;
+    transition: height 1s ease-in-out;
 }
