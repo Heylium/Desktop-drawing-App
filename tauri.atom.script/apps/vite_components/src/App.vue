@@ -23,6 +23,7 @@ const openedValue = ref(['a'])
     </a>
   </div>
 
+  <font-awesome-icon icon="fa-solid fa-user-secret" ></font-awesome-icon>
 
   <main>
     <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
