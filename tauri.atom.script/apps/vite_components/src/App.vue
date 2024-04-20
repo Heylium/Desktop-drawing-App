@@ -4,6 +4,7 @@ import Collapse from "./components/Collapse/Collapse.vue";
 import Item from "./components/Collapse/CollapseItem.vue";
 import {onMounted, ref} from "vue";
 import type {ButtonInstance} from "./components/Button/types.ts";
+import VkIcon from "./components/Icon/Icon.vue";
 
 const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
@@ -23,7 +24,7 @@ const openedValue = ref(['a'])
     </a>
   </div>
 
-  <font-awesome-icon icon="fa-solid fa-user-secret" ></font-awesome-icon>
+  <VkIcon icon="fa-solid fa-user-secret" ></VkIcon>
 
   <main>
     <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
