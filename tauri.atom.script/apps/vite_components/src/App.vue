@@ -24,7 +24,7 @@ const openedValue = ref(['a'])
     </a>
   </div>
 
-  <VkIcon icon="fa-solid fa-user-secret" ></VkIcon>
+  <VkIcon icon="arrow-up" size="2xl" type="danger"></VkIcon>
 
   <main>
     <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
@@ -32,6 +32,11 @@ const openedValue = ref(['a'])
     <my-button round >Round</my-button>
     <my-button circle >Circle</my-button>
     <my-button disabled >Disabled</my-button>
+    <br/>
+    <br/>
+    <my-button size="large" loading >Loading</my-button>
+    <my-button size="large" icon="arrow-up" >Icon</my-button>
+
 
     <Collapse v-model="openedValue" accordion>
       <Item name="a">
