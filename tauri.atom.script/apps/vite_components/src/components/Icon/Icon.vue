@@ -19,7 +19,7 @@ const customStyles = computed(() => {
 </script>
 
 <template>
-  <i class="vk-icon" :class="{[`vk-icon--${type}`] : type}" :style="customStyles">
+  <i class="vk-icon" :class="{[`vk-icon--${type}`] : type}" :style="customStyles" v-bind="$attrs">
     <font-awesome-icon v-bind="filteredProps"/>
   </i>
 
