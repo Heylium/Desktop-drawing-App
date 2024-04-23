@@ -17,3 +17,4 @@ target/
 node_modules/
 dist/
 
+tauri.atom.script/pnpm-lock.yaml
