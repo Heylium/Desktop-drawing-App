@@ -5,7 +5,7 @@ export default defineComponent({
 })
 </script>
 <script setup lang="ts">
-import {ButtonProps} from './types.ts'
+import type {ButtonProps} from './types.ts'
 import {ref} from "vue"
 import './style.css'
 import Icon from '../Icon/Icon.vue'
@@ -41,7 +41,7 @@ defineExpose({
     <Icon icon="spinner" spin v-if="loading" />
     <Icon :icon="icon" v-if="icon" />
     <span>
-      <slot></slot>
+      <slot />
     </span>
   </button>
 
