@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {  omit } from "lodash-es";
+import { omit } from "lodash-es";
 import {IconProps} from "./types.ts";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {computed} from "vue";
