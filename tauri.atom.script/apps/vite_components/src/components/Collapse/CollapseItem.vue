@@ -46,12 +46,14 @@ const transitionEvents: Record<string, (el: HTMLElement) => void> = {
 <template>
 <div
   class="vk-collapse-item"
-  :class="{
-      'is-disabled': disabled,
-      'is-active': isActive,
-    }"
 >
-  <div class="vk-collapse-item__header" :id="`item-header-${name}`" @click="handleClick">
+  <div class="vk-collapse-item__header"
+       :class="{
+        'is-disabled': disabled,
+        'is-active': isActive,
+        }"
+       :id="`item-header-${name}`"
+       @click="handleClick">
     <slot name="title">{{title}}</slot>
     <Icon icon="angle-right" class="header-angle" />
   </div>
