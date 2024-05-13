@@ -1,4 +1,4 @@
-import {describe, expect, test} from "vitest";
+import {describe, expect, test, vi} from "vitest";
 import {mount} from "@vue/test-utils";
 import VkCollapse from "./Collapse.vue";
 import VkCollapseItem from "./CollapseItem.vue";
@@ -6,8 +6,9 @@ import VkCollapseItem from "./CollapseItem.vue";
 
 describe('Collapse.vue', () => {
     test('basic collapse', async () => {
+        const onChange = vi.fn()
         const wrapper = mount(() =>
-            <VkCollapse modelValue={['a']}>
+            <VkCollapse modelValue={['a']} onChange={onChange}>
                 <VkCollapseItem name="a" title="title a">
                     content a
                 </VkCollapseItem>
@@ -48,9 +49,11 @@ describe('Collapse.vue', () => {
         // actions
         await firstHeader.trigger('click')
         expect(firstContent.isVisible()).toBeFalsy()
-
+        expect(onChange).toHaveBeenCalledWith([])
         await secondHeader.trigger('click')
         expect(secondHeader.isVisible()).toBeTruthy()
+        expect(onChange).toHaveBeenLastCalledWith(['b'])
+
 
         // disabled item
         const disabledHeader = headers[2]
