@@ -20,18 +20,21 @@ if (props.accordion && activeNames.value.length > 1) {
 }
 
 const handleItemClick = (item: NameType) => {
+  let _activeNames = [...activeNames.value]
   if (props.accordion) {
-    activeNames.value = [ activeNames.value[0] === item ? '' : item ]
+    _activeNames = [ activeNames.value[0] === item ? '' : item ]
+    activeNames.value = _activeNames
   } else {
-    const index = activeNames.value.indexOf(item)
+    const index = _activeNames.indexOf(item)
     if (index > -1) {
-      activeNames.value.splice(index, 1)
+      _activeNames.splice(index, 1)
     } else {
-      activeNames.value.push(item)
+      _activeNames.push(item)
     }
+    activeNames.value = _activeNames
   }
-  emits('update:modelValue', activeNames.value)
-  emits('change', activeNames.value)
+  emits('update:modelValue', _activeNames)
+  emits('change', _activeNames)
 }
 
 provide(collapseContextKey, {
