@@ -5,11 +5,32 @@ import Item from "./components/Collapse/CollapseItem.vue";
 import {onMounted, ref} from "vue";
 import type {ButtonInstance} from "./components/Button/types.ts";
 import VkIcon from "./components/Icon/Icon.vue";
+import VNode from "./VNode.js";
+import {createPopper} from "@popperjs/core";
+import type {Instance} from "@popperjs/core";
 
 const buttonRef = ref<ButtonInstance | null>(null)
+
+const overlayNode = ref<HTMLElement>()
+const triggerNode = ref<HTMLElement>()
+let popperInstance: Instance | null = null
+let size = ref<any>('3x')
 onMounted(() => {
   console.log(`buttonRef:`, buttonRef.value?.ref)
+
+  if (overlayNode.value && triggerNode.value) {
+    popperInstance = createPopper(triggerNode.value, overlayNode.value, {placement: 'right'})
+  }
+
+  setTimeout(() => {
+    openedValue.value = ['a', 'b']
+    size.value = '2xl'
+    popperInstance?.setOptions({
+      placement: 'bottom',
+    })
+  }, 2000)
 })
+
 
 const openedValue = ref(['a'])
 </script>
@@ -17,12 +38,15 @@ const openedValue = ref(['a'])
 <template>
   <div>
     <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
+      <img src="/vite.svg" class="logo" alt="Vite logo" ref="triggerNode" />
+      <div ref="overlayNode"><h1>Hello Tooltip</h1></div>
     </a>
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
+
+  <VNode msg="hello" ></VNode>
 
   <VkIcon icon="arrow-up" size="2xl" type="danger"></VkIcon>
 
