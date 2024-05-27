@@ -8,6 +8,7 @@ import VkIcon from "./components/Icon/Icon.vue";
 import VNode from "./VNode.js";
 import {createPopper} from "@popperjs/core";
 import type {Instance} from "@popperjs/core";
+import Tooltip from "./components/Tooltip/Tooltip.vue";
 
 const buttonRef = ref<ButtonInstance | null>(null)
 
@@ -37,10 +38,14 @@ const openedValue = ref(['a'])
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" ref="triggerNode" />
-      <div ref="overlayNode"><h1>Hello Tooltip</h1></div>
-    </a>
+<!--    <a href="https://vitejs.dev" target="_blank">-->
+      <Tooltip content="hello world" placement="right">
+        <img src="/vite.svg" class="logo" alt="Vite logo"/>
+        <template #content>
+          <h1>Hello Tooltip</h1>
+        </template>
+      </Tooltip>
+<!--    </a>-->
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
