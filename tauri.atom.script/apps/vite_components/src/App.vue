@@ -16,6 +16,7 @@ const overlayNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let size = ref<any>('3x')
+const trigger = ref<any>('hover')
 onMounted(() => {
   console.log(`buttonRef:`, buttonRef.value?.ref)
 
@@ -39,7 +40,7 @@ const openedValue = ref(['a'])
 <template>
   <div>
 <!--    <a href="https://vitejs.dev" target="_blank">-->
-      <Tooltip content="hello world" placement="right">
+      <Tooltip content="hello world" placement="left" :trigger="trigger">
         <img src="/vite.svg" class="logo" alt="Vite logo"/>
         <template #content>
           <h1>Hello Tooltip</h1>
