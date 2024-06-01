@@ -15,6 +15,7 @@ const popperNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
 let popperInstance: null | Instance = null
 let events: Record<string, any> = reactive({})
+let outerEvents: Record<string, any> = reactive({})
 const togglePopper = () => {
   isOpen.value = !isOpen.value
   emits('visible-change', isOpen.value)
@@ -38,6 +39,15 @@ const attachEvents = () => {
 }
 attachEvents()
 
+watch(() => props.trigger, (newTrigger, oldTrigger) => {
+  if (newTrigger !== oldTrigger) {
+    // clear events
+    events = {}
+    outerEvents = {}
+    attachEvents()
+  }
+})
+
 watch(isOpen, (newValue) => {
   if (newValue) {
     if (triggerNode.value && popperNode.value) {
@@ -55,6 +65,7 @@ watch(isOpen, (newValue) => {
 <template>
 <div
   class="vk-tooltip"
+  v-on="outerEvents"
 >
   <div
       ref="triggerNode"
