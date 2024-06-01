@@ -16,7 +16,7 @@ const overlayNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let size = ref<any>('3x')
-const trigger = ref<any>('hover')
+const trigger = ref<any>('click')
 onMounted(() => {
   console.log(`buttonRef:`, buttonRef.value?.ref)
 
@@ -27,9 +27,10 @@ onMounted(() => {
   setTimeout(() => {
     openedValue.value = ['a', 'b']
     size.value = '2xl'
-    popperInstance?.setOptions({
-      placement: 'bottom',
-    })
+    trigger.value = 'hover'
+    // popperInstance?.setOptions({
+    //   placement: 'bottom',
+    // })
   }, 2000)
 })
 
