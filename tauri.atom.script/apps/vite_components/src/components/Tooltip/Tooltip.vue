@@ -2,6 +2,7 @@
 import {reactive, ref, watch} from "vue";
 import type {TooltipProps, TooltipEmits} from "./types.ts";
 import {createPopper, Instance} from "@popperjs/core";
+import useClickOutside from "@/hooks/useClickOutside.ts";
 
 
 const props = withDefaults(defineProps<TooltipProps>(), {
@@ -13,6 +14,7 @@ const emits = defineEmits<TooltipEmits>()
 const isOpen = ref(false)
 const popperNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
+const popperContainerNode =  ref<HTMLElement>()
 let popperInstance: null | Instance = null
 let events: Record<string, any> = reactive({})
 let outerEvents: Record<string, any> = reactive({})
@@ -37,6 +39,13 @@ const attachEvents = () => {
     events['click'] = togglePopper
   }
 }
+
+useClickOutside(popperContainerNode, () => {
+  if (props.trigger === 'click' && isOpen.value) {
+    close()
+  }
+})
+
 attachEvents()
 
 watch(() => props.trigger, (newTrigger, oldTrigger) => {
@@ -66,6 +75,7 @@ watch(isOpen, (newValue) => {
 <div
   class="vk-tooltip"
   v-on="outerEvents"
+  ref="popperContainerNode"
 >
   <div
       ref="triggerNode"
