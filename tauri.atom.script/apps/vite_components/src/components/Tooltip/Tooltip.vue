@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {reactive, ref, watch} from "vue";
-import type {TooltipProps, TooltipEmits} from "./types.ts";
+import {onUnmounted, reactive, ref, watch} from "vue";
+import type {TooltipProps, TooltipEmits, TooltipInstance} from "./types.ts";
 import {createPopper, Instance} from "@popperjs/core";
 import useClickOutside from "@/hooks/useClickOutside.ts";
 
@@ -41,12 +41,23 @@ const attachEvents = () => {
 }
 
 useClickOutside(popperContainerNode, () => {
-  if (props.trigger === 'click' && isOpen.value) {
+  if (props.trigger === 'click' && isOpen.value && !props.manual) {
     close()
   }
 })
 
-attachEvents()
+if (!props.manual) {
+  attachEvents()
+}
+
+watch(() => props.manual, (isManual) => {
+  if (isManual) {
+    events = {}
+    outerEvents = {}
+  } else {
+    attachEvents()
+  }
+})
 
 watch(() => props.trigger, (newTrigger, oldTrigger) => {
   if (newTrigger !== oldTrigger) {
@@ -69,6 +80,14 @@ watch(isOpen, (newValue) => {
   }
 }, { flush: 'post' })
 
+onUnmounted(() => {
+  popperInstance?.destroy()
+})
+
+defineExpose<TooltipInstance>({
+  'show': open,
+  'hide': close,
+})
 </script>
 
 <template>
