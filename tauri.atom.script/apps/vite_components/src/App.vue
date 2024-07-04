@@ -6,17 +6,29 @@ import {onMounted, ref} from "vue";
 import type {ButtonInstance} from "./components/Button/types.ts";
 import VkIcon from "./components/Icon/Icon.vue";
 import VNode from "./VNode.js";
-import {createPopper} from "@popperjs/core";
+import {createPopper, Options} from "@popperjs/core";
 import type {Instance} from "@popperjs/core";
 import Tooltip from "./components/Tooltip/Tooltip.vue";
+import {TooltipInstance} from "@/components/Tooltip/types.ts";
 
 const buttonRef = ref<ButtonInstance | null>(null)
+const tooltipRef = ref<TooltipInstance | null>(null)
 
 const overlayNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let size = ref<any>('3x')
-const trigger = ref<any>('click')
+
+const trigger = ref<any>('hover')
+const options: Partial<Options> = {placement: 'right-end', strategy: 'fixed'}
+
+const open = () => {
+  tooltipRef.value?.show()
+}
+const close = () => {
+  tooltipRef.value?.hide()
+}
+
 onMounted(() => {
   console.log(`buttonRef:`, buttonRef.value?.ref)
 
@@ -41,7 +53,14 @@ const openedValue = ref(['a'])
 <template>
   <div>
 <!--    <a href="https://vitejs.dev" target="_blank">-->
-      <Tooltip content="hello world" placement="left" :trigger="trigger">
+      <Tooltip
+          content="hello world"
+          placement="left"
+          :trigger="trigger"
+          ref="tooltipRef"
+          :open-delay="1000"
+          :close-delay="1000"
+      >
         <img src="/vite.svg" class="logo" alt="Vite logo"/>
         <template #content>
           <h1>Hello Tooltip</h1>
@@ -58,8 +77,8 @@ const openedValue = ref(['a'])
   <VkIcon icon="arrow-up" size="2xl" type="danger"></VkIcon>
 
   <main>
-    <my-button type="primary" plain ref="buttonRef">Defined Button</my-button>
-    <my-button plain >Plain</my-button>
+    <my-button @click="open" type="primary" plain ref="buttonRef">Defined Button</my-button>
+    <my-button @click="close" plain >Plain</my-button>
     <my-button round >Round</my-button>
     <my-button circle >Circle</my-button>
     <my-button disabled >Disabled</my-button>

@@ -3,12 +3,15 @@ import {computed, onUnmounted, reactive, ref, watch} from "vue";
 import type {TooltipProps, TooltipEmits, TooltipInstance} from "./types.ts";
 import {createPopper, Instance} from "@popperjs/core";
 import useClickOutside from "@/hooks/useClickOutside.ts";
+import {debounce} from "lodash-es";
 
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
   transition: 'fade',
+  openDelay: 0,
+  closeDelay: 0,
 })
 const emits = defineEmits<TooltipEmits>()
 const isOpen = ref(false)
@@ -18,6 +21,10 @@ const popperContainerNode =  ref<HTMLElement>()
 let popperInstance: null | Instance = null
 let events: Record<string, any> = reactive({})
 let outerEvents: Record<string, any> = reactive({})
+
+let openTimes = 0
+let closeTimes = 0
+
 const popperOptions = computed(() => {
   return {
     placement: props.placement,
@@ -25,24 +32,44 @@ const popperOptions = computed(() => {
   }
 })
 
-
-const togglePopper = () => {
-  isOpen.value = !isOpen.value
-  emits('visible-change', isOpen.value)
-}
-
 const open = () => {
+  openTimes++
+  console.log('open times', openTimes)
   isOpen.value = true
   emits('visible-change', true)
 }
 const close = () => {
+  closeTimes++
+  console.log('close times', closeTimes)
   isOpen.value = false
   emits('visible-change', false)
 }
+const openDebounce = debounce(open, props.openDelay)
+const closeDebounce = debounce(close, props.closeDelay)
+
+const openFinal = () => {
+  closeDebounce.cancel()
+  openDebounce()
+}
+const closeFinal = () => {
+  openDebounce.cancel()
+  closeDebounce()
+}
+
+const togglePopper = () => {
+  if (isOpen.value) {
+    openFinal()
+  } else {
+    closeFinal()
+  }
+  // isOpen.value = !isOpen.value
+  // emits('visible-change', isOpen.value)
+}
+
 const attachEvents = () => {
   if (props.trigger === 'hover') {
-    events['mouseenter'] = open
-    events['mouseleave'] = close
+    events['mouseenter'] = openFinal
+    events['mouseleave'] = closeFinal
   } else if (props.trigger === 'click') {
     events['click'] = togglePopper
   }
@@ -91,8 +118,8 @@ onUnmounted(() => {
 })
 
 defineExpose<TooltipInstance>({
-  'show': open,
-  'hide': close,
+  'show': openDebounce,
+  'hide': closeDebounce,
 })
 </script>
 
