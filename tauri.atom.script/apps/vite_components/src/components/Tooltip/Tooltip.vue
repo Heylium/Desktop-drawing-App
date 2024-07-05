@@ -28,6 +28,14 @@ let closeTimes = 0
 const popperOptions = computed(() => {
   return {
     placement: props.placement,
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 9],
+        }
+      }
+    ],
     ...props.popperOptions,
   }
 })
