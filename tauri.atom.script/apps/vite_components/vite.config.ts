@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-// import eslint from 'vite-plugin-eslint'
+import eslint from 'vite-plugin-eslint'
 import VueMacros from 'unplugin-vue-macros'
 import dts from 'vite-plugin-dts'
 
@@ -16,6 +16,7 @@ export default defineConfig({
         vueJsx: vueJsx(),
       },
     }),
+    eslint(),
     dts({
       tsconfigPath: './tsconfig.build.json'
     })
