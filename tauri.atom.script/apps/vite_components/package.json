@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -22,9 +23,13 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@rushstack/eslint-patch": "^1.10.3",
     "@types/lodash-es": "^4.17.12",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/test-utils": "^2.3.0",
+    "eslint": "^9.6.0",
+    "eslint-plugin-vue": "^9.27.0",
     "jsdom": "^21.1.0",
     "postcss-color-mix": "^1.1.0",
     "postcss-each": "^1.1.0",
