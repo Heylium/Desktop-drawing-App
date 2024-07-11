@@ -10,39 +10,32 @@ describe('Tooltip.vue', () => {
   beforeEach(() => {
     vi.useFakeTimers()
   })
-
   test('basic tooltip', async () => {
     const wrapper = mount(() =>
-      <div>
-        <div id="outside"></div>
-        <Tooltip content="hello tooltip" trigger="click" onVisibleChange={onVisibleChange}>
-          <button id="trigger">Trigger</button>
-        </Tooltip>
-      </div>
+        <div>
+          <div id="outside"></div>
+          <Tooltip content="hello tooltip" trigger='click' onVisibleChange={onVisibleChange}>
+            <button id="trigger">Trigger</button>
+          </Tooltip>
+        </div>
       , {
         attachTo: document.body
-      }
-    )
-
-    // static test
+      })
+    // 静态测试
     const triggerArea = wrapper.find('#trigger')
     expect(triggerArea.exists()).toBeTruthy()
-    expect(wrapper.find('.vk-tooltip_popper').exists()).toBeFalsy()
-
-    // testing click
+    expect(wrapper.find('.vk-tooltip__popper').exists()).toBeFalsy()
+    console.log('before', wrapper.html())
+    // 测试点击行为
     triggerArea.trigger('click')
     await vi.runAllTimers()
-    // error
-    expect(wrapper.find('.vk-tooltip_popper').exists()).toBeTruthy()
-    expect(wrapper.get('.vk-tooltip_popper').text()).toBe('hello tooltip')
-    expect('onVisibleChange').toHaveBeenCalledWith(true)
-    console.log(wrapper.html())
-
-    wrapper.find('#outside').trigger('click')
+    expect(wrapper.find('.vk-tooltip__popper').exists()).toBeTruthy()
+    expect(wrapper.get('.vk-tooltip__popper').text()).toBe('hello tooltip')
+    expect(onVisibleChange).toHaveBeenCalledWith(true)
+    console.log('after', wrapper.html())
+    wrapper.get('#outside').trigger('click')
     await vi.runAllTimers()
-    expect(wrapper.find('.vk-tooltip_popper').exists()).toBeFalsy()
-    expect('onVisibleChange').toHaveBeenLastCalledWith(true)
-
-
+    expect(wrapper.find('.vk-tooltip__popper').exists()).toBeFalsy()
+    expect(onVisibleChange).toHaveBeenLastCalledWith(false)
   })
 })
