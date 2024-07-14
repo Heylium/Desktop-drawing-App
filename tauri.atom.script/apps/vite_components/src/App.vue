@@ -2,7 +2,7 @@
 import MyButton from "./components/Button/Button.vue";
 import Collapse from "./components/Collapse/Collapse.vue";
 import Item from "./components/Collapse/CollapseItem.vue";
-import {onMounted, ref} from "vue";
+import {h, onMounted, ref} from "vue";
 import type {ButtonInstance} from "./components/Button/types.ts";
 import VkIcon from "./components/Icon/Icon.vue";
 import VNode from "./VNode.js";
@@ -10,6 +10,8 @@ import {createPopper, Options} from "@popperjs/core";
 import type {Instance} from "@popperjs/core";
 import Tooltip from "./components/Tooltip/Tooltip.vue";
 import {TooltipInstance} from "@/components/Tooltip/types.ts";
+import DropDown from "@/components/DropDown/DropDown.vue";
+import {MenuOption} from "@/components/DropDown/types.ts";
 
 const buttonRef = ref<ButtonInstance | null>(null)
 const tooltipRef = ref<TooltipInstance | null>(null)
@@ -20,7 +22,13 @@ let popperInstance: Instance | null = null
 let size = ref<any>('3x')
 
 const trigger = ref<any>('hover')
-const options: Partial<Options> = {placement: 'right-end', strategy: 'fixed'}
+// const options: Partial<Options> = {placement: 'right-end', strategy: 'fixed'}
+const options: MenuOption[] = [
+  {key: 1, label: h('b', 'this is bold'),},
+  {key: 2, label: 'item2', disabled: true},
+  {key: 3, label: 'item3', divided: true},
+  {key: 4, label: 'item4',},
+]
 
 const open = () => {
   tooltipRef.value?.show()
@@ -53,19 +61,16 @@ const openedValue = ref(['a'])
 <template>
   <div>
 <!--    <a href="https://vitejs.dev" target="_blank">-->
-      <Tooltip
+      <DropDown
           content="hello world"
-          placement="left"
+          placement="bottom"
           :trigger="trigger"
-          ref="tooltipRef"
           :open-delay="1000"
           :close-delay="1000"
+          :menu-options="options"
       >
         <img src="/vite.svg" class="logo" alt="Vite logo"/>
-        <template #content>
-          <h1>Hello Tooltip</h1>
-        </template>
-      </Tooltip>
+      </DropDown>
 <!--    </a>-->
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
