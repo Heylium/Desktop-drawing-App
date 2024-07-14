@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type {DropDownProps, DropDownInstance, DropDownEmits} from "@/components/DropDown/types.ts";
+import type {DropDownProps, DropDownInstance, DropDownEmits, MenuOption} from "@/components/DropDown/types.ts";
 import VkTooltip from "@/components/Tooltip/Tooltip.vue";
-
+import {Ref, ref} from "vue";
+import {TooltipInstance} from "@/components/Tooltip/types.ts";
 
 
 const props = defineProps<DropDownProps>()
@@ -9,8 +10,19 @@ const emits = defineEmits<DropDownEmits>()
 const visibleChange = (e: boolean): void => {
   emits('visible-change', e)
 }
+const tooltipRef = ref() as Ref<TooltipInstance>
 
+const itemClick = (e: MenuOption) => {
+  if (e.disabled) {
+    return
+  }
+  emits('select', e)
+}
 
+defineExpose<DropDownInstance>({
+  show: tooltipRef.value?.show,
+  hide: tooltipRef.value?.hide,
+})
 </script>
 
 <template>
@@ -37,11 +49,12 @@ const visibleChange = (e: boolean): void => {
             ></li>
             <li
                 class="vk-dropdown__item"
+                @click="itemClick(item)"
                 :class="{
                   'is-disabled': item.disabled,
                   'is-divided': item.divided,
                 }"
-                :id="item.key"
+                :id="`dropdown-item-${item.key}`"
             >{{item.label}}</li>
           </template>
         </ul>
