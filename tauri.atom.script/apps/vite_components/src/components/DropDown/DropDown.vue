@@ -1,27 +1,35 @@
 <script setup lang="ts">
-import type {DropDownProps, DropDownInstance, DropDownEmits, MenuOption} from "@/components/DropDown/types.ts";
+import type {DropdownProps, DropdownInstance, DropdownEmits, MenuOption} from "@/components/DropDown/types.ts";
 import VkTooltip from "@/components/Tooltip/Tooltip.vue";
-import {Ref, ref} from "vue";
+import {ref} from "vue";
 import {TooltipInstance} from "@/components/Tooltip/types.ts";
+import RenderVNode from "@/components/Common/RenderVNode.ts";
 
 
-const props = defineProps<DropDownProps>()
-const emits = defineEmits<DropDownEmits>()
-const visibleChange = (e: boolean): void => {
+defineOptions({
+  name: 'VkDropDown',
+})
+
+const props = withDefaults(defineProps<DropdownProps>(), { hideAfterClick: true })
+const emits = defineEmits<DropdownEmits>()
+const tooltipRef = ref<TooltipInstance | null>(null)
+const visibleChange = (e: boolean) => {
   emits('visible-change', e)
 }
-const tooltipRef = ref() as Ref<TooltipInstance>
 
 const itemClick = (e: MenuOption) => {
   if (e.disabled) {
     return
   }
   emits('select', e)
+  if (props.hideAfterClick) {
+    tooltipRef.value?.hide()
+  }
 }
 
-defineExpose<DropDownInstance>({
-  show: tooltipRef.value?.show,
-  hide: tooltipRef.value?.hide,
+defineExpose<DropdownInstance>({
+  show: () => tooltipRef.value?.show(),
+  hide: () => tooltipRef.value?.hide()
 })
 </script>
 
@@ -55,7 +63,9 @@ defineExpose<DropDownInstance>({
                   'is-divided': item.divided,
                 }"
                 :id="`dropdown-item-${item.key}`"
-            >{{item.label}}</li>
+            >
+              <RenderVNode :v-node="item.label" />
+            </li>
           </template>
         </ul>
       </template>

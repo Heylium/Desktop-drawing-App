@@ -2,8 +2,9 @@ import type {VNode} from "vue";
 import type {TooltipProps} from "@/components/Tooltip/types.ts";
 
 
-export interface DropDownProps extends TooltipProps {
+export interface DropdownProps extends TooltipProps {
   menuOptions: MenuOption[];
+  hideAfterClick?: boolean;
 }
 
 export interface MenuOption {
@@ -13,12 +14,12 @@ export interface MenuOption {
   divided?: boolean;
 }
 
-export interface DropDownEmits {
+export interface DropdownEmits {
   (e: 'visible-change', value: boolean): void;
   (e: 'select', value: MenuOption): void;
 }
 
-export interface DropDownInstance {
+export interface DropdownInstance {
   show: () => void;
   hide: () => void;
 }
