@@ -8,9 +8,9 @@ import VkIcon from "./components/Icon/Icon.vue";
 import VNode from "./VNode.js";
 import {createPopper, Options} from "@popperjs/core";
 import type {Instance} from "@popperjs/core";
-import Tooltip from "./components/Tooltip/Tooltip.vue";
+// import Tooltip from "./components/Tooltip/Tooltip.vue";
 import {TooltipInstance} from "@/components/Tooltip/types.ts";
-import DropDown from "@/components/DropDown/DropDown.vue";
+import DropDown from "@/components/DropDown/Dropdown.tsx";
 import {MenuOption} from "@/components/DropDown/types.ts";
 
 const buttonRef = ref<ButtonInstance | null>(null)
