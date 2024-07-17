@@ -21,7 +21,7 @@ const triggerNode = ref<HTMLElement>()
 let popperInstance: Instance | null = null
 let size = ref<any>('3x')
 
-const trigger = ref<any>('hover')
+const trigger = ref<any>('click')
 // const options: Partial<Options> = {placement: 'right-end', strategy: 'fixed'}
 const options: MenuOption[] = [
   {key: 1, label: h('b', 'this is bold'),},
@@ -29,6 +29,10 @@ const options: MenuOption[] = [
   {key: 3, label: 'item3', divided: true},
   {key: 4, label: 'item4',},
 ]
+
+const inlineConsole = (...args: any[]) => {
+  console.log(...args)
+}
 
 const open = () => {
   tooltipRef.value?.show()
@@ -47,7 +51,7 @@ onMounted(() => {
   setTimeout(() => {
     openedValue.value = ['a', 'b']
     size.value = '2xl'
-    trigger.value = 'hover'
+    // trigger.value = 'hover'
     // popperInstance?.setOptions({
     //   placement: 'bottom',
     // })
@@ -68,6 +72,10 @@ const openedValue = ref(['a'])
           :open-delay="1000"
           :close-delay="1000"
           :menu-options="options"
+          @visible-change="e => inlineConsole('visible-change', e)"
+          @select="e => inlineConsole('select', e)"
+          manual
+          ref="tooltipRef"
       >
         <img src="/vite.svg" class="logo" alt="Vite logo"/>
       </DropDown>
