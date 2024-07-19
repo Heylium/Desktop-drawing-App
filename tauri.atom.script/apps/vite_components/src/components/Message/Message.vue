@@ -2,7 +2,7 @@
 import type {MessageProps} from "@/components/Message/types.ts";
 import RenderVNode from "@/components/Common/RenderVNode.ts";
 import VkIcon from "@/components/Icon/Icon.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
@@ -20,6 +20,11 @@ function startTimer() {
 onMounted(() => {
   visible.value = true
   startTimer()
+})
+watch(visible, (newVal) => {
+  if (!newVal) {
+    props.onDestroy()
+  }
 })
 </script>
 
