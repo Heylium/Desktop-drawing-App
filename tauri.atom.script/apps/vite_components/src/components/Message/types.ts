@@ -6,4 +6,7 @@ export interface MessageProps {
   duration?: number;
   showClose?: boolean;
   type?: "success" | "info" | "warning" | "error";
+  onDestroy: () => void;
 }
+
+export type CreateMessageProps = Omit<MessageProps, 'onDestroy'>
