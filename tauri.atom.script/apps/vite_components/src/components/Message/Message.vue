@@ -3,12 +3,15 @@ import type {MessageProps} from "@/components/Message/types.ts";
 import RenderVNode from "@/components/Common/RenderVNode.ts";
 import VkIcon from "@/components/Icon/Icon.vue";
 import {onMounted, ref, watch} from "vue";
+import {getLastInstance} from "@/components/Message/method.ts";
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
   duration: 3000,
 })
 const visible = ref(false)
+const prevInstances = getLastInstance()
+console.log('prev', prevInstances)
 function startTimer() {
   if (props.duration === 0) {
     return
