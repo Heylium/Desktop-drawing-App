@@ -7,6 +7,7 @@ export interface MessageProps {
   showClose?: boolean;
   type?: "success" | "info" | "warning" | "error";
   onDestroy: () => void;
+  offset?: number;
 }
 
 
