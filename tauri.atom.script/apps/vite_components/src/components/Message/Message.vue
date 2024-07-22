@@ -15,7 +15,7 @@ const messageRef = ref<HTMLDivElement>()
 // calculate offset height
 const height = ref(0)
 // last message offset
-const lastOffset = computed(() => getLastBottomOffset())
+const lastOffset = computed(() => getLastBottomOffset(props.id))
 // current message top
 const topOffset = computed(() => props.offset + lastOffset.value)
 // bottomOffset for next message
@@ -61,6 +61,7 @@ defineExpose({
   >
     <div class="vk-message__content">
       <slot>
+        {{offset}} - {{topOffset}} - {{height}} - {{bottomOffset}}
         <RenderVNode :v-node="message" v-if="message" />
       </slot>
     </div>
