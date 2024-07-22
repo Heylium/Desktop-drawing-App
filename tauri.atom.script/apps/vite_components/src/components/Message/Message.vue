@@ -3,7 +3,7 @@ import type {MessageProps} from "@/components/Message/types.ts";
 import RenderVNode from "@/components/Common/RenderVNode.ts";
 import VkIcon from "@/components/Icon/Icon.vue";
 import {computed, nextTick, onMounted, ref, watch} from "vue";
-import {getLastBottomOffset, getLastInstance} from "@/components/Message/method.ts";
+import {getLastBottomOffset} from "@/components/Message/method.ts";
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
@@ -19,7 +19,7 @@ const lastOffset = computed(() => getLastBottomOffset(props.id))
 // current message top
 const topOffset = computed(() => props.offset + lastOffset.value)
 // bottomOffset for next message
-const bottomOffset = computed(() => height.value - topOffset.value)
+const bottomOffset = computed(() => height.value + topOffset.value)
 const cssStyle = computed(() => ({
   top: topOffset.value + "px",
 }))

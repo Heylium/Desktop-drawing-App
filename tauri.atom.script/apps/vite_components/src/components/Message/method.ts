@@ -1,9 +1,9 @@
-import {h, render} from "vue";
+import {h, render, shallowReactive} from "vue";
 import type {CreateMessageProps, MessageContext} from "@/components/Message/types.ts";
 import MessageConstructor from "./Message.vue"
 
 let seed = 1
-const instances: MessageContext[] = []
+const instances: MessageContext[] = shallowReactive([])
 export const createMessage = (props: CreateMessageProps) => {
   const id= `message_${seed++}`
   const container = document.createElement('div');
@@ -40,11 +40,10 @@ export const getLastInstance = () => {
 
 export const getLastBottomOffset = (id: string) => {
   const idx = instances.findIndex(instance => instance.id === id)
-  if (idx <= 0)  {
+  if (idx <= 0) {
     return 0
   } else {
     const prev = instances[idx - 1]
     return prev.vm.exposed!.bottomOffset.value
   }
-
 }
