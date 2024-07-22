@@ -1,4 +1,4 @@
-import type {VNode} from "vue";
+import type {ComponentInternalInstance, VNode} from "vue";
 
 
 export interface MessageProps {
@@ -7,6 +7,7 @@ export interface MessageProps {
   showClose?: boolean;
   type?: "success" | "info" | "warning" | "error";
   onDestroy: () => void;
+  id: string;
   offset?: number;
 }
 
@@ -14,6 +15,7 @@ export interface MessageProps {
 export interface MessageContext {
   id: string;
   vnode: VNode;
+  vm: ComponentInternalInstance,
   props: MessageProps;
 }
-export type CreateMessageProps = Omit<MessageProps, 'onDestroy'>
+export type CreateMessageProps = Omit<MessageProps, 'onDestroy' | 'id'>
