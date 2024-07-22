@@ -46,7 +46,7 @@ const close = () => {
 onMounted(() => {
   createMessage({message: 'hello world', duration: 0})
   createMessage({message: 'hello world x2', duration: 0})
-  createMessage({message: 'hello world x3',})
+  // createMessage({message: 'hello world x3',})
 
 
   if (overlayNode.value && triggerNode.value) {
