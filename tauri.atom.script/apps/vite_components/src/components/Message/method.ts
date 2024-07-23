@@ -14,9 +14,17 @@ export const createMessage = (props: CreateMessageProps) => {
     instances.splice(idx, 1);
     render(null, container);
   }
+  // delete message instance manually by change visible
+  const manualDestroy = () => {
+    const instance = instances.find(instance => instance.id === id)
+    if (instance) {
+      instance.vm.exposed!.visible.value = false
+    }
+  }
   const newProps = {
     ...props,
     id,
+    zIndex: 2000,
     onDestroy: destroy,
   }
   const vnode = h(MessageConstructor, newProps);
@@ -28,7 +36,8 @@ export const createMessage = (props: CreateMessageProps) => {
     id,
     vnode,
     vm,
-    props: newProps
+    props: newProps,
+    destroy: manualDestroy,
   }
   instances.push(instance)
   return instance
