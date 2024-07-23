@@ -22,6 +22,7 @@ const topOffset = computed(() => props.offset + lastOffset.value)
 const bottomOffset = computed(() => height.value + topOffset.value)
 const cssStyle = computed(() => ({
   top: topOffset.value + "px",
+  zIndex: props.zIndex,
 }))
 function startTimer() {
   if (props.duration === 0) {
@@ -43,7 +44,8 @@ watch(visible, (newVal) => {
   }
 })
 defineExpose({
-  bottomOffset
+  bottomOffset,
+  visible,
 })
 </script>
 
