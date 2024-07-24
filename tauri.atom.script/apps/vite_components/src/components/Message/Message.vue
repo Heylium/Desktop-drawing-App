@@ -4,6 +4,7 @@ import RenderVNode from "@/components/Common/RenderVNode.ts";
 import VkIcon from "@/components/Icon/Icon.vue";
 import {computed, nextTick, onMounted, ref, watch} from "vue";
 import {getLastBottomOffset} from "@/components/Message/method.ts";
+import useEventListeners from "@/hooks/useEventListener.ts";
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
@@ -24,20 +25,33 @@ const cssStyle = computed(() => ({
   top: topOffset.value + "px",
   zIndex: props.zIndex,
 }))
+let timer: any
 function startTimer() {
   if (props.duration === 0) {
     return
   }
-  setTimeout(() => {
+  timer = setTimeout(() => {
     visible.value = false
   }, props.duration)
 }
+function clearTimer() {
+  clearTimeout(timer)
+}
+
 onMounted(async () => {
   visible.value = true
   startTimer()
   await nextTick()
   height.value = messageRef.value!.getBoundingClientRect().height
 })
+
+function keydown(e: Event) {
+  const event = e as KeyboardEvent
+  if (event.code === 'Escape') {
+    visible.value = false
+  }
+}
+useEventListeners(document, 'keydown', keydown)
 watch(visible, (newVal) => {
   if (!newVal) {
     props.onDestroy()
@@ -60,6 +74,8 @@ defineExpose({
       :style="cssStyle"
       role="alert"
       ref="messageRef"
+      @mouseenter="clearTimer"
+      @mouseleave="startTimer"
   >
     <div class="vk-message__content">
       <slot>
