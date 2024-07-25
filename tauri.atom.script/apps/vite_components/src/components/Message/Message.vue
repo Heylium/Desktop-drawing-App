@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
   duration: 3000,
   offset: 20,
+  transitionName: 'fade-up',
 })
 const visible = ref(false)
 const messageRef = ref<HTMLDivElement>()
@@ -42,7 +43,7 @@ onMounted(async () => {
   visible.value = true
   startTimer()
   await nextTick()
-  height.value = messageRef.value!.getBoundingClientRect().height
+  // height.value = messageRef.value!.getBoundingClientRect().height
 })
 
 function keydown(e: Event) {
@@ -52,11 +53,17 @@ function keydown(e: Event) {
   }
 }
 useEventListeners(document, 'keydown', keydown)
-watch(visible, (newVal) => {
-  if (!newVal) {
-    props.onDestroy()
-  }
-})
+// watch(visible, (newVal) => {
+//   if (!newVal) {
+//     props.onDestroy()
+//   }
+// })
+function destroyComponent() {
+  props.onDestroy()
+}
+function updateHeight() {
+  height.value = messageRef.value!.getBoundingClientRect().height
+}
 defineExpose({
   bottomOffset,
   visible,
@@ -64,41 +71,38 @@ defineExpose({
 </script>
 
 <template>
-  <div
-      class="vk-message"
-      v-show="visible"
-      :class="{
+  <Transition
+      :name="transitionName"
+      @after-leave="destroyComponent"
+      @enter="updateHeight"
+  >
+    <div
+        class="vk-message"
+        v-show="visible"
+        :class="{
         [`vk-message--${type}`]: type,
         'is-close': showClose,
       }"
-      :style="cssStyle"
-      role="alert"
-      ref="messageRef"
-      @mouseenter="clearTimer"
-      @mouseleave="startTimer"
-  >
-    <div class="vk-message__content">
-      <slot>
-        {{offset}} - {{topOffset}} - {{height}} - {{bottomOffset}}
-        <RenderVNode :v-node="message" v-if="message" />
-      </slot>
-    </div>
+        :style="cssStyle"
+        role="alert"
+        ref="messageRef"
+        @mouseenter="clearTimer"
+        @mouseleave="startTimer"
+    >
+      <div class="vk-message__content">
+        <slot>
+          <RenderVNode :v-node="message" v-if="message" />
+        </slot>
+      </div>
 
-    <div class="vk-message__close" v-if="showClose">
-      <VkIcon @click.stop="$event => visible = false" icon="xmark" />
+      <div class="vk-message__close" v-if="showClose">
+        <VkIcon @click.stop="$event => visible = false" icon="xmark" />
+      </div>
     </div>
-  </div>
+  </Transition>
 
 </template>
 
 <style scoped>
-.vk-message {
-  width: max-content;
-  position: fixed;
-  left: 50%;
-  top: 20px;
-  transform: translateX(-50%);
-  border: 1px solid blue;
-}
 
 </style>

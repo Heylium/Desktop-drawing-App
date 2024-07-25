@@ -12,7 +12,6 @@ import type {Instance} from "@popperjs/core";
 import {TooltipInstance} from "@/components/Tooltip/types.ts";
 import DropDown from "@/components/DropDown/Dropdown.tsx";
 import {MenuOption} from "@/components/DropDown/types.ts";
-import Message from "@/components/Message/Message.vue";
 import {createMessage} from "@/components/Message/method.ts";
 
 const buttonRef = ref<ButtonInstance | null>(null)
@@ -44,9 +43,10 @@ const close = () => {
 }
 
 onMounted(() => {
-  createMessage({message: 'hello world', duration: 0})
-  createMessage({message: 'hello world x2', duration: 0})
-  // createMessage({message: 'hello world x3',})
+  createMessage({message: 'hello world x1', duration: 0, showClose: true})
+  createMessage({message: 'hello world x2', duration: 0, showClose: true, type: "success"})
+  createMessage({message: 'hello world x3', duration: 0, showClose: true, type: "warning"})
+  createMessage({message: 'hello world x4', duration: 0, showClose: true, type: "error"})
 
 
   if (overlayNode.value && triggerNode.value) {

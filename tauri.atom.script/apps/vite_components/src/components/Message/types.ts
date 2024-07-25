@@ -10,6 +10,7 @@ export interface MessageProps {
   id: string;
   zIndex: number;
   offset?: number;
+  transitionName?: string;
 }
 
 
