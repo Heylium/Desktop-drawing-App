@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type {DropdownProps, DropdownInstance, DropdownEmits, MenuOption} from "@/components/DropDown/types.ts";
-import VkTooltip from "@/components/Tooltip/Tooltip.vue";
+import VkTooltip from "../Tooltip/Tooltip.vue";
 import {ref} from "vue";
-import {TooltipInstance} from "@/components/Tooltip/types.ts";
-import RenderVNode from "@/components/Common/RenderVNode.ts";
+import {TooltipInstance} from "../Tooltip/types.ts";
+import RenderVNode from "../Common/RenderVNode.ts";
 
 
 defineOptions({

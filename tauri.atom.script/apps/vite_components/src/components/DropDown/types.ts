@@ -1,5 +1,5 @@
 import type {VNode} from "vue";
-import type {TooltipProps} from "@/components/Tooltip/types.ts";
+import type {TooltipProps} from "../Tooltip/types.ts";
 
 
 export interface DropdownProps extends TooltipProps {

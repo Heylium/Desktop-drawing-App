@@ -1,8 +1,8 @@
 import {computed, defineComponent, Fragment, PropType, ref} from "vue";
 import type {Options, Placement} from "@popperjs/core";
-import {MenuOption} from "@/components/DropDown/types.ts";
-import VkTooltip from "@/components/Tooltip/Tooltip.vue";
-import {TooltipInstance} from "@/components/Tooltip/types.ts";
+import {MenuOption} from "./types.ts";
+import VkTooltip from "../Tooltip/Tooltip.vue";
+import {TooltipInstance} from "../Tooltip/types.ts";
 
 
 export default defineComponent({

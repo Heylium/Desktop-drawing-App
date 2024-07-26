@@ -1,5 +1,5 @@
 import {h, render, shallowReactive} from "vue";
-import type {CreateMessageProps, MessageContext} from "@/components/Message/types.ts";
+import type {CreateMessageProps, MessageContext} from "./types.ts";
 import MessageConstructor from "./Message.vue"
 import useZIndex from "../../hooks/useZIndex.ts";
 

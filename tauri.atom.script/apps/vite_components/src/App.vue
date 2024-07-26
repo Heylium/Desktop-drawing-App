@@ -9,10 +9,10 @@ import VNode from "./VNode.js";
 import {createPopper} from "@popperjs/core";
 import type {Instance} from "@popperjs/core";
 // import Tooltip from "./components/Tooltip/Tooltip.vue";
-import {TooltipInstance} from "@/components/Tooltip/types.ts";
-import DropDown from "@/components/DropDown/Dropdown.tsx";
-import {MenuOption} from "@/components/DropDown/types.ts";
-import {createMessage} from "@/components/Message/method.ts";
+import {TooltipInstance} from "./components/Tooltip/types.ts";
+import DropDown from "./components/DropDown/Dropdown.tsx";
+import {MenuOption} from "./components/DropDown/types.ts";
+import {createMessage} from "./components/Message/method.ts";
 
 const buttonRef = ref<ButtonInstance | null>(null)
 const tooltipRef = ref<TooltipInstance | null>(null)
