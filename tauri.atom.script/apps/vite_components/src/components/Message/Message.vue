@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type {MessageProps} from "@/components/Message/types.ts";
-import RenderVNode from "@/components/Common/RenderVNode.ts";
-import VkIcon from "@/components/Icon/Icon.vue";
-import {computed, nextTick, onMounted, ref, watch} from "vue";
-import {getLastBottomOffset} from "@/components/Message/method.ts";
-import useEventListeners from "@/hooks/useEventListener.ts";
+import type {MessageProps} from "../Message/types.ts";
+import RenderVNode from "../Common/RenderVNode.ts";
+import VkIcon from "../Icon/Icon.vue";
+import {computed, nextTick, onMounted, ref} from "vue";
+import {getLastBottomOffset} from "./method.ts";
+import useEventListeners from "../../hooks/useEventListener.ts";
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
