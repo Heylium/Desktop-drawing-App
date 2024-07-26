@@ -1,7 +1,7 @@
 import {h, render, shallowReactive} from "vue";
 import type {CreateMessageProps, MessageContext} from "@/components/Message/types.ts";
 import MessageConstructor from "./Message.vue"
-import useZIndex from "@/hooks/useZIndex.ts";
+import useZIndex from "../../hooks/useZIndex.ts";
 
 let seed = 1
 const instances: MessageContext[] = shallowReactive([])
@@ -57,4 +57,10 @@ export const getLastBottomOffset = (id: string) => {
     const prev = instances[idx - 1]
     return prev.vm.exposed!.bottomOffset.value
   }
+}
+
+export const closeAll = () => {
+  instances.forEach(instance => {
+    instance.destroy()
+  })
 }
