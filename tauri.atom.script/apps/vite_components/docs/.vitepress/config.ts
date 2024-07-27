@@ -1,10 +1,23 @@
 import { defineConfig } from 'vitepress'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import VueMacros from "unplugin-vue-macros";
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "My Awesome Project",
   description: "A VitePress Site",
-  srcDir: 'components',
+  vite: {
+    plugins: [
+      VueMacros.vite({
+        setupComponent: false,
+        setupSFC: false,
+        plugins: {
+          vuejs: vueJsx(),
+        }
+      })
+    ],
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

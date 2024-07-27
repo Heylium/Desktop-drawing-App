@@ -10,9 +10,13 @@ description: Button component document
 使用 `type`、 `plain`、 `round`和`circle`来定义按钮的样式。
 
 <script setup>
-import {ref} from 'vue';
-const count = ref(0)
+import Button from '../../src/components/Button/Button.vue';
 </script>
-Current count is: {{count}}
 
-<button @click="count++">Add</button>
+<Button> hello </Button>
+<Button loading> Loading </Button>
+
+```vue
+<Button> hello </Button>
+<Button loading> Loading </Button>
+```
