@@ -9,14 +9,5 @@ description: Button component document
 ## 基础用法
 使用 `type`、 `plain`、 `round`和`circle`来定义按钮的样式。
 
-<script setup>
-import Button from '../../src/components/Button/Button.vue';
-</script>
 
-<Button> hello </Button>
-<Button loading> Loading </Button>
-
-```vue
-<Button> hello </Button>
-<Button loading> Loading </Button>
-```
+<preview path="../demo/Button/Basic.vue" title="基础用法" description="Button 组件的基础用法"></preview>
