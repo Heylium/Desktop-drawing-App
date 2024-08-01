@@ -38,4 +38,38 @@ describe('Input', () => {
     expect(wrapper2.find('textarea').exists()).toBeTruthy()
   })
 
+  it('支持 v-model', async () => {
+    const wrapper = mount(VKInput, {
+      props: {
+        modelValue: 'test',
+        'onUpdate:modelValue': (e: any) => wrapper.setProps({modelValue: e}),
+        type: 'text',
+      }
+    })
+
+    // 初始值
+    const input = wrapper.get('input')
+    expect(input.element.value).toBe('test')
+
+    // 更新值
+    // 注意 setValue 是组合事件会触发 input 以及 change
+    await input.setValue('update')
+    expect(wrapper.props('modelValue')).toBe('update')
+    expect(input.element.value).toBe('update')
+
+    console.log('the events', wrapper.emitted())
+    expect(wrapper.emitted()).toHaveProperty('input')
+    expect(wrapper.emitted()).toHaveProperty('change')
+
+    // [ [ 'update' ], ...更多事件 ]
+    const inputEvent = wrapper.emitted('input')
+    const changeEvent = wrapper.emitted('change')
+    expect(inputEvent![0]).toEqual(['update'])
+    expect(changeEvent![0]).toEqual(['update'])
+
+    // v-model 的异步更新
+    await wrapper.setProps({modelValue: 'prop updated'})
+    expect(input.element.value).toBe('prop updated')
+
+  });
 });
