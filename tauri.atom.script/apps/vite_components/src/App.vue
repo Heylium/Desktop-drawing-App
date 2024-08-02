@@ -70,7 +70,7 @@ const openedValue = ref(['a'])
 
 <template>
   <div>
-    <Input model-value="test" :clearable="true" type="text" />
+    <Input model-value="" :showPassword="true" type="text" />
 <!--    <a href="https://vitejs.dev" target="_blank">-->
       <DropDown
           content="hello world"

@@ -5,7 +5,7 @@ import {computed, inject, nextTick, Ref, ref, useAttrs, watch} from "vue";
 
 
 defineOptions({
-  name: 'Input'
+  name: 'Input',
 })
 
 const props = withDefaults(defineProps<InputProps>(), {
