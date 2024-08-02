@@ -1,12 +1,12 @@
 import {describe, expect, it} from "vitest";
 import {mount} from "@vue/test-utils";
-import VKInput from "./Input.vue";
+import Input from "./Input.vue";
 
 
 describe('Input', () => {
 
   it('基本展示', () => {
-    const wrapper = mount(VKInput, {
+    const wrapper = mount(Input, {
       props: {
         size: 'small',
         type: 'text',
@@ -29,7 +29,7 @@ describe('Input', () => {
     expect(wrapper.get('.vk-input__prefix').text()).toBe('prefix')
 
     // textarea
-    const wrapper2 = mount(VKInput, {
+    const wrapper2 = mount(Input, {
       props: {
         type: 'textarea',
         modelValue: ''
@@ -39,7 +39,7 @@ describe('Input', () => {
   })
 
   it('支持 v-model', async () => {
-    const wrapper = mount(VKInput, {
+    const wrapper = mount(Input, {
       props: {
         modelValue: 'test',
         'onUpdate:modelValue': (e: any) => wrapper.setProps({modelValue: e}),
@@ -72,4 +72,39 @@ describe('Input', () => {
     expect(input.element.value).toBe('prop updated')
 
   });
+
+  it('支持点击清空字符串', async () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'test',
+        clearable: true,
+        type: 'text'
+      },
+      global: {
+        stubs: ['Icon']
+      }
+    })
+    // 不出现对应的 Icon 区域
+    expect(wrapper.find('.vk-input__clear').exists()).toBeFalsy()
+    const input = wrapper.get('input')
+    await input.trigger('focus')
+    expect(wrapper.emitted()).toHaveProperty('focus')
+    //  出现 Icon 区域
+    expect(wrapper.find('.vk-input__clear').exists()).toBeTruthy()
+    // 点击值变为空并且消失
+    await wrapper.get('.vk-input__clear').trigger('click')
+    expect(input.element.value).toBe('')
+    // 点击值变为空并且消失，特别注意这里不仅仅会触发 clear 事件，对应的 input 以及 change 应该都会被触发，因为对应的值发生了变化
+    expect(wrapper.emitted()).toHaveProperty('clear')
+    expect(wrapper.emitted()).toHaveProperty('input')
+    expect(wrapper.emitted()).toHaveProperty('change')
+    const inputEvent = wrapper.emitted('input')
+    const changeEvent = wrapper.emitted('change')
+    expect(inputEvent![0]).toEqual([''])
+    expect(changeEvent![0]).toEqual([''])
+
+    await input.trigger('blur')
+    expect(wrapper.emitted()).toHaveProperty('blur')
+  })
+
 });

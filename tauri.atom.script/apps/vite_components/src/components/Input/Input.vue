@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type {InputEmits, InputProps} from "./types.ts";
-import VkIcon from "../../App.vue";
+import VkIcon from "../Icon/Icon.vue";
 import {computed, inject, nextTick, Ref, ref, useAttrs, watch} from "vue";
 
 
 defineOptions({
-  name: 'VKInput'
+  name: 'Input'
 })
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<InputProps>(), {
 const emits = defineEmits<InputEmits>()
 const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
-const isFocus = ref(true)
+const isFocus = ref(false)
 const passwordVisible = ref(false)
 const inputRef = ref() as Ref<HTMLInputElement>
 // const formItemContext = inject(formItemContextKey)

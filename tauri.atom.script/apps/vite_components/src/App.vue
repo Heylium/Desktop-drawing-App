@@ -13,6 +13,7 @@ import {TooltipInstance} from "./components/Tooltip/types.ts";
 import DropDown from "./components/DropDown/Dropdown.tsx";
 import {MenuOption} from "./components/DropDown/types.ts";
 import {createMessage} from "./components/Message/method.ts";
+import Input from "./components/Input/Input.vue";
 
 const buttonRef = ref<ButtonInstance | null>(null)
 const tooltipRef = ref<TooltipInstance | null>(null)
@@ -69,6 +70,7 @@ const openedValue = ref(['a'])
 
 <template>
   <div>
+    <Input model-value="test" :clearable="true" type="text" />
 <!--    <a href="https://vitejs.dev" target="_blank">-->
       <DropDown
           content="hello world"
