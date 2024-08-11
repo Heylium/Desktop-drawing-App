@@ -14,7 +14,6 @@ const options2 = [
 <template>
   <VkSelect v-model="test" placeholder="基础选择器，请选择" :options="options2" />
   <span>{{test}}</span>
-
 </template>
 
 <style scoped>
