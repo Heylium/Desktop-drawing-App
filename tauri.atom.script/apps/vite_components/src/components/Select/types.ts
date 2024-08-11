@@ -13,7 +13,7 @@ export interface SelectProps {
   // v-model
   modelValue: string;
   // 选项
-  options: SelectOption[];
+  options?: SelectOption[];
   // 一些基本表单属性
   placeholder: string;
   disabled: boolean;
