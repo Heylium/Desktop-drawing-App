@@ -1,6 +1,8 @@
 #  A molecule drawing program based on Compose Desktop / Tauri + Rust
 A desktop application based on Compose Desktop framework. It has implemented some basic function to draw very simple chemical structure. However, there are some functions are still in developing, and there are some difference between Compose Desktop and Jetpack Compose.
 
+## Updated 2024.10.18
+Component library add to support App development, based on Vue3 and Ts, which will be used in further development.
 
 ## Updated 2023.10.08
 Implemented some basic molecule drawing function based on [butlerov](https://github.com/eizemazal/butlerov)
@@ -19,4 +21,4 @@ JetBrains provided an open-source all-products license for their products which 
 
 <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains logo." width="200" height="200">
 
-_Copyright © 2000-2023 [JetBrains](https://www.jetbrains.com/) s.r.o. JetBrains and the JetBrains logo are registered trademarks of JetBrains s.r.o._
+_Copyright © 2000-2024 [JetBrains](https://www.jetbrains.com/) s.r.o. JetBrains and the JetBrains logo are registered trademarks of JetBrains s.r.o._
